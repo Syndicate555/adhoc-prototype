@@ -1,0 +1,355 @@
+// App.jsx
+import { useEffect, useState, useRef } from 'react';
+import { io } from 'socket.io-client';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+
+function App() {
+	const [receipts, setReceipts] = useState([]);
+	const [files, setFiles] = useState([]);
+	const [sessionId] = useState(uuidv4());
+	const [uploading, setUploading] = useState(false);
+	const [allCompleted, setAllCompleted] = useState(false);
+
+	// Ref for the file input element
+	const fileInputRef = useRef(null);
+
+	useEffect(() => {
+		// Initialize Socket.IO connection
+		const socket = io('https://www.receipt-ms.online', {
+			transports: ['websocket', 'polling'],
+		});
+
+		socket.emit('join', sessionId);
+
+		socket.on('receipt:update', (data) => {
+			setReceipts((prevReceipts) => {
+				const updatedReceipts = prevReceipts.map((receipt) =>
+					receipt.receiptId === data.receiptId
+						? { ...receipt, status: data.status }
+						: receipt
+				);
+				checkAllCompleted(updatedReceipts);
+				return updatedReceipts;
+			});
+		});
+
+		socket.on('receipt:completed', (data) => {
+			setReceipts((prevReceipts) => {
+				const updatedReceipts = prevReceipts.map((receipt) =>
+					receipt.receiptId === data.receiptId
+						? { ...receipt, status: 'COMPLETED' }
+						: receipt
+				);
+				checkAllCompleted(updatedReceipts);
+				return updatedReceipts;
+			});
+		});
+
+		return () => {
+			socket.disconnect();
+		};
+	}, [sessionId]);
+
+	const handleFileChange = (e) => {
+		const selectedFiles = Array.from(e.target.files);
+		const newReceipts = selectedFiles.map((file) => ({
+			receiptId: null,
+			file,
+			status: 'PENDING',
+		}));
+		setFiles(selectedFiles);
+		setReceipts(newReceipts);
+		setAllCompleted(false);
+	};
+
+	const handleUpload = async () => {
+		if (!files || files.length === 0) {
+			alert('Please select at least one file');
+			return;
+		}
+
+		setUploading(true);
+
+		const formData = new FormData();
+		files.forEach((file) => {
+			formData.append('images', file);
+		});
+		formData.append('session', sessionId);
+
+		try {
+			const response = await axios.post(
+				'https://www.receipt-ms.online/receipts/upload-multiple',
+				formData,
+				{
+					headers: {
+						'Content-Type': 'multipart/form-data',
+					},
+				}
+			);
+
+			const uploadedReceipts = response.data.createdReceipts.map(
+				(receipt, index) => ({
+					receiptId: receipt._id,
+					file: files[index],
+					status: 'UPLOADED',
+				})
+			);
+
+			setReceipts(uploadedReceipts);
+		} catch (error) {
+			console.error('Upload failed:', error);
+		} finally {
+			setUploading(false);
+		}
+	};
+
+	const checkAllCompleted = (receiptsList) => {
+		const allDone = receiptsList.every(
+			(receipt) => receipt.status === 'COMPLETED'
+		);
+		setAllCompleted(allDone);
+	};
+
+	const handleGenerateInsights = () => {
+		// Implement logic to generate insights
+		alert('Generating insights...');
+	};
+
+	// Function to handle the "Select Receipts" button click
+	const handleSelectReceiptsClick = () => {
+		if (fileInputRef.current) {
+			fileInputRef.current.click();
+		}
+	};
+
+	const getProgressPercentage = (status) => {
+		switch (status) {
+			case 'PENDING':
+				return 0;
+			case 'PROCESSING':
+				return 33;
+			case 'ANALYZED':
+				return 67;
+			case 'COMPLETED':
+				return 100;
+			default:
+				return 0;
+		}
+	};
+
+	return (
+		<div className="min-h-screen bg-gray-100 flex flex-col">
+			{/* Header */}
+			<header className="bg-blue-600 text-white py-4">
+				<div className="container mx-auto flex justify-between items-center px-4">
+					<h1 className="text-xl font-bold">
+						Platen Receipt Insight Generator
+					</h1>
+					<nav>
+						<ul className="flex space-x-6">
+							<li>
+								<a href="#home" className="hover:underline">
+									Home
+								</a>
+							</li>
+							<li>
+								<a href="#features" className="hover:underline">
+									Features
+								</a>
+							</li>
+							<li>
+								<a href="#contact" className="hover:underline">
+									Contact
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+
+			{/* Hero Section */}
+			<section className="flex-1 flex items-center justify-center text-center py-16 bg-white">
+				<div className="container mx-auto px-4">
+					<h2 className="text-4xl font-bold text-gray-800 mb-4">
+						Unlock Insights from Your Receipts
+					</h2>
+					<p className="text-lg text-gray-600 mb-8">
+						Upload your receipts and let our AI generate valuable spending
+						insights for you.
+					</p>
+					<div className="flex justify-center space-x-4">
+						{/* Select Receipts Button */}
+						<button
+							onClick={handleSelectReceiptsClick}
+							className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-md"
+						>
+							Select Receipts
+						</button>
+
+						{/* Hidden File Input */}
+						<input
+							type="file"
+							ref={fileInputRef}
+							style={{ display: 'none' }}
+							accept="image/*"
+							multiple
+							onChange={handleFileChange}
+						/>
+
+						{/* Upload Receipts Button */}
+						<button
+							onClick={handleUpload}
+							className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-md ${
+								uploading ? 'opacity-50 cursor-not-allowed' : ''
+							}`}
+							disabled={files.length === 0 || uploading}
+						>
+							{uploading ? 'Uploading...' : 'Upload Receipts'}
+						</button>
+					</div>
+				</div>
+			</section>
+
+			{/* Receipt Upload & Tracking Section */}
+			{receipts.length > 0 && (
+				<section className="container mx-auto px-4 my-8">
+					<h3 className="text-2xl font-semibold text-gray-800 mb-4">
+						You have uploaded {receipts.length} receipt
+						{receipts.length > 1 ? 's' : ''}
+					</h3>
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+						{receipts.map((receipt, index) => (
+							<div key={index} className="bg-white p-4 rounded-lg shadow-md">
+								<div className="w-full h-40 mb-4 overflow-hidden rounded-md">
+									<img
+										src={URL.createObjectURL(receipt.file)}
+										alt={`Receipt ${index + 1}`}
+										className="w-full h-full object-cover"
+									/>
+								</div>
+								<h4 className="text-lg font-bold mb-2">
+									{receipt.receiptId || 'Pending...'}
+								</h4>
+								<div className="flex items-center space-x-2 mb-2">
+									<span
+										className={`text-sm font-semibold ${
+											receipt.status === 'COMPLETED'
+												? 'text-green-600'
+												: 'text-yellow-600'
+										}`}
+									>
+										{receipt.status}
+									</span>
+								</div>
+								{/* Progress Bar */}
+								<div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+									<div
+										className={`h-4 rounded-full ${
+											receipt.status === 'COMPLETED'
+												? 'bg-green-500'
+												: 'bg-blue-500'
+										}`}
+										style={{
+											width: `${getProgressPercentage(receipt.status)}%`,
+										}}
+									></div>
+								</div>
+							</div>
+						))}
+					</div>
+
+					{/* Generate Insights Button */}
+					<div className="flex justify-center mt-8">
+						<button
+							onClick={handleGenerateInsights}
+							className={`bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-md ${
+								!allCompleted ? 'opacity-50 cursor-not-allowed' : ''
+							}`}
+							disabled={!allCompleted}
+						>
+							Generate Insights
+						</button>
+					</div>
+				</section>
+			)}
+
+			{/* Features Section */}
+			<section id="features" className="bg-gray-50 py-16">
+				<div className="container mx-auto px-4">
+					<h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
+						Why Choose Our Solution?
+					</h3>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+						<div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md">
+							<svg
+								className="w-12 h-12 text-blue-500 mb-4"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
+							</svg>
+							<h4 className="text-xl font-semibold mb-2">Easy Upload</h4>
+							<p className="text-gray-600">
+								Quickly upload multiple receipts with just a few clicks.
+							</p>
+						</div>
+						<div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md">
+							<svg
+								className="w-12 h-12 text-blue-500 mb-4"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
+							</svg>
+							<h4 className="text-xl font-semibold mb-2">
+								Real-Time Processing
+							</h4>
+							<p className="text-gray-600">
+								Watch as your receipts are processed in real-time.
+							</p>
+						</div>
+						<div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md">
+							<svg
+								className="w-12 h-12 text-blue-500 mb-4"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
+							</svg>
+							<h4 className="text-xl font-semibold mb-2">Valuable Insights</h4>
+							<p className="text-gray-600">
+								Gain actionable insights from your spending habits.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Footer */}
+			<footer className="bg-blue-600 text-white py-8">
+				<div className="container mx-auto px-4">
+					<div className="flex flex-col md:flex-row justify-between items-center">
+						<div className="mb-4 md:mb-0">
+							<h5 className="text-xl font-bold">Platen</h5>
+							<p>© {new Date().getFullYear()} Platen. All rights reserved.</p>
+						</div>
+						<div className="flex space-x-4">
+							<a href="#privacy" className="hover:underline">
+								Privacy Policy
+							</a>
+							<a href="#terms" className="hover:underline">
+								Terms of Service
+							</a>
+							<a href="#contact" className="hover:underline">
+								Contact Us
+							</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	);
+}
+
+export default App;
