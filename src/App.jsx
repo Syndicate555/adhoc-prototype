@@ -289,9 +289,9 @@ function App() {
 									</span>
 								</div>
 								{/* Progress Bar */}
-								<div className="w-full bg-gray-200 rounded-full h-4 mb-4">
+								<div className="w-full bg-gray-200 rounded-full h-4 mb-4 overflow-hidden">
 									<div
-										className={`h-4 rounded-full ${
+										className={`h-4 rounded-full transition-all duration-1000 ease-in-out ${
 											receipt.status === 'COMPLETED'
 												? 'bg-green-500'
 												: 'bg-blue-500'
