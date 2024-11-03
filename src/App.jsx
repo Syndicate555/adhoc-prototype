@@ -10,6 +10,7 @@ function App() {
 	const [sessionId] = useState(uuidv4());
 	const [uploading, setUploading] = useState(false);
 	const [allCompleted, setAllCompleted] = useState(false);
+	const [warningMessage, setWarningMessage] = useState('');
 
 	// Ref for the file input element
 	const fileInputRef = useRef(null);
@@ -53,13 +54,34 @@ function App() {
 
 	const handleFileChange = (e) => {
 		const selectedFiles = Array.from(e.target.files);
-		const newReceipts = selectedFiles.map((file) => ({
+		let isDuplicate = false;
+
+		const uniqueFiles = selectedFiles.filter((file) => {
+			const isFileAlreadySelected = files.some(
+				(existingFile) =>
+					existingFile.name === file.name && existingFile.size === file.size
+			);
+			if (isFileAlreadySelected) {
+				isDuplicate = true;
+				return false;
+			}
+			return true;
+		});
+
+		if (isDuplicate) {
+			setWarningMessage('Some files were not added as they are duplicates.');
+		} else {
+			setWarningMessage('');
+		}
+
+		const newReceipts = uniqueFiles.map((file) => ({
 			receiptId: null,
 			file,
 			status: 'PENDING',
 		}));
-		setFiles(selectedFiles);
-		setReceipts(newReceipts);
+
+		setFiles((prevFiles) => [...prevFiles, ...uniqueFiles]);
+		setReceipts((prevReceipts) => [...prevReceipts, ...newReceipts]);
 		setAllCompleted(false);
 	};
 
@@ -102,6 +124,12 @@ function App() {
 		} finally {
 			setUploading(false);
 		}
+	};
+
+	const handleRemoveReceipt = (index) => {
+		setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+		setReceipts((prevReceipts) => prevReceipts.filter((_, i) => i !== index));
+		setWarningMessage('');
 	};
 
 	const checkAllCompleted = (receiptsList) => {
@@ -208,6 +236,10 @@ function App() {
 							{uploading ? 'Uploading...' : 'Upload Receipts'}
 						</button>
 					</div>
+					{/* Warning Message */}
+					{warningMessage && (
+						<p className="mt-4 text-red-500 font-bold">{warningMessage}</p>
+					)}
 				</div>
 			</section>
 
@@ -215,12 +247,22 @@ function App() {
 			{receipts.length > 0 && (
 				<section className="container mx-auto px-4 my-8">
 					<h3 className="text-2xl font-semibold text-gray-800 mb-4">
-						You have uploaded {receipts.length} receipt
+						You are uploading {receipts.length} receipt
 						{receipts.length > 1 ? 's' : ''}
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 						{receipts.map((receipt, index) => (
-							<div key={index} className="bg-white p-4 rounded-lg shadow-md">
+							<div
+								key={index}
+								className="bg-white p-4 rounded-lg shadow-md relative"
+							>
+								{/* Remove Button */}
+								<button
+									onClick={() => handleRemoveReceipt(index)}
+									className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+								>
+									&times;
+								</button>
 								<div className="w-full h-40 mb-4 overflow-hidden rounded-md">
 									<img
 										src={URL.createObjectURL(receipt.file)}
