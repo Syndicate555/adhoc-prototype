@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import gsap from 'gsap';
@@ -35,7 +35,6 @@ function App() {
 
 	const animateProgress = useCallback(
 		(updatedReceipts) => {
-			// Calculate the global progress
 			const totalProgress = updatedReceipts.reduce((acc, receipt) => {
 				return acc + getProgressPercentage(receipt.status);
 			}, 0);
@@ -44,7 +43,6 @@ function App() {
 				? (totalProgress / (receipts.length * 100)) * 100
 				: 0;
 
-			// Animate the global progress bar
 			if (globalProgressRef.current) {
 				gsap.to(globalProgressRef.current, {
 					width: `${overallProgress}%`,
@@ -53,18 +51,15 @@ function App() {
 				});
 			}
 
-			// Update the percentage text
 			if (globalProgressRef.current) {
-				globalProgressRef.current.textContent = `${Math.round(
-					overallProgress
-				)}%`;
+				globalProgressRef.current.textContent =
+					overallProgress > 0 ? `${Math.round(overallProgress)}%` : '';
 			}
 		},
 		[receipts.length]
 	);
 
 	useEffect(() => {
-		// Initialize Socket.IO connection
 		const socket = io('https://www.receipt-ms.online', {
 			transports: ['websocket', 'polling'],
 		});
@@ -169,7 +164,7 @@ function App() {
 			);
 
 			setReceipts(uploadedReceipts);
-			setUploadFinalized(true); // Finalize uploads once successful
+			setUploadFinalized(true);
 			animateProgress(uploadedReceipts);
 		} catch (error) {
 			console.error('Upload failed:', error);
@@ -281,14 +276,15 @@ function App() {
 			{/* Global Progress Bar */}
 			{receipts.length > 0 && (
 				<div className="container mx-auto px-4 my-10">
+					<h4 className="text-xl font-semibold text-gray-800 mb-2">
+						Overall Processing Progress
+					</h4>
 					<div className="w-full bg-gray-300 rounded-full h-6 overflow-hidden mb-6 relative">
 						<div
 							ref={globalProgressRef}
 							className="h-6 bg-green-500 rounded-full flex items-center justify-center text-white font-bold"
 							style={{ width: '0%' }}
-						>
-							0%
-						</div>
+						></div>
 					</div>
 				</div>
 			)}
@@ -322,11 +318,9 @@ function App() {
 										className="w-full h-full object-cover"
 									/>
 								</div>
-								<h4 className="text-lg font-semibold mb-2 text-gray-800">
-									{receipt.receiptId || 'Pending...'}
-								</h4>
+
 								<div className="flex items-center space-x-2 mb-4">
-									<span
+									{/* <span
 										className={`text-sm font-semibold ${
 											receipt.status === 'COMPLETED'
 												? 'text-green-600'
@@ -334,21 +328,27 @@ function App() {
 										}`}
 									>
 										{receipt.status}
-									</span>
+									</span> */}
 								</div>
 								{/* Circular Progress Bar */}
 								<div className="w-20 h-20 mx-auto">
-									<CircularProgressbar
-										value={getProgressPercentage(receipt.status)}
-										text={`${getProgressPercentage(receipt.status)}%`}
-										styles={buildStyles({
-											pathColor:
-												receipt.status === 'COMPLETED' ? '#22c55e' : '#3b82f6',
-											textColor: '#000',
-											trailColor: '#d1d5db',
-											textSize: '16px',
-										})}
-									/>
+									{receipt.status === 'COMPLETED' ? (
+										<FaCheckCircle className="text-green-500 w-full h-full" />
+									) : (
+										<CircularProgressbar
+											value={getProgressPercentage(receipt.status)}
+											text={`${getProgressPercentage(receipt.status)}%`}
+											styles={buildStyles({
+												pathColor:
+													receipt.status === 'COMPLETED'
+														? '#22c55e'
+														: '#3b82f6',
+												textColor: '#000',
+												trailColor: '#d1d5db',
+												textSize: '16px',
+											})}
+										/>
+									)}
 								</div>
 							</div>
 						))}
@@ -369,7 +369,80 @@ function App() {
 				</section>
 			)}
 
-			{/* The rest of the sections remain the same... */}
+			{/* Features Section */}
+			<section id="features" className="bg-gray-50 py-16">
+				<div className="container mx-auto px-4">
+					<h3 className="text-4xl font-bold text-center text-gray-800 mb-12">
+						Why Choose Our Solution?
+					</h3>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+						<div className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow">
+							<svg
+								className="w-14 h-14 text-blue-500 mb-5"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
+							</svg>
+							<h4 className="text-2xl font-semibold mb-4">Easy Upload</h4>
+							<p className="text-gray-600">
+								Quickly upload multiple receipts with just a few clicks.
+							</p>
+						</div>
+						<div className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow">
+							<svg
+								className="w-14 h-14 text-blue-500 mb-5"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
+							</svg>
+							<h4 className="text-2xl font-semibold mb-4">
+								Real-Time Processing
+							</h4>
+							<p className="text-gray-600">
+								Watch as your receipts are processed in real-time.
+							</p>
+						</div>
+						<div className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow">
+							<svg
+								className="w-14 h-14 text-blue-500 mb-5"
+								fill="currentColor"
+								viewBox="0 0 20 20"
+							>
+								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
+							</svg>
+							<h4 className="text-2xl font-semibold mb-4">Valuable Insights</h4>
+							<p className="text-gray-600">
+								Gain actionable insights from your spending habits.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Footer */}
+			<footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-10 mt-16">
+				<div className="container mx-auto px-4">
+					<div className="flex flex-col md:flex-row justify-between items-center">
+						<div className="mb-6 md:mb-0">
+							<h5 className="text-2xl font-bold">Platen</h5>
+							<p>© {new Date().getFullYear()} Platen. All rights reserved.</p>
+						</div>
+						<div className="flex space-x-6 text-lg">
+							<a href="#privacy" className="hover:underline">
+								Privacy Policy
+							</a>
+							<a href="#terms" className="hover:underline">
+								Terms of Service
+							</a>
+							<a href="#contact" className="hover:underline">
+								Contact Us
+							</a>
+						</div>
+					</div>
+				</div>
+			</footer>
 		</div>
 	);
 }
