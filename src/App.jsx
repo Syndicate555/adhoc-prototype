@@ -2,12 +2,32 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
 import gsap from 'gsap';
+import {
+	Chart,
+	ArcElement,
+	BarElement,
+	CategoryScale,
+	LinearScale,
+	Tooltip,
+	Legend,
+} from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
+import ReceiptHierarchyTree from './components/ReceiptTree';
+import HeroSection from './components/HeroSection';
+import Header from './components/Header';
+import ProgressBar from './components/ProgressBar';
+import ReceiptCard from './components/ReceiptCard';
+
+// Register required Chart.js components
+Chart.register(
+	ArcElement,
+	BarElement,
+	CategoryScale,
+	LinearScale,
+	Tooltip,
+	Legend
+);
 
 function App() {
 	const [receipts, setReceipts] = useState([]);
@@ -141,8 +161,6 @@ function App() {
 			const response = await axios.get(
 				`https://www.receipt-ms.online/analytics/summary?demo=true&job=${job_id}`
 			);
-			console.log('JOB', job_id);
-			console.log(response.data.insights);
 			setInsights(response.data.insights);
 		} catch (error) {
 			console.error('Failed to fetch insights:', error);
@@ -206,108 +224,69 @@ function App() {
 		setAllCompleted(allDone);
 	};
 
-	// const handleGenerateInsights = () => {
-	// 	alert('Generating insights...');
-	// };
-
 	const handleSelectReceiptsClick = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
 
+	const treeData = {
+		name: 'Safeway',
+		children: [
+			{
+				name: 'Food & Beverages',
+				children: [
+					{
+						name: 'Sauces & Condiments',
+						children: [
+							{ name: 'Chunky Salsa' },
+							{ name: 'Herdez Taqueria Sauce' },
+						],
+					},
+					{
+						name: 'Canned Goods',
+						children: [{ name: 'Nacho Sliced Jalapenos' }],
+					},
+					{ name: 'Non-Alcoholic Drinks', children: [{ name: 'Coke Zero' }] },
+					{ name: 'Snacks & Sweets', children: [{ name: 'Soft Snql Tak' }] },
+					{ name: 'Cheese', children: [{ name: 'Daisy Sour Cream' }] },
+					{
+						name: 'Fresh Vegetables',
+						children: [{ name: 'Italian Red Onions' }],
+					},
+				],
+			},
+			{
+				name: 'Miscellaneous & Other',
+				children: [
+					{
+						name: 'Reusable Bag Fees',
+						children: [{ name: 'Recycle Bag Charge' }],
+					},
+				],
+			},
+		],
+	};
+
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
-			{/* Header */}
-			<header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 shadow-lg">
-				<div className="container mx-auto flex justify-between items-center px-4">
-					<h1 className="text-2xl font-bold">
-						Platen Receipt Insight Generator
-					</h1>
-					<nav>
-						<ul className="flex space-x-6 text-lg">
-							<li>
-								<a href="#home" className="hover:underline">
-									Home
-								</a>
-							</li>
-							<li>
-								<a href="#features" className="hover:underline">
-									Features
-								</a>
-							</li>
-							<li>
-								<a href="#contact" className="hover:underline">
-									Contact
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</header>
+			<Header />
 
-			{/* Hero Section */}
-			<section className="flex-1 flex items-center justify-center text-center py-16 bg-white">
-				<div className="container mx-auto px-4">
-					<h2 className="text-5xl font-extrabold text-gray-800 mb-6">
-						Unlock Insights from Your Receipts
-					</h2>
-					<p className="text-xl text-gray-600 mb-8">
-						Upload your receipts and let our AI generate valuable spending
-						insights for you.
-					</p>
-					<div className="flex justify-center space-x-6">
-						{/* Select Receipts Button */}
-						<button
-							onClick={handleSelectReceiptsClick}
-							className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
-						>
-							Select Receipts
-						</button>
+			<HeroSection
+				handleSelectReceiptsClick={handleSelectReceiptsClick}
+				handleUpload={handleUpload}
+				uploading={uploading}
+				files={files}
+				warningMessage={warningMessage}
+				fileInputRef={fileInputRef}
+				handleFileChange={handleFileChange}
+			/>
 
-						{/* Hidden File Input */}
-						<input
-							type="file"
-							ref={fileInputRef}
-							style={{ display: 'none' }}
-							accept="image/*"
-							multiple
-							onChange={handleFileChange}
-						/>
-
-						{/* Upload Receipts Button */}
-						<button
-							onClick={handleUpload}
-							className={`bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
-								uploading ? 'opacity-50 cursor-not-allowed' : ''
-							}`}
-							disabled={files.length === 0 || uploading}
-						>
-							{uploading ? 'Uploading...' : 'Upload Receipts'}
-						</button>
-					</div>
-					{/* Warning Message */}
-					{warningMessage && (
-						<p className="mt-4 text-red-500 font-bold">{warningMessage}</p>
-					)}
-				</div>
-			</section>
+			{/* Receipt Item Hierarchy */}
+			<ReceiptHierarchyTree data={treeData} />
 
 			{/* Global Progress Bar */}
-			{receipts.length > 0 && (
-				<div className="container mx-auto px-4 my-10">
-					<h4 className="text-xl font-semibold text-gray-800 mb-2">
-						Overall Processing Progress
-					</h4>
-					<div className="w-full bg-gray-300 rounded-full h-6 overflow-hidden mb-6 relative">
-						<div
-							ref={globalProgressRef}
-							className="h-6 bg-green-500 rounded-full flex items-center justify-center text-white font-bold"
-							style={{ width: '0%' }}
-						></div>
-					</div>
-				</div>
-			)}
+			<ProgressBar globalProgressRef={globalProgressRef} receipts={receipts} />
 
 			{/* Receipt Upload & Tracking Section */}
 			{receipts.length > 0 && (
@@ -318,76 +297,35 @@ function App() {
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 						{receipts.map((receipt, index) => (
-							<div
+							<ReceiptCard
 								key={index}
-								className="bg-white p-5 rounded-2xl shadow-lg relative transform hover:scale-105 transition-transform"
-							>
-								{/* Remove Button - Only show if upload not finalized */}
-								{!uploadFinalized && (
-									<button
-										onClick={() => handleRemoveReceipt(index)}
-										className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 shadow-lg transform hover:scale-110 transition-transform"
-									>
-										<FaTrashAlt />
-									</button>
-								)}
-								<div className="w-full h-48 mb-4 overflow-hidden rounded-xl">
-									<img
-										src={URL.createObjectURL(receipt.file)}
-										alt={`Receipt ${index + 1}`}
-										className="w-full h-full object-cover"
-									/>
-								</div>
-
-								<div className="flex items-center space-x-2 mb-4">
-									{/* <span
-										className={`text-sm font-semibold ${
-											receipt.status === 'COMPLETED'
-												? 'text-green-600'
-												: 'text-yellow-600'
-										}`}
-									>
-										{receipt.status}
-									</span> */}
-								</div>
-								{/* Circular Progress Bar */}
-								<div className="w-20 h-20 mx-auto">
-									{receipt.status === 'COMPLETED' ? (
-										<FaCheckCircle className="text-green-500 w-full h-full" />
-									) : (
-										<CircularProgressbar
-											value={getProgressPercentage(receipt.status)}
-											text={`${getProgressPercentage(receipt.status)}%`}
-											styles={buildStyles({
-												pathColor:
-													receipt.status === 'COMPLETED'
-														? '#22c55e'
-														: '#3b82f6',
-												textColor: '#000',
-												trailColor: '#d1d5db',
-												textSize: '16px',
-											})}
-										/>
-									)}
-								</div>
-							</div>
+								receipt={receipt}
+								index={index}
+								handleRemoveReceipt={handleRemoveReceipt}
+								uploadFinalized={uploadFinalized}
+								getProgressPercentage={getProgressPercentage}
+							/>
 						))}
-					</div>
-
-					{/* Generate Insights Button */}
-					<div className="flex justify-center mt-10">
-						<button
-							onClick={handleGenerateInsights}
-							className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
-								!allCompleted ? 'opacity-50 cursor-not-allowed' : ''
-							}`}
-							disabled={!allCompleted}
-						>
-							Generate Insights
-						</button>
 					</div>
 				</section>
 			)}
+
+			{/* Generate Insights Button */}
+			{receipts.length > 0 && (
+				<div className="flex justify-center mt-10">
+					<button
+						onClick={handleGenerateInsights}
+						className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
+							!allCompleted ? 'opacity-50 cursor-not-allowed' : ''
+						}`}
+						disabled={!allCompleted}
+					>
+						Generate Insights
+					</button>
+				</div>
+			)}
+
+			{/* Insights Summary Section */}
 			{insights && (
 				<section className="container mx-auto px-4 my-10">
 					<h3 className="text-3xl font-semibold text-gray-800 mb-6">
@@ -505,58 +443,6 @@ function App() {
 					</div>
 				</section>
 			)}
-
-			{/* Features Section */}
-			<section id="features" className="bg-gray-50 py-16">
-				<div className="container mx-auto px-4">
-					<h3 className="text-4xl font-bold text-center text-gray-800 mb-12">
-						Why Choose Our Solution?
-					</h3>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-						<div className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow">
-							<svg
-								className="w-14 h-14 text-blue-500 mb-5"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
-							</svg>
-							<h4 className="text-2xl font-semibold mb-4">Easy Upload</h4>
-							<p className="text-gray-600">
-								Quickly upload multiple receipts with just a few clicks.
-							</p>
-						</div>
-						<div className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow">
-							<svg
-								className="w-14 h-14 text-blue-500 mb-5"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
-							</svg>
-							<h4 className="text-2xl font-semibold mb-4">
-								Real-Time Processing
-							</h4>
-							<p className="text-gray-600">
-								Watch as your receipts are processed in real-time.
-							</p>
-						</div>
-						<div className="flex flex-col items-center text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow">
-							<svg
-								className="w-14 h-14 text-blue-500 mb-5"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-							>
-								<path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z" />
-							</svg>
-							<h4 className="text-2xl font-semibold mb-4">Valuable Insights</h4>
-							<p className="text-gray-600">
-								Gain actionable insights from your spending habits.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
 
 			{/* Footer */}
 			<footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-10 mt-16">
