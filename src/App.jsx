@@ -9,6 +9,8 @@ import Header from './components/Header';
 import ProgressBar from './components/ProgressBar';
 import ReceiptCard from './components/ReceiptCard';
 import InsightsSummary from './components/InsightsSummary';
+import { uploadReceipts, fetchInsights } from './services/api';
+import { getProgressPercentage } from './utilities/utils';
 
 function App() {
 	const [receipts, setReceipts] = useState([]);
@@ -21,21 +23,6 @@ function App() {
 	const [insights, setInsights] = useState(null);
 	const fileInputRef = useRef(null);
 	const globalProgressRef = useRef(null);
-
-	const getProgressPercentage = (status) => {
-		switch (status) {
-			case 'PENDING':
-				return 0;
-			case 'PROCESSING':
-				return 33;
-			case 'ANALYZED':
-				return 67;
-			case 'COMPLETED':
-				return 100;
-			default:
-				return 0;
-		}
-	};
 
 	const animateProgress = useCallback(
 		(updatedReceipts) => {
@@ -66,9 +53,15 @@ function App() {
 	useEffect(() => {
 		const socket = io('https://www.receipt-ms.online', {
 			transports: ['websocket', 'polling'],
+			reconnection: true, // This is enough for automatic reconnection
+			reconnectionAttempts: 5,
+			reconnectionDelay: 5000,
 		});
 
-		socket.emit('join', sessionId);
+		socket.on('connect', () => {
+			console.log('Connected to WebSocket server.');
+			socket.emit('join', sessionId);
+		});
 
 		socket.on('receipt:update', (data) => {
 			setReceipts((prevReceipts) => {
@@ -96,7 +89,12 @@ function App() {
 			});
 		});
 
+		socket.on('connect_error', (error) => {
+			console.error('Connection error:', error);
+		});
+
 		return () => {
+			console.log('Disconnecting socket...');
 			socket.disconnect();
 		};
 	}, [sessionId, animateProgress]);
@@ -139,10 +137,8 @@ function App() {
 
 		try {
 			const job_id = receipts[0].job_id; // Assuming all receipts have the same job_id
-			const response = await axios.get(
-				`https://www.receipt-ms.online/analytics/summary?demo=true&job=${job_id}`
-			);
-			setInsights(response.data.insights);
+			const insightsData = await fetchInsights(job_id);
+			setInsights(insightsData);
 		} catch (error) {
 			console.error('Failed to fetch insights:', error);
 		}
@@ -156,31 +152,14 @@ function App() {
 
 		setUploading(true);
 
-		const formData = new FormData();
-		files.forEach((file) => {
-			formData.append('images', file);
-		});
-		formData.append('session', sessionId);
-
 		try {
-			const response = await axios.post(
-				'https://www.receipt-ms.online/receipts/upload-multiple',
-				formData,
-				{
-					headers: {
-						'Content-Type': 'multipart/form-data',
-					},
-				}
-			);
-
-			const uploadedReceipts = response.data.createdReceipts.map(
-				(receipt, index) => ({
-					receiptId: receipt._id,
-					file: files[index],
-					status: 'UPLOADED',
-					job_id: receipt.job_id,
-				})
-			);
+			const createdReceipts = await uploadReceipts(files, sessionId);
+			const uploadedReceipts = createdReceipts.map((receipt, index) => ({
+				receiptId: receipt._id,
+				file: files[index],
+				status: 'UPLOADED',
+				job_id: receipt.job_id,
+			}));
 
 			setReceipts(uploadedReceipts);
 			setUploadFinalized(true);
@@ -306,7 +285,6 @@ function App() {
 				</div>
 			)}
 
-			{/* Insights Summary Section */}
 			{/* Insights Summary Section */}
 			<InsightsSummary insights={insights} />
 

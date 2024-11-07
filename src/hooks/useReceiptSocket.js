@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+// hooks/useReceiptSocket.js
+import { useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 
 const useReceiptSocket = (
@@ -7,15 +8,39 @@ const useReceiptSocket = (
 	animateProgress,
 	checkAllCompleted
 ) => {
+	const socketRef = useRef(null);
+
 	useEffect(() => {
-		const socket = io('https://www.receipt-ms.online', {
-			transports: ['websocket', 'polling'],
-			reconnectionAttempts: 5, // Automatically try to reconnect up to 5 times
+		// Initialize Socket.IO client
+		socketRef.current = io('https://www.receipt-ms.online', {
+			transports: ['websocket'],
+			reconnection: true, // Enable auto-reconnection
+			reconnectionAttempts: 10, // Max number of reconnection attempts
+			reconnectionDelay: 5000, // Delay between reconnection attempts (5 seconds)
+			timeout: 20000, // Connection timeout (20 seconds)
 		});
 
-		socket.emit('join', sessionId);
+		// Connection event handlers
+		socketRef.current.on('connect', () => {
+			console.log('Connected to WebSocket server.');
+			socketRef.current.emit('join', sessionId);
+		});
 
-		socket.on('receipt:update', (data) => {
+		socketRef.current.on('disconnect', (reason) => {
+			console.warn('Socket disconnected:', reason);
+			if (reason === 'io server disconnect') {
+				// Server forced disconnection, need to reconnect manually
+				socketRef.current.connect();
+			}
+		});
+
+		socketRef.current.on('connect_error', (error) => {
+			console.error('Connection error:', error);
+		});
+
+		// Handle receipt updates
+		socketRef.current.on('receipt:update', (data) => {
+			console.log('Receipt update received:', data);
 			setReceipts((prevReceipts) => {
 				const updatedReceipts = prevReceipts.map((receipt) =>
 					receipt.receiptId === data.receiptId
@@ -28,7 +53,9 @@ const useReceiptSocket = (
 			});
 		});
 
-		socket.on('receipt:completed', (data) => {
+		// Handle receipt completed updates
+		socketRef.current.on('receipt:completed', (data) => {
+			console.log('Receipt completed received:', data);
 			setReceipts((prevReceipts) => {
 				const updatedReceipts = prevReceipts.map((receipt) =>
 					receipt.receiptId === data.receiptId
@@ -41,20 +68,11 @@ const useReceiptSocket = (
 			});
 		});
 
-		socket.on('connect_error', (err) => {
-			console.error('WebSocket connection error:', err.message);
-		});
-
-		socket.on('disconnect', (reason) => {
-			console.warn('Socket disconnected:', reason);
-			if (reason === 'io server disconnect') {
-				// Manually disconnected, try to reconnect
-				socket.connect();
-			}
-		});
-
+		// Clean up on component unmount
 		return () => {
-			socket.disconnect();
+			if (socketRef.current) {
+				socketRef.current.disconnect();
+			}
 		};
 	}, [sessionId, setReceipts, animateProgress, checkAllCompleted]);
 };
