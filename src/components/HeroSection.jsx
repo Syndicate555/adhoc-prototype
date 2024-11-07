@@ -8,6 +8,7 @@ const HeroSection = ({
 	warningMessage,
 	fileInputRef,
 	handleFileChange,
+	allCompleted, // Add this line
 }) => {
 	return (
 		<section className="flex-1 flex items-center justify-center text-center py-16 bg-white">
@@ -16,9 +17,10 @@ const HeroSection = ({
 					Unlock Insights from Your Receipts
 				</h2>
 				<p className="text-xl text-gray-600 mb-8">
-					Upload your receipts and let our AI generate valuable spending
-					insights for you.
+					Upload 20-50 of your receipts and let our AI generate valuable
+					spending insights for you.
 				</p>
+
 				<div className="flex justify-center space-x-6">
 					{/* Select Receipts Button */}
 					<button
@@ -41,10 +43,12 @@ const HeroSection = ({
 					{/* Upload Receipts Button */}
 					<button
 						onClick={handleUpload}
-						className={`bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
-							uploading ? 'opacity-50 cursor-not-allowed' : ''
+						className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
+							uploading || files.length === 0
+								? 'opacity-50 cursor-not-allowed'
+								: ''
 						}`}
-						disabled={files.length === 0 || uploading}
+						disabled={uploading || files.length === 0}
 					>
 						{uploading ? 'Uploading...' : 'Upload Receipts'}
 					</button>

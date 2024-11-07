@@ -101,7 +101,7 @@ function App() {
 
 	const handleFileChange = (e) => {
 		const selectedFiles = Array.from(e.target.files);
-		let isDuplicate = false;
+		let duplicateFiles = [];
 
 		const uniqueFiles = selectedFiles.filter((file) => {
 			const isFileAlreadySelected = files.some(
@@ -109,14 +109,18 @@ function App() {
 					existingFile.name === file.name && existingFile.size === file.size
 			);
 			if (isFileAlreadySelected) {
-				isDuplicate = true;
+				duplicateFiles.push(file.name);
 				return false;
 			}
 			return true;
 		});
 
-		if (isDuplicate) {
-			setWarningMessage('Some files were not added as they are duplicates.');
+		if (duplicateFiles.length > 0) {
+			setWarningMessage(
+				`The following files are duplicates and were not added: ${duplicateFiles.join(
+					', '
+				)}`
+			);
 		} else {
 			setWarningMessage('');
 		}
@@ -146,8 +150,14 @@ function App() {
 
 	const handleUpload = async () => {
 		if (!files || files.length === 0) {
-			alert('Please select at least one file');
+			setWarningMessage(
+				'No files selected. Please add receipts before uploading.'
+			);
 			return;
+		}
+
+		if (uploading) {
+			return; // Prevent redundant uploads if the button is clicked multiple times.
 		}
 
 		setUploading(true);
@@ -240,6 +250,7 @@ function App() {
 				warningMessage={warningMessage}
 				fileInputRef={fileInputRef}
 				handleFileChange={handleFileChange}
+				allCompleted={allCompleted}
 			/>
 
 			{/* Receipt Item Hierarchy */}

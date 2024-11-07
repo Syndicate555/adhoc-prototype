@@ -17,9 +17,7 @@ const InsightsSummary = ({ insights }) => {
 	}, [insights]);
 
 	if (!insights) {
-		return (
-			<p className="text-center text-gray-500 my-10">Loading insights...</p>
-		);
+		return null; // Do not render anything if there are no insights.
 	}
 
 	if (
