@@ -50,7 +50,7 @@ const HeroSection = ({
 						}`}
 						disabled={uploading || files.length === 0}
 					>
-						{uploading ? 'Uploading...' : 'Upload Receipts'}
+						{uploading ? 'Generate' : 'Generate Insights'}
 					</button>
 				</div>
 				{/* Warning Message */}

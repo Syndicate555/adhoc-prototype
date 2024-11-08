@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
+import { motion } from 'framer-motion';
 
 const InsightsSummary = ({ insights }) => {
 	const pieChartRef = useRef(null);
@@ -17,7 +18,7 @@ const InsightsSummary = ({ insights }) => {
 	}, [insights]);
 
 	if (!insights) {
-		return null; // Do not render anything if there are no insights.
+		return null;
 	}
 
 	if (
@@ -34,14 +35,29 @@ const InsightsSummary = ({ insights }) => {
 	}
 
 	return (
-		<section className="container mx-auto px-4 my-10">
-			<h3 className="text-3xl font-semibold text-gray-800 mb-6">
+		<motion.section
+			className="container mx-auto px-4 my-10"
+			initial={{ opacity: 0, y: 50 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 1 }}
+		>
+			<motion.h3
+				className="text-4xl font-bold text-gray-800 mb-10 text-center"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2, duration: 1 }}
+			>
 				Insights Summary
-			</h3>
+			</motion.h3>
 
 			{/* Spending by Category Pie Chart */}
-			<div className="chart-container my-8">
-				<h4 className="text-2xl font-bold text-gray-700 mb-4">
+			<motion.div
+				className="chart-container my-8 bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+				initial={{ opacity: 0, y: 50 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ delay: 0.3, duration: 1 }}
+			>
+				<h4 className="text-2xl font-bold text-gray-700 mb-4 text-center">
 					Spending by Category
 				</h4>
 				<Pie
@@ -89,11 +105,16 @@ const InsightsSummary = ({ insights }) => {
 					}}
 					style={{ maxHeight: '400px' }}
 				/>
-			</div>
+			</motion.div>
 
 			{/* Spending by Vendor Bar Chart */}
-			<div className="chart-container my-8">
-				<h4 className="text-2xl font-bold text-gray-700 mb-4">
+			<motion.div
+				className="chart-container my-8 bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+				initial={{ opacity: 0, y: 50 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.6, duration: 1 }}
+			>
+				<h4 className="text-2xl font-bold text-gray-700 mb-4 text-center">
 					Spending by Vendor
 				</h4>
 				<Bar
@@ -132,23 +153,28 @@ const InsightsSummary = ({ insights }) => {
 					}}
 					style={{ maxHeight: '400px' }}
 				/>
-			</div>
+			</motion.div>
 
 			{/* Top Line Items */}
-			<div className="chart-container my-8">
-				<h4 className="text-2xl font-bold text-gray-700 mb-4">
+			<motion.div
+				className="chart-container my-8 bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+				initial={{ opacity: 0, y: 50 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.9, duration: 1 }}
+			>
+				<h4 className="text-2xl font-bold text-gray-700 mb-4 text-center">
 					Top Line Items
 				</h4>
-				<ul className="list-disc list-inside">
+				<ul className="list-disc list-inside space-y-2 text-gray-700">
 					{insights.topLineItems.map((item, index) => (
-						<li key={index} className="text-lg text-gray-700">
+						<li key={index} className="text-lg">
 							{item.title} - Quantity: {item.quantity}, Total Spent: $
 							{item.totalSpent.toFixed(2)}
 						</li>
 					))}
 				</ul>
-			</div>
-		</section>
+			</motion.div>
+		</motion.section>
 	);
 };
 
