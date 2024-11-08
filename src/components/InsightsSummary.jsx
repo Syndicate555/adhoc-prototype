@@ -1,237 +1,215 @@
 import React, { useEffect, useRef } from 'react';
-import {
-	Chart,
-	PointElement,
-	LineElement,
-	BarElement,
-	CategoryScale,
-	LinearScale,
-	Title,
-	Tooltip,
-	Legend,
-	ArcElement,
-} from 'chart.js';
-import { Bar, Pie, Line } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import { motion } from 'framer-motion';
-
-Chart.register(
-	PointElement,
-	LineElement,
-	BarElement,
-	CategoryScale,
-	LinearScale,
-	Title,
-	Tooltip,
-	Legend,
-	ArcElement
-);
+import {
+	Card,
+	CardContent,
+	Grid,
+	Typography,
+	Box,
+	Button,
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 const InsightsSummary = ({ insights, handleReset }) => {
 	const pieChartRef = useRef(null);
 	const barChartRef = useRef(null);
 
+	// To avoid unhandled reference errors with charts, add null checks
 	useEffect(() => {
-		// Clean up on unmount
 		return () => {
-			if (pieChartRef.current && pieChartRef.current.chartInstance) {
+			if (pieChartRef.current?.chartInstance) {
 				pieChartRef.current.chartInstance.destroy();
 			}
-			if (barChartRef.current && barChartRef.current.chartInstance) {
+			if (barChartRef.current?.chartInstance) {
 				barChartRef.current.chartInstance.destroy();
 			}
 		};
 	}, [insights]);
 
 	if (!insights) {
-		return null;
+		return null; // Don't render anything if insights are not ready
 	}
-
-	if (
-		!insights.spendingByCategory ||
-		!insights.spendingByVendor ||
-		!insights.topLineItems ||
-		!Array.isArray(insights.spendingByCategory) ||
-		!Array.isArray(insights.spendingByVendor) ||
-		!Array.isArray(insights.topLineItems)
-	) {
-		return (
-			<p className="text-center text-red-500 my-10">Invalid insights data.</p>
-		);
-	}
-
-	// Dummy data for charts as a fallback in case insights data is not available
-	const dummySpendingByCategory = [
-		{ category: 'Groceries', totalSpent: 120.5 },
-		{ category: 'Transportation', totalSpent: 75.8 },
-		{ category: 'Entertainment', totalSpent: 50.3 },
-		{ category: 'Utilities', totalSpent: 80.6 },
-	];
-
-	const dummySpendingByVendor = [
-		{ vendor: 'Walmart', totalSpent: 150.0 },
-		{ vendor: 'Amazon', totalSpent: 95.4 },
-		{ vendor: 'Netflix', totalSpent: 20.0 },
-	];
-
-	// Pie Chart Data Configuration
-	const pieChartData = {
-		labels:
-			insights?.spendingByCategory?.map((category) => category.category) ||
-			dummySpendingByCategory.map((category) => category.category),
-		datasets: [
-			{
-				data:
-					insights?.spendingByCategory?.map(
-						(category) => category.totalSpent
-					) || dummySpendingByCategory.map((category) => category.totalSpent),
-				backgroundColor: [
-					'#FF6384',
-					'#36A2EB',
-					'#FFCE56',
-					'#4BC0C0',
-					'#9966FF',
-					'#FF9F40',
-				],
-				hoverBackgroundColor: [
-					'#FF6384',
-					'#36A2EB',
-					'#FFCE56',
-					'#4BC0C0',
-					'#9966FF',
-					'#FF9F40',
-				],
-			},
-		],
-	};
-
-	// Bar Chart Data Configuration
-	const barChartData = {
-		labels:
-			insights?.spendingByVendor?.map((vendor) => vendor.vendor) ||
-			dummySpendingByVendor.map((vendor) => vendor.vendor),
-		datasets: [
-			{
-				label: 'Total Spent',
-				data:
-					insights?.spendingByVendor?.map((vendor) => vendor.totalSpent) ||
-					dummySpendingByVendor.map((vendor) => vendor.totalSpent),
-				backgroundColor: '#3b82f6',
-			},
-		],
-	};
-
-	// Placeholder data for the rest of the dashboard
-	const totalSpent = 950.25;
-	const totalTransactions = 120;
-	const uniqueVendors = 15;
 
 	return (
 		<motion.section
-			className="container mx-auto px-6 my-10"
+			className="container mx-auto px-4 my-10"
 			initial={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 1 }}
 		>
-			{/* KPI Cards */}
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-				<div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-					<h4 className="text-xl font-bold text-gray-700">Total Spent</h4>
-					<p className="text-3xl font-semibold text-blue-600 mt-2">
-						${totalSpent.toFixed(2)}
-					</p>
-				</div>
-				<div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-					<h4 className="text-xl font-bold text-gray-700">
-						Total Transactions
-					</h4>
-					<p className="text-3xl font-semibold text-blue-600 mt-2">
-						{totalTransactions}
-					</p>
-				</div>
-				<div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-					<h4 className="text-xl font-bold text-gray-700">Unique Vendors</h4>
-					<p className="text-3xl font-semibold text-blue-600 mt-2">
-						{uniqueVendors}
-					</p>
-				</div>
-			</div>
+			{/* Dashboard Header */}
+			<Typography
+				variant="h3"
+				gutterBottom
+				sx={{ fontWeight: 'bold', textAlign: 'center' }}
+			>
+				Receipt Insights Dashboard
+			</Typography>
+			<Typography
+				variant="subtitle1"
+				sx={{ textAlign: 'center', marginBottom: 4 }}
+			>
+				Get an overview of your spending based on your uploaded receipts.
+			</Typography>
+
+			{/* Summary Cards */}
+			<Grid container spacing={4} justifyContent="center">
+				<Grid item xs={12} sm={4}>
+					<Card>
+						<CardContent>
+							<Typography variant="h6" color="textSecondary">
+								Total Spent
+							</Typography>
+							<Typography variant="h4" color="primary">
+								{insights.totalSpent
+									? `$${insights.totalSpent.toFixed(2)}`
+									: '$0.00'}
+							</Typography>
+						</CardContent>
+					</Card>
+				</Grid>
+				<Grid item xs={12} sm={4}>
+					<Card>
+						<CardContent>
+							<Typography variant="h6" color="textSecondary">
+								Total Transactions
+							</Typography>
+							<Typography variant="h4" color="primary">
+								{insights.totalTransactions || 0}
+							</Typography>
+						</CardContent>
+					</Card>
+				</Grid>
+				<Grid item xs={12} sm={4}>
+					<Card>
+						<CardContent>
+							<Typography variant="h6" color="textSecondary">
+								Unique Vendors
+							</Typography>
+							<Typography variant="h4" color="primary">
+								{insights.uniqueVendors || 0}
+							</Typography>
+						</CardContent>
+					</Card>
+				</Grid>
+			</Grid>
 
 			{/* Spending by Category Pie Chart */}
-			<motion.div
-				className="chart-container bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform my-8"
-				initial={{ opacity: 0, y: 50 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.3, duration: 1 }}
-			>
-				<h4 className="text-2xl font-bold text-gray-700 mb-4 text-center">
-					Spending by Category
-				</h4>
-				<Pie
-					ref={pieChartRef}
-					data={pieChartData}
-					options={{
-						responsive: true,
-						maintainAspectRatio: false,
-						plugins: {
-							legend: {
-								position: 'bottom',
-								labels: {
-									boxWidth: 20,
-									padding: 10,
+			<Card sx={{ my: 4 }}>
+				<CardContent>
+					<Typography variant="h5" gutterBottom>
+						Spending by Category
+					</Typography>
+					<Pie
+						ref={pieChartRef}
+						data={{
+							labels: insights.spendingByCategory.map(
+								(category) => category.category
+							),
+							datasets: [
+								{
+									data: insights.spendingByCategory.map(
+										(category) => category.totalSpent
+									),
+									backgroundColor: [
+										'#FF6384',
+										'#36A2EB',
+										'#FFCE56',
+										'#4BC0C0',
+										'#9966FF',
+										'#FF9F40',
+									],
+								},
+							],
+						}}
+						options={{
+							responsive: true,
+							maintainAspectRatio: false,
+							devicePixelRatio: window.devicePixelRatio || 1, // Set devicePixelRatio to improve quality
+							plugins: {
+								legend: {
+									position: 'bottom',
 								},
 							},
-						},
-					}}
-					style={{ maxHeight: '400px' }}
-				/>
-			</motion.div>
+						}}
+						style={{ maxHeight: '400px' }}
+					/>
+				</CardContent>
+			</Card>
 
 			{/* Spending by Vendor Bar Chart */}
-			<motion.div
-				className="chart-container my-8 bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
-				initial={{ opacity: 0, y: 50 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 0.6, duration: 1 }}
-			>
-				<h4 className="text-2xl font-bold text-gray-700 mb-4 text-center">
-					Spending by Vendor
-				</h4>
-				<Bar
-					ref={barChartRef}
-					data={barChartData}
-					options={{
-						responsive: true,
-						maintainAspectRatio: false,
-						plugins: {
-							legend: {
-								display: false,
-							},
-						},
-						scales: {
-							x: {
-								ticks: {
-									maxRotation: 90,
-									minRotation: 45,
+			<Card sx={{ my: 4 }}>
+				<CardContent>
+					<Typography variant="h5" gutterBottom>
+						Spending by Vendor
+					</Typography>
+					<Bar
+						ref={barChartRef}
+						data={{
+							labels: insights.spendingByVendor.map((vendor) => vendor.vendor),
+							datasets: [
+								{
+									label: 'Total Spent',
+									data: insights.spendingByVendor.map(
+										(vendor) => vendor.totalSpent
+									),
+									backgroundColor: '#3b82f6',
 								},
+							],
+						}}
+						options={{
+							responsive: true,
+							maintainAspectRatio: false,
+							devicePixelRatio: window.devicePixelRatio || 1, // Set devicePixelRatio to improve quality
+							plugins: {
+								legend: { display: false },
 							},
-							y: {
-								beginAtZero: true,
+							scales: {
+								x: { ticks: { maxRotation: 90, minRotation: 45 } },
+								y: { beginAtZero: true },
 							},
-						},
-					}}
-					style={{ maxHeight: '400px' }}
-				/>
-			</motion.div>
-			<br />
+						}}
+						style={{ maxHeight: '400px' }}
+					/>
+				</CardContent>
+			</Card>
+
+			{/* Top Line Items Data Grid */}
+			<Card sx={{ my: 4 }}>
+				<CardContent>
+					<Typography variant="h5" gutterBottom>
+						Top Purchases
+					</Typography>
+					<DataGrid
+						rows={insights.topLineItems.map((item, index) => ({
+							id: index,
+							title: item.title,
+							quantity: item.quantity,
+							totalSpent: `$${item.totalSpent.toFixed(2)}`,
+						}))}
+						columns={[
+							{ field: 'title', headerName: 'Item', flex: 1 },
+							{ field: 'quantity', headerName: 'Quantity', flex: 1 },
+							{ field: 'totalSpent', headerName: 'Total Spent', flex: 1 },
+						]}
+						autoHeight
+						pageSize={5}
+					/>
+				</CardContent>
+			</Card>
+
 			{/* Try it again Button */}
-			<div className="flex justify-center mt-10">
-				<button
+			<Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+				<Button
 					onClick={handleReset}
-					className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105"
+					variant="contained"
+					color="primary"
+					size="large"
 				>
 					Try it again with another batch of receipts
-				</button>
-			</div>
+				</Button>
+			</Box>
 		</motion.section>
 	);
 };
