@@ -29,10 +29,15 @@ function App() {
 	const [allReceiptsProcessed, setAllReceiptsProcessed] = useState(false);
 	const [loadingInsights, setLoadingInsights] = useState(false);
 	const fileInputRef = useRef(null);
+	const [fakeProgress, setFakeProgress] = useState(0);
+	const [isGeneratingInsights, setIsGeneratingInsights] = useState(false);
 	const globalProgressRef = useRef(null);
+	const [isUploading, setIsUploading] = useState(false);
+	const [isLoadingInsights, setIsLoadingInsights] = useState(false);
 	const [insightsReadyNotification, setInsightsReadyNotification] =
 		useState(false);
 	const insightsRef = useRef(null);
+	const socketRef = useRef(null);
 
 	const animateProgress = useCallback(
 		(updatedReceipts) => {
@@ -40,9 +45,12 @@ function App() {
 				return acc + getProgressPercentage(receipt.status);
 			}, 0);
 
-			const overallProgress = receipts.length
+			const overallRealProgress = receipts.length
 				? (totalProgress / (receipts.length * 100)) * 100
 				: 0;
+
+			// Use the greater value between fakeProgress and real progress
+			const overallProgress = Math.max(fakeProgress, overallRealProgress);
 
 			if (globalProgressRef.current) {
 				gsap.to(globalProgressRef.current, {
@@ -56,9 +64,33 @@ function App() {
 				globalProgressRef.current.textContent =
 					overallProgress > 0 ? `${Math.round(overallProgress)}%` : '';
 			}
+
+			// Stop fake progress and hide the spinner once the real progress exceeds it
+			if (overallRealProgress > 0) {
+				setIsLoadingInsights(false); // Ensure the spinner is removed after real progress starts
+			}
+
+			if (overallRealProgress >= fakeProgress) {
+				setIsGeneratingInsights(false);
+			}
 		},
-		[receipts.length]
+		[receipts.length, fakeProgress]
 	);
+
+	const getRandomNumber = (min, max) => {
+		return Math.random() * (max - min) + min;
+	};
+	useEffect(() => {
+		let timer;
+		if (isGeneratingInsights) {
+			// Faster initial progress indication
+			const randomNumber = getRandomNumber(35, 60);
+			timer = setInterval(() => {
+				setFakeProgress((prev) => Math.min(prev + 10, randomNumber)); // Increment up to 50%
+			}, 500); // Increase fake progress by 10% every 300ms until it reaches 80%
+		}
+		return () => clearInterval(timer);
+	}, [isGeneratingInsights]);
 
 	useEffect(() => {
 		const socket = io('https://www.receipt-ms.online', {
@@ -109,6 +141,25 @@ function App() {
 		};
 	}, [sessionId, animateProgress]);
 
+	const handleReset = () => {
+		setReceipts([]);
+		setFiles([]);
+		setUploading(false);
+		setAllCompleted(false);
+		setWarningMessage('');
+		setUploadFinalized(false);
+		setInsights(null);
+		setInsightsGenerated(false);
+		setAllReceiptsProcessed(false);
+		setLoadingInsights(false);
+		setFakeProgress(0);
+		setIsGeneratingInsights(false);
+		setIsUploading(false);
+		setIsLoadingInsights(false);
+		setInsightsReadyNotification(false);
+		globalProgressRef.current = null; // Optionally reset the progress bar ref
+	};
+
 	const handleFileChange = (e) => {
 		const selectedFiles = Array.from(e.target.files);
 		let duplicateFiles = [];
@@ -155,7 +206,7 @@ function App() {
 			const job_id = receipts[0].job_id; // Assuming all receipts have the same job_id
 			const insightsData = await fetchInsights(job_id);
 			setInsights(insightsData);
-			setInsightsGenerated(true); // Prevent further clicking
+			setInsightsGenerated(true);
 			setInsightsReadyNotification(true); // Show notification once insights are ready
 		} catch (error) {
 			console.error('Failed to fetch insights:', error);
@@ -177,21 +228,27 @@ function App() {
 		}
 
 		setUploading(true);
+		setIsUploading(true); // Update to handle button visibility
+		setIsLoadingInsights(true); // Show spinner when generating insights
 
 		try {
 			const createdReceipts = await uploadReceipts(files, sessionId);
-			const uploadedReceipts = createdReceipts.map((receipt, index) => ({
-				receiptId: receipt._id,
-				file: files[index],
-				status: 'UPLOADED',
-				job_id: receipt.job_id,
-			}));
+			if (createdReceipts) {
+				const uploadedReceipts = createdReceipts.map((receipt, index) => ({
+					receiptId: receipt._id,
+					file: files[index],
+					status: 'UPLOADED',
+					job_id: receipt.job_id,
+				}));
 
-			setReceipts(uploadedReceipts);
-			setUploadFinalized(true);
-			animateProgress(uploadedReceipts);
+				setReceipts(uploadedReceipts);
+				setUploadFinalized(true);
+				setFakeProgress(30); // Start the progress bar immediately to indicate progress
+				setIsGeneratingInsights(true); // Start "fake" progress generation
+			}
 		} catch (error) {
 			console.error('Upload failed:', error);
+			setIsLoadingInsights(false); // Ensure the spinner is removed in case of an error
 		} finally {
 			setUploading(false);
 		}
@@ -215,17 +272,15 @@ function App() {
 		);
 		setAllCompleted(allDone);
 		if (allDone) {
-			setAllReceiptsProcessed(true); // Trigger the notification when all receipts are processed.
+			setAllReceiptsProcessed(true);
+			setFakeProgress(100); // Set fake progress to 100% to reflect real completion
 		}
 	};
 
 	const scrollToInsights = async () => {
 		// Close the modal by setting `allReceiptsProcessed` to `false`
 		setAllReceiptsProcessed(false);
-
-		// Generate insights before scrolling to them
 		await handleGenerateInsights();
-
 		// Scroll to the insights section using the ScrollToPlugin
 		if (insightsRef.current) {
 			gsap.to(window, {
@@ -290,10 +345,31 @@ function App() {
 				fileInputRef={fileInputRef}
 				handleFileChange={handleFileChange}
 				allCompleted={allCompleted}
+				isUploading={isUploading} // New prop
+				isLoadingInsights={isLoadingInsights} // New prop
 			/>
 
 			{/* Receipt Item Hierarchy */}
 			{/* <ReceiptHierarchyTree data={treeData} /> */}
+			{/* {isLoadingInsights && (
+				<div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+					<motion.div
+						className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.5 }}
+					>
+						<div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500 mb-6"></div>
+						<h2 className="text-2xl font-bold text-gray-800">
+							Generating Insights...
+						</h2>
+						<p className="text-gray-600 mt-4">
+							This may take a moment, please wait.
+						</p>
+					</motion.div>
+				</div>
+			)} */}
 
 			{/* Global Progress Bar */}
 			<ProgressBar globalProgressRef={globalProgressRef} receipts={receipts} />
@@ -364,7 +440,7 @@ function App() {
 
 			{/* Insights Summary Section */}
 			<div ref={insightsRef}>
-				<InsightsSummary insights={insights} />
+				<InsightsSummary insights={insights} handleReset={handleReset} />
 			</div>
 
 			{/* Footer */}
