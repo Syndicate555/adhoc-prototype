@@ -1,18 +1,43 @@
 import React, { useEffect, useRef } from 'react';
-import { Bar, Pie } from 'react-chartjs-2';
+import {
+	Chart,
+	PointElement,
+	LineElement,
+	BarElement,
+	CategoryScale,
+	LinearScale,
+	Title,
+	Tooltip,
+	Legend,
+	ArcElement,
+} from 'chart.js';
+import { Bar, Pie, Line } from 'react-chartjs-2';
 import { motion } from 'framer-motion';
+
+Chart.register(
+	PointElement,
+	LineElement,
+	BarElement,
+	CategoryScale,
+	LinearScale,
+	Title,
+	Tooltip,
+	Legend,
+	ArcElement
+);
 
 const InsightsSummary = ({ insights, handleReset }) => {
 	const pieChartRef = useRef(null);
 	const barChartRef = useRef(null);
 
 	useEffect(() => {
+		// Clean up on unmount
 		return () => {
-			if (pieChartRef.current) {
-				pieChartRef.current.destroy();
+			if (pieChartRef.current && pieChartRef.current.chartInstance) {
+				pieChartRef.current.chartInstance.destroy();
 			}
-			if (barChartRef.current) {
-				barChartRef.current.destroy();
+			if (barChartRef.current && barChartRef.current.chartInstance) {
+				barChartRef.current.chartInstance.destroy();
 			}
 		};
 	}, [insights]);
@@ -34,25 +59,106 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		);
 	}
 
+	// Dummy data for charts as a fallback in case insights data is not available
+	const dummySpendingByCategory = [
+		{ category: 'Groceries', totalSpent: 120.5 },
+		{ category: 'Transportation', totalSpent: 75.8 },
+		{ category: 'Entertainment', totalSpent: 50.3 },
+		{ category: 'Utilities', totalSpent: 80.6 },
+	];
+
+	const dummySpendingByVendor = [
+		{ vendor: 'Walmart', totalSpent: 150.0 },
+		{ vendor: 'Amazon', totalSpent: 95.4 },
+		{ vendor: 'Netflix', totalSpent: 20.0 },
+	];
+
+	// Pie Chart Data Configuration
+	const pieChartData = {
+		labels:
+			insights?.spendingByCategory?.map((category) => category.category) ||
+			dummySpendingByCategory.map((category) => category.category),
+		datasets: [
+			{
+				data:
+					insights?.spendingByCategory?.map(
+						(category) => category.totalSpent
+					) || dummySpendingByCategory.map((category) => category.totalSpent),
+				backgroundColor: [
+					'#FF6384',
+					'#36A2EB',
+					'#FFCE56',
+					'#4BC0C0',
+					'#9966FF',
+					'#FF9F40',
+				],
+				hoverBackgroundColor: [
+					'#FF6384',
+					'#36A2EB',
+					'#FFCE56',
+					'#4BC0C0',
+					'#9966FF',
+					'#FF9F40',
+				],
+			},
+		],
+	};
+
+	// Bar Chart Data Configuration
+	const barChartData = {
+		labels:
+			insights?.spendingByVendor?.map((vendor) => vendor.vendor) ||
+			dummySpendingByVendor.map((vendor) => vendor.vendor),
+		datasets: [
+			{
+				label: 'Total Spent',
+				data:
+					insights?.spendingByVendor?.map((vendor) => vendor.totalSpent) ||
+					dummySpendingByVendor.map((vendor) => vendor.totalSpent),
+				backgroundColor: '#3b82f6',
+			},
+		],
+	};
+
+	// Placeholder data for the rest of the dashboard
+	const totalSpent = 950.25;
+	const totalTransactions = 120;
+	const uniqueVendors = 15;
+
 	return (
 		<motion.section
-			className="container mx-auto px-4 my-10"
+			className="container mx-auto px-6 my-10"
 			initial={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 1 }}
 		>
-			<motion.h3
-				className="text-4xl font-bold text-gray-800 mb-10 text-center"
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 0.2, duration: 1 }}
-			>
-				Insights Summary
-			</motion.h3>
+			{/* KPI Cards */}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+				<div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+					<h4 className="text-xl font-bold text-gray-700">Total Spent</h4>
+					<p className="text-3xl font-semibold text-blue-600 mt-2">
+						${totalSpent.toFixed(2)}
+					</p>
+				</div>
+				<div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+					<h4 className="text-xl font-bold text-gray-700">
+						Total Transactions
+					</h4>
+					<p className="text-3xl font-semibold text-blue-600 mt-2">
+						{totalTransactions}
+					</p>
+				</div>
+				<div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+					<h4 className="text-xl font-bold text-gray-700">Unique Vendors</h4>
+					<p className="text-3xl font-semibold text-blue-600 mt-2">
+						{uniqueVendors}
+					</p>
+				</div>
+			</div>
 
 			{/* Spending by Category Pie Chart */}
 			<motion.div
-				className="chart-container my-8 bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+				className="chart-container bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform my-8"
 				initial={{ opacity: 0, y: 50 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ delay: 0.3, duration: 1 }}
@@ -62,34 +168,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 				</h4>
 				<Pie
 					ref={pieChartRef}
-					data={{
-						labels: insights.spendingByCategory.map(
-							(category) => category.category
-						),
-						datasets: [
-							{
-								data: insights.spendingByCategory.map(
-									(category) => category.totalSpent
-								),
-								backgroundColor: [
-									'#FF6384',
-									'#36A2EB',
-									'#FFCE56',
-									'#4BC0C0',
-									'#9966FF',
-									'#FF9F40',
-								],
-								hoverBackgroundColor: [
-									'#FF6384',
-									'#36A2EB',
-									'#FFCE56',
-									'#4BC0C0',
-									'#9966FF',
-									'#FF9F40',
-								],
-							},
-						],
-					}}
+					data={pieChartData}
 					options={{
 						responsive: true,
 						maintainAspectRatio: false,
@@ -119,18 +198,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 				</h4>
 				<Bar
 					ref={barChartRef}
-					data={{
-						labels: insights.spendingByVendor.map((vendor) => vendor.vendor),
-						datasets: [
-							{
-								label: 'Total Spent',
-								data: insights.spendingByVendor.map(
-									(vendor) => vendor.totalSpent
-								),
-								backgroundColor: '#3b82f6',
-							},
-						],
-					}}
+					data={barChartData}
 					options={{
 						responsive: true,
 						maintainAspectRatio: false,
@@ -154,59 +222,12 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					style={{ maxHeight: '400px' }}
 				/>
 			</motion.div>
-
-			{/* Top Line Items - Structured Table */}
-			<motion.div
-				className="chart-container my-8 bg-white p-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
-				initial={{ opacity: 0, y: 50 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 0.9, duration: 1 }}
-			>
-				<h4 className="text-2xl font-bold text-gray-700 mb-4 text-center">
-					Top Purchases
-				</h4>
-				<div className="overflow-x-auto">
-					<table className="min-w-full bg-white border border-gray-300 rounded-md">
-						<thead className="bg-gray-200">
-							<tr>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-									Line Item
-								</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-									Quantity
-								</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-									Total Spent ($)
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{insights.topLineItems.map((item, index) => (
-								<tr
-									key={index}
-									className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
-								>
-									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-										{item.title}
-									</td>
-									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-										{item.quantity}
-									</td>
-									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-										${item.totalSpent.toFixed(2)}
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</motion.div>
 			<br />
-			{/* Try it again Button - Repositioned and Improved Styling */}
-			<div className="flex justify-center mt-12">
+			{/* Try it again Button */}
+			<div className="flex justify-center mt-10">
 				<button
 					onClick={handleReset}
-					className="bg-blue-600 text-white px-10 py-4 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300"
+					className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105"
 				>
 					Try it again with another batch of receipts
 				</button>
