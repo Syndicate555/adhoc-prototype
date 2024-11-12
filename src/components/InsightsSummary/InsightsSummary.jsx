@@ -10,6 +10,12 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import StoreIcon from '@mui/icons-material/Store';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import DiscountIcon from '@mui/icons-material/Discount';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SummaryCard from './components/SummayCard';
 import ParentCategoryDropdown from './components/ParentCategoryDropdown';
 import SpendingByPieChart from './components/SpendingByPieChart';
@@ -95,22 +101,31 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							? `$${insights.totalSpending.toFixed(2)}`
 							: '$0.00'
 					}
+					icon={<MonetizationOnIcon color="primary" fontSize="large" />}
 				/>
 				<SummaryCard
 					title="Total Transactions"
 					value={insights.totalReceipts || 0}
+					icon={<ReceiptIcon color="primary" fontSize="large" />}
 				/>
 				<SummaryCard
 					title="Unique Vendors"
-					value={insights.uniqueVendors || 0}
+					value={insights.totalUniqueVendors || 0}
+					icon={<StoreIcon color="primary" fontSize="large" />}
 				/>
 				<SummaryCard
 					title="Total Products Purchased"
-					value={insights.uniqueVendors || 0}
+					value={insights.totalLineItems || 0}
+					icon={<ShoppingCartIcon color="primary" fontSize="large" />}
 				/>
 				<SummaryCard
 					title="Total Discount Collected"
-					value={insights.uniqueVendors || 0}
+					value={
+						insights.totalDiscounts
+							? `$${insights.totalDiscounts.toFixed(2)}`
+							: '$0.00'
+					}
+					icon={<DiscountIcon color="primary" fontSize="large" />}
 				/>
 				<SummaryCard
 					title="Average Spent per Transaction"
@@ -119,6 +134,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							? `$${insights.averageSpendingPerTransaction.toFixed(2)}`
 							: '$0.00'
 					}
+					icon={<AccountBalanceWalletIcon color="primary" fontSize="large" />}
 				/>
 			</Grid>
 
