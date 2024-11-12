@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import axios from 'axios';
+import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import gsap from 'gsap';
 import ReceiptHierarchyTree from './components/ReceiptTree';

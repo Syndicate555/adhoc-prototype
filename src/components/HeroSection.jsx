@@ -24,11 +24,10 @@ const HeroSection = ({
 				</p>
 
 				<div className="flex justify-center space-x-6">
-					{/* Show Spinner instead of buttons when loading */}
 					{isLoadingInsights ? (
 						<div className="flex flex-col items-center">
-							<div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500 mb-4"></div>
-							<h2 className="text-2xl font-bold text-gray-800">
+							<img src="/spinner.svg" alt="Loading" className="logo-spinner" />
+							<h2 className="text-2xl font-bold text-gray-800 mt-4">
 								Generating Insights...
 							</h2>
 							<p className="text-gray-600 mt-2">
