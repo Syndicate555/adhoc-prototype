@@ -8,9 +8,9 @@
 }
 
 .logo-spinner {
-	width: 80px; /* Set an appropriate size for the logo */
-	height: 80px; /* Set an appropriate size for the logo */
-	animation: spinLogoY 0.5s linear infinite; /* Apply faster spinning animation along Y-axis */
-	display: inline-block; /* Ensure the logo is displayed properly */
-	margin-bottom: 1rem; /* Add some spacing below the logo */
+	width: 80px;
+	height: 80px;
+	animation: spinLogoY 0.5s linear infinite;
+	display: inline-block;
+	margin-bottom: 1rem;
 }
