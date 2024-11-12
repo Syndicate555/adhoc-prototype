@@ -7,11 +7,11 @@ import './chartSetup';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 Modal.setAppElement('#root');
-// Create a custom theme
+
 const theme = createTheme({
 	palette: {
 		primary: {
-			main: '#1a73e8', // Customize as per your brand color
+			main: '#1a73e8',
 		},
 		secondary: {
 			main: '#ff6d00',
