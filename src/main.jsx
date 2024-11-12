@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import Modal from 'react-modal';
 import App from './App.jsx';
 import './index.css';
 import './chartSetup';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+Modal.setAppElement('#root');
 // Create a custom theme
 const theme = createTheme({
 	palette: {

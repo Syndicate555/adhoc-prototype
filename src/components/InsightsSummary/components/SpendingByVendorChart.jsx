@@ -6,7 +6,7 @@ const SpendingByVendorChart = ({ spendingByVendor, sx }) => {
 	const barChartRef = useRef(null);
 
 	// Dynamic height adjustment based on the number of vendors
-	const chartHeight = spendingByVendor.length > 10 ? 600 : 600;
+	const chartHeight = spendingByVendor.length > 10 ? 800 : 600;
 
 	return (
 		<Card sx={{ height: '100%' }}>
