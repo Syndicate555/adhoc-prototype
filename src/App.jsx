@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
+import Navbar from './components/Navbar';
+import HeroSectionProd from './components/HeroSectionProd';
+import Footer from './components/Footer';
 import axios from 'axios';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -294,103 +297,110 @@ function App() {
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
-			<Header />
-
-			<HeroSection
-				handleSelectReceiptsClick={handleSelectReceiptsClick}
-				handleUpload={handleUpload}
-				uploading={uploading}
-				files={files}
-				warningMessage={warningMessage}
-				fileInputRef={fileInputRef}
-				handleFileChange={handleFileChange}
-				allCompleted={allCompleted}
-				isUploading={isUploading} // New prop
-				isLoadingInsights={isLoadingInsights} // New prop
-			/>
-
-			{/* Receipt Item Hierarchy */}
-			{/* <ReceiptHierarchyTree data={treeData} /> */}
-
-			<ProgressBar globalProgressRef={globalProgressRef} receipts={receipts} />
-
-			{/* Receipt Upload & Tracking Section */}
-			{receipts.length > 0 && (
-				<section className="container mx-auto px-4 my-10">
-					<h3 className="text-3xl font-semibold text-gray-800 mb-6">
-						You are uploading {receipts.length} receipt
-						{receipts.length > 1 ? 's' : ''}
-					</h3>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-						{receipts.map((receipt, index) => (
-							<ReceiptCard
-								key={index}
-								receipt={receipt}
-								index={index}
-								handleRemoveReceipt={handleRemoveReceipt}
-								uploadFinalized={uploadFinalized}
-								getProgressPercentage={getProgressPercentage}
-							/>
-						))}
-					</div>
-				</section>
-			)}
-
-			{/* Notification when all receipts are processed */}
-			{allReceiptsProcessed && (
-				<motion.div
-					className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.5 }}
-				>
-					<div className="bg-white p-8 rounded-lg shadow-lg text-center">
-						<h2 className="text-3xl font-bold text-green-600 mb-4">
-							🎉 Your insights are ready to be viewed!
-						</h2>
-						<p className="text-lg text-gray-700 mb-6">
-							Click the button below to view your insights.
-						</p>
-						<button
-							className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
-							onClick={scrollToInsights}
-						>
-							View My Insights
-						</button>
-					</div>
-				</motion.div>
-			)}
-
-			{/* Insights Summary Section */}
-			<div ref={insightsRef}>
-				<InsightsSummary insights={insights} handleReset={handleReset} />
+		<>
+			<Navbar />
+			<div className="max-w-7xl mx-auto pt-20 px-6">
+				<HeroSectionProd />
+				<Footer />
 			</div>
+		</>
+		// <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
+		// 	<Header />
 
-			{/* Footer */}
-			<footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-10 mt-16">
-				<div className="container mx-auto px-4">
-					<div className="flex flex-col md:flex-row justify-between items-center">
-						<div className="mb-6 md:mb-0">
-							<h5 className="text-2xl font-bold">Platen</h5>
-							<p>© {new Date().getFullYear()} Platen. All rights reserved.</p>
-						</div>
-						<div className="flex space-x-6 text-lg">
-							<a href="#privacy" className="hover:underline">
-								Privacy Policy
-							</a>
-							<a href="#terms" className="hover:underline">
-								Terms of Service
-							</a>
-							<a href="#contact" className="hover:underline">
-								Contact Us
-							</a>
-						</div>
-					</div>
-				</div>
-			</footer>
-		</div>
+		// 	<HeroSection
+		// 		handleSelectReceiptsClick={handleSelectReceiptsClick}
+		// 		handleUpload={handleUpload}
+		// 		uploading={uploading}
+		// 		files={files}
+		// 		warningMessage={warningMessage}
+		// 		fileInputRef={fileInputRef}
+		// 		handleFileChange={handleFileChange}
+		// 		allCompleted={allCompleted}
+		// 		isUploading={isUploading} // New prop
+		// 		isLoadingInsights={isLoadingInsights} // New prop
+		// 	/>
+
+		// 	{/* Receipt Item Hierarchy */}
+		// 	{/* <ReceiptHierarchyTree data={treeData} /> */}
+
+		// 	<ProgressBar globalProgressRef={globalProgressRef} receipts={receipts} />
+
+		// 	{/* Receipt Upload & Tracking Section */}
+		// 	{receipts.length > 0 && (
+		// 		<section className="container mx-auto px-4 my-10">
+		// 			<h3 className="text-3xl font-semibold text-gray-800 mb-6">
+		// 				You are uploading {receipts.length} receipt
+		// 				{receipts.length > 1 ? 's' : ''}
+		// 			</h3>
+		// 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+		// 				{receipts.map((receipt, index) => (
+		// 					<ReceiptCard
+		// 						key={index}
+		// 						receipt={receipt}
+		// 						index={index}
+		// 						handleRemoveReceipt={handleRemoveReceipt}
+		// 						uploadFinalized={uploadFinalized}
+		// 						getProgressPercentage={getProgressPercentage}
+		// 					/>
+		// 				))}
+		// 			</div>
+		// 		</section>
+		// 	)}
+
+		// 	{/* Notification when all receipts are processed */}
+		// 	{allReceiptsProcessed && (
+		// 		<motion.div
+		// 			className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+		// 			initial={{ opacity: 0 }}
+		// 			animate={{ opacity: 1 }}
+		// 			exit={{ opacity: 0 }}
+		// 			transition={{ duration: 0.5 }}
+		// 		>
+		// 			<div className="bg-white p-8 rounded-lg shadow-lg text-center">
+		// 				<h2 className="text-3xl font-bold text-green-600 mb-4">
+		// 					🎉 Your insights are ready to be viewed!
+		// 				</h2>
+		// 				<p className="text-lg text-gray-700 mb-6">
+		// 					Click the button below to view your insights.
+		// 				</p>
+		// 				<button
+		// 					className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
+		// 					onClick={scrollToInsights}
+		// 				>
+		// 					View My Insights
+		// 				</button>
+		// 			</div>
+		// 		</motion.div>
+		// 	)}
+
+		// 	{/* Insights Summary Section */}
+		// 	<div ref={insightsRef}>
+		// 		<InsightsSummary insights={insights} handleReset={handleReset} />
+		// 	</div>
+
+		// 	{/* Footer */}
+		// 	<footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-10 mt-16">
+		// 		<div className="container mx-auto px-4">
+		// 			<div className="flex flex-col md:flex-row justify-between items-center">
+		// 				<div className="mb-6 md:mb-0">
+		// 					<h5 className="text-2xl font-bold">Platen</h5>
+		// 					<p>© {new Date().getFullYear()} Platen. All rights reserved.</p>
+		// 				</div>
+		// 				<div className="flex space-x-6 text-lg">
+		// 					<a href="#privacy" className="hover:underline">
+		// 						Privacy Policy
+		// 					</a>
+		// 					<a href="#terms" className="hover:underline">
+		// 						Terms of Service
+		// 					</a>
+		// 					<a href="#contact" className="hover:underline">
+		// 						Contact Us
+		// 					</a>
+		// 				</div>
+		// 			</div>
+		// 		</div>
+		// 	</footer>
+		// </div>
 	);
 }
 
