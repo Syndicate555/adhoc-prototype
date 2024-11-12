@@ -8,11 +8,11 @@ import HeroSection from './components/HeroSection';
 import Header from './components/Header';
 import ProgressBar from './components/ProgressBar';
 import ReceiptCard from './components/ReceiptCard';
-import InsightsSummary from './components/InsightsSummary';
+import InsightsSummary from './components/InsightsSummary/InsightsSummary';
 import { uploadReceipts, fetchInsights } from './services/api';
 import { getProgressPercentage } from './utilities/utils';
 import { motion } from 'framer-motion';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'; // Import ScrollToPlugin
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -86,8 +86,8 @@ function App() {
 			// Faster initial progress indication
 			const randomNumber = getRandomNumber(35, 60);
 			timer = setInterval(() => {
-				setFakeProgress((prev) => Math.min(prev + 10, randomNumber)); // Increment up to 50%
-			}, 500); // Increase fake progress by 10% every 300ms until it reaches 80%
+				setFakeProgress((prev) => Math.min(prev + 10, randomNumber));
+			}, 500); // Increase fake progress by 10% every 300ms until it reaches the random number
 		}
 		return () => clearInterval(timer);
 	}, [isGeneratingInsights]);
@@ -95,7 +95,7 @@ function App() {
 	useEffect(() => {
 		const socket = io('https://www.receipt-ms.online', {
 			transports: ['websocket', 'polling'],
-			reconnection: true, // This is enough for automatic reconnection
+			reconnection: true,
 			reconnectionAttempts: 5,
 			reconnectionDelay: 5000,
 		});
@@ -157,7 +157,7 @@ function App() {
 		setIsUploading(false);
 		setIsLoadingInsights(false);
 		setInsightsReadyNotification(false);
-		globalProgressRef.current = null; // Optionally reset the progress bar ref
+		globalProgressRef.current = null;
 	};
 
 	const handleFileChange = (e) => {
@@ -200,18 +200,18 @@ function App() {
 	const handleGenerateInsights = async () => {
 		if (!receipts.length || insightsGenerated || loadingInsights) return;
 
-		setLoadingInsights(true); // Start loading
+		setLoadingInsights(true);
 
 		try {
-			const job_id = receipts[0].job_id; // Assuming all receipts have the same job_id
+			const job_id = receipts[0].job_id;
 			const insightsData = await fetchInsights(job_id);
 			setInsights(insightsData);
 			setInsightsGenerated(true);
-			setInsightsReadyNotification(true); // Show notification once insights are ready
+			setInsightsReadyNotification(true);
 		} catch (error) {
 			console.error('Failed to fetch insights:', error);
 		} finally {
-			setLoadingInsights(false); // Stop loading
+			setLoadingInsights(false);
 		}
 	};
 
@@ -224,13 +224,12 @@ function App() {
 		}
 
 		if (uploading) {
-			return; // Prevent redundant uploads if the button is clicked multiple times.
+			return;
 		}
 
 		setUploading(true);
-		setIsUploading(true); // Update to handle button visibility
-		setIsLoadingInsights(true); // Show spinner when generating insights
-
+		setIsUploading(true);
+		setIsLoadingInsights(true);
 		try {
 			const createdReceipts = await uploadReceipts(files, sessionId);
 			if (createdReceipts) {
@@ -243,12 +242,12 @@ function App() {
 
 				setReceipts(uploadedReceipts);
 				setUploadFinalized(true);
-				setFakeProgress(30); // Start the progress bar immediately to indicate progress
-				setIsGeneratingInsights(true); // Start "fake" progress generation
+				setFakeProgress(30);
+				setIsGeneratingInsights(true);
 			}
 		} catch (error) {
 			console.error('Upload failed:', error);
-			setIsLoadingInsights(false); // Ensure the spinner is removed in case of an error
+			setIsLoadingInsights(false);
 		} finally {
 			setUploading(false);
 		}
@@ -273,15 +272,14 @@ function App() {
 		setAllCompleted(allDone);
 		if (allDone) {
 			setAllReceiptsProcessed(true);
-			setFakeProgress(100); // Set fake progress to 100% to reflect real completion
+			setFakeProgress(100);
 		}
 	};
 
 	const scrollToInsights = async () => {
-		// Close the modal by setting `allReceiptsProcessed` to `false`
 		setAllReceiptsProcessed(false);
 		await handleGenerateInsights();
-		// Scroll to the insights section using the ScrollToPlugin
+
 		if (insightsRef.current) {
 			gsap.to(window, {
 				scrollTo: {
@@ -292,44 +290,6 @@ function App() {
 				ease: 'power3.out',
 			});
 		}
-	};
-
-	const treeData = {
-		name: 'Safeway',
-		children: [
-			{
-				name: 'Food & Beverages',
-				children: [
-					{
-						name: 'Sauces & Condiments',
-						children: [
-							{ name: 'Chunky Salsa' },
-							{ name: 'Herdez Taqueria Sauce' },
-						],
-					},
-					{
-						name: 'Canned Goods',
-						children: [{ name: 'Nacho Sliced Jalapenos' }],
-					},
-					{ name: 'Non-Alcoholic Drinks', children: [{ name: 'Coke Zero' }] },
-					{ name: 'Snacks & Sweets', children: [{ name: 'Soft Snql Tak' }] },
-					{ name: 'Cheese', children: [{ name: 'Daisy Sour Cream' }] },
-					{
-						name: 'Fresh Vegetables',
-						children: [{ name: 'Italian Red Onions' }],
-					},
-				],
-			},
-			{
-				name: 'Miscellaneous & Other',
-				children: [
-					{
-						name: 'Reusable Bag Fees',
-						children: [{ name: 'Recycle Bag Charge' }],
-					},
-				],
-			},
-		],
 	};
 
 	return (
@@ -351,27 +311,7 @@ function App() {
 
 			{/* Receipt Item Hierarchy */}
 			{/* <ReceiptHierarchyTree data={treeData} /> */}
-			{/* {isLoadingInsights && (
-				<div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-					<motion.div
-						className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.5 }}
-					>
-						<div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500 mb-6"></div>
-						<h2 className="text-2xl font-bold text-gray-800">
-							Generating Insights...
-						</h2>
-						<p className="text-gray-600 mt-4">
-							This may take a moment, please wait.
-						</p>
-					</motion.div>
-				</div>
-			)} */}
 
-			{/* Global Progress Bar */}
 			<ProgressBar globalProgressRef={globalProgressRef} receipts={receipts} />
 
 			{/* Receipt Upload & Tracking Section */}
@@ -396,22 +336,6 @@ function App() {
 				</section>
 			)}
 
-			{/* Generate Insights Button */}
-			{/* {receipts.length > 0 && (
-				<div className="flex justify-center mt-10">
-					<button
-						onClick={handleGenerateInsights}
-						className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
-							!allCompleted || insightsGenerated
-								? 'opacity-50 cursor-not-allowed'
-								: ''
-						}`}
-						disabled={!allCompleted || insightsGenerated}
-					>
-						Generate Insights
-					</button>
-				</div>
-			)} */}
 			{/* Notification when all receipts are processed */}
 			{allReceiptsProcessed && (
 				<motion.div
