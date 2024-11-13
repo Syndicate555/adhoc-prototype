@@ -13,8 +13,8 @@
 	);
 	background-size: 200%;
 	background-position: -100%;
-	line-height: 1.2; /* Adjusts line height for better alignment */
-	height: 1.2em; /* Sets a fixed height to avoid overflow */
+	line-height: 1.2;
+	height: 1.2em;
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
