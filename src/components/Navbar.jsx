@@ -53,13 +53,13 @@ const Navbar = () => {
 						</ul>
 						<div className="flex space-x-6">
 							<a href="#" className="py-2 px-3 border rounded-md">
-								Sign In
+								Demo
 							</a>
 							<a
 								href="#"
-								className="py-2 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800"
+								className="py-2 px-3 rounded-md bg-gradient-to-r from-green-500 to-white-800"
 							>
-								Create an account
+								Try it out!
 							</a>
 						</div>
 					</div>

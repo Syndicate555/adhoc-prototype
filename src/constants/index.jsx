@@ -1,9 +1,35 @@
-import { BotMessageSquare } from 'lucide-react';
-import { BatteryCharging } from 'lucide-react';
-import { Fingerprint } from 'lucide-react';
-import { ShieldHalf } from 'lucide-react';
-import { PlugZap } from 'lucide-react';
-import { GlobeLock } from 'lucide-react';
+import {
+	Accessibility,
+	Activity,
+	AlertCircle,
+	Award,
+	Bell,
+	Bot,
+	Briefcase,
+	Camera,
+	Cloud,
+	DollarSign,
+	FileText,
+	Gift,
+	Globe,
+	Layers,
+	Leaf,
+	Link,
+	List,
+	Lock,
+	MessageCircle,
+	PieChart,
+	Receipt,
+	RotateCcw,
+	Share,
+	Share2,
+	ShieldCheck,
+	Sliders,
+	Tag,
+	TrendingUp,
+	Wallet,
+	WifiOff,
+} from 'lucide-react';
 
 import user1 from '../assets/profile-pictures/user1.jpg';
 import user2 from '../assets/profile-pictures/user2.jpg';
@@ -60,40 +86,184 @@ export const testimonials = [
 
 export const features = [
 	{
-		icon: <BotMessageSquare />,
-		text: 'Drag-and-Drop Interface',
+		icon: <Receipt />,
+		text: 'Centralized Digital Receipts',
 		description:
-			'Easily design and arrange your VR environments with a user-friendly drag-and-drop interface.',
+			'Store all your receipts in one secure place with detailed, itemized data for every purchase, eliminating paper clutter and making retrieval effortless.',
 	},
 	{
-		icon: <Fingerprint />,
-		text: 'Multi-Platform Compatibility',
+		icon: <Activity />,
+		text: 'AI-Driven Insights',
 		description:
-			'Build VR applications that run seamlessly across multiple platforms, including mobile, desktop, and VR headsets.',
+			'Leverage advanced AI algorithms to analyze your spending habits, providing personalized insights that help you make smarter financial decisions.',
 	},
 	{
-		icon: <ShieldHalf />,
-		text: 'Built-in Templates',
+		icon: <Wallet />,
+		text: 'Personal Finance Management',
 		description:
-			'Jumpstart your VR projects with a variety of built-in templates for different types of applications and environments.',
+			'Set budgets, track spending, and monitor expenses across categories and vendors, all within a single intuitive app.',
 	},
 	{
-		icon: <BatteryCharging />,
-		text: 'Real-Time Preview',
+		icon: <Bot />,
+		text: 'Personalized AI Assistant',
 		description:
-			'Preview your VR application in real-time as you make changes, allowing for quick iterations and adjustments.',
+			'Receive tailored financial advice from an AI assistant that understands your unique spending patterns and goals.',
 	},
 	{
-		icon: <PlugZap />,
-		text: 'Collaboration Tools',
+		icon: <Leaf />,
+		text: 'Eco-Friendly Solution',
 		description:
-			'Work together with your team in real-time on VR projects, enabling seamless collaboration and idea sharing.',
+			'Contribute to a greener planet by eliminating paper receipts, reducing waste, and lowering carbon emissions associated with paper production.',
 	},
 	{
-		icon: <GlobeLock />,
-		text: 'Analytics Dashboard',
+		icon: <Gift />,
+		text: 'Rewards and Incentives',
 		description:
-			'Gain valuable insights into user interactions and behavior within your VR applications with an integrated analytics dashboard.',
+			'Earn points for using Platen, redeemable for monetary value through various gift cards, incentivizing you to keep track of your purchases.',
+	},
+	{
+		icon: <Camera />,
+		text: 'Easy Receipt Uploads',
+		description:
+			'Add receipts manually by taking a picture, ensuring no purchase goes untracked—even from vendors not yet integrated with Platen.',
+	},
+	{
+		icon: <Tag />,
+		text: 'Personalized Vendor Offers',
+		description:
+			'Receive custom discounts and promotions from vendors based on your purchase history, helping you save money on products you love.',
+	},
+	{
+		icon: <PieChart />,
+		text: 'Comprehensive Spending Analytics',
+		description:
+			'Visualize your expenses with interactive charts and graphs, giving you a clear picture of where your money goes.',
+	},
+	{
+		icon: <Globe />,
+		text: 'Environmental Impact Tracker',
+		description:
+			'Track and quantify your positive environmental impact by choosing digital over paper receipts, turning sustainable choices into measurable achievements.',
+	},
+	{
+		icon: <ShieldCheck />,
+		text: 'Secure Data Storage',
+		description:
+			'Benefit from top-notch security protocols that protect your financial data, ensuring your information remains private and secure.',
+	},
+	{
+		icon: <Bell />,
+		text: 'Smart Notifications',
+		description:
+			'Stay informed with timely notifications about upcoming bills, expiring warranties, or when items you’ve purchased go on sale.',
+	},
+	{
+		icon: <List />,
+		text: 'Expense Categorization',
+		description:
+			'Automatically categorize your expenses for easier tracking and budgeting, making financial management more streamlined than ever.',
+	},
+	{
+		icon: <FileText />,
+		text: 'Tax Preparation Assistance',
+		description:
+			'Simplify tax season with organized receipts and categorized expenses, making it easier to claim deductions and prepare your returns.',
+	},
+	{
+		icon: <TrendingUp />,
+		text: 'Price Comparison',
+		description:
+			'Compare prices of items between different vendors to ensure you always get the best deal.',
+	},
+	{
+		icon: <RotateCcw />,
+		text: 'Return and Warranty Tracking',
+		description:
+			'Keep track of purchase dates and warranty periods, making returns and warranty claims hassle-free.',
+	},
+	{
+		icon: <Briefcase />,
+		text: 'Business Expense Management',
+		description:
+			'Easily tag and separate personal and business expenses, simplifying reimbursements and accounting for freelancers and professionals.',
+	},
+	{
+		icon: <Sliders />,
+		text: 'Customizable Budgeting Tools',
+		description:
+			'Tailor your budgeting experience with customizable categories and limits that fit your unique financial situation.',
+	},
+	{
+		icon: <Lock />,
+		text: 'User Privacy Controls',
+		description:
+			'Have full control over your data with robust privacy settings, allowing you to decide what information is shared and with whom.',
+	},
+	{
+		icon: <Award />,
+		text: 'Gamification Elements',
+		description:
+			'Engage with your finances through gamified experiences that make managing money fun and rewarding.',
+	},
+	{
+		icon: <Link />,
+		text: 'Seamless Vendor Integration',
+		description:
+			'Enjoy a seamless shopping experience with direct integration at point-of-sale terminals, eliminating the need for paper receipts entirely.',
+	},
+	{
+		icon: <Cloud />,
+		text: 'Cloud Synchronization',
+		description:
+			'Access your receipts and financial data from any device with automatic cloud synchronization.',
+	},
+	{
+		icon: <Share />,
+		text: 'Data Export and Sharing',
+		description:
+			'Export your financial data in various formats to share with accountants or import into other financial software.',
+	},
+	{
+		icon: <DollarSign />,
+		text: 'Multi-Currency Support',
+		description:
+			'Track purchases and manage expenses in multiple currencies, ideal for travelers and international shoppers.',
+	},
+	{
+		icon: <Accessibility />,
+		text: 'Accessibility Features',
+		description:
+			'Designed with inclusivity in mind, offering features that make the app usable for people with disabilities.',
+	},
+	{
+		icon: <Layers />,
+		text: 'Integration with Financial Apps',
+		description:
+			'Sync Platen with other financial applications and services for a holistic view of your finances.',
+	},
+	{
+		icon: <MessageCircle />,
+		text: 'Customer Support Chatbot',
+		description:
+			'Get instant assistance with any queries or issues through an integrated customer support chatbot.',
+	},
+	{
+		icon: <AlertCircle />,
+		text: 'Smart Purchase Alerts',
+		description:
+			'Receive alerts when items you frequently purchase are on sale, maximizing your savings.',
+	},
+	{
+		icon: <Share2 />,
+		text: 'Social Sharing',
+		description:
+			'Share your eco-friendly achievements and savings milestones with friends and family on social media.',
+	},
+	{
+		icon: <WifiOff />,
+		text: 'Offline Access',
+		description:
+			'Access your stored receipts and financial data even without an internet connection.',
 	},
 ];
 

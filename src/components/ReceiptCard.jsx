@@ -30,7 +30,7 @@ const ReceiptCard = ({
 				{!uploadFinalized && (
 					<button
 						onClick={(e) => {
-							e.stopPropagation(); // Prevent modal opening when deleting
+							e.stopPropagation();
 							handleRemoveReceipt(index);
 						}}
 						className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 shadow-lg transform hover:scale-110 transition-transform"
@@ -58,6 +58,7 @@ const ReceiptCard = ({
 								textColor: '#000',
 								trailColor: '#d1d5db',
 								textSize: '16px',
+								marginLeft: '20px',
 							})}
 						/>
 					)}

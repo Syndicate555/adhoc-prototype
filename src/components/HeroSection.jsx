@@ -13,12 +13,13 @@ const HeroSection = ({
 	isLoadingInsights,
 }) => {
 	return (
-		<section className="flex-1 flex flex-col items-center justify-center text-center py-16 bg-white">
-			<div className="container mx-auto px-4">
-				<h2 className="text-5xl font-extrabold text-gray-800 mb-6">
-					Unlock Insights from Your Receipts
+		<section className="flex-1 flex flex-col items-center justify-center text-center">
+			<div className="flex flex-col items-center mt-6 lg:mt-20">
+				<h2 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
+					Unlock <span className="btn-shine">Insights</span> from Your Receipts
 				</h2>
-				<p className="text-xl text-gray-600 mb-8">
+				<br></br>
+				<p className="text-xl text-600 mb-8">
 					Upload 20-50 of your receipts and let our AI generate valuable
 					spending insights for you.
 				</p>
@@ -27,7 +28,7 @@ const HeroSection = ({
 					{isLoadingInsights ? (
 						<div className="flex flex-col items-center">
 							<img src="/spinner.svg" alt="Loading" className="logo-spinner" />
-							<h2 className="text-2xl font-bold text-gray-800 mt-4">
+							<h2 className="text-2xl font-bold text-800 mt-4">
 								Generating Insights...
 							</h2>
 							<p className="text-gray-600 mt-2">
