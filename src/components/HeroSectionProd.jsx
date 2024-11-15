@@ -5,20 +5,16 @@ const HeroSectionProd = ({ handleScrollToDemo }) => {
 	return (
 		<div className="flex flex-col items-center mt-6 lg:mt-20">
 			<h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
-				Digital Receipts
+				Your Receipts. Organized, Analyzed,
 				<span className="bg-gradient-to-r from-green-500 to-green-800 text-transparent bg-clip-text">
 					{' '}
-					made Easy!
+					Optimized.
 				</span>
 			</h1>
 			<p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-				veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-				commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-				velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-				occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-				mollit anim id est laborum.
+				Transform every purchase into actionable insights with Platen.
+				Centralize your digital receipts, harness AI-driven analytics, and
+				contribute to a greener planet—all in one intuitive app.
 			</p>
 			<div className="flex justify-center my-10">
 				<button
