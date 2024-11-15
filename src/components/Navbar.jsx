@@ -3,7 +3,7 @@ import { useState } from 'react';
 import logo from '../assets/logo.png';
 import { navItems } from '../constants';
 
-const Navbar = () => {
+const Navbar = ({ handleScrollToDemo }) => {
 	const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
 	const toggleNavbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
 
 	return (
 		<nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-neutral-700/80">
-			<div className="container px-8 mx-auto relative lg:text-sm">
+			<div className="container px-8 mx-auto relative lg:text-lg">
 				<div className="flex justify-between items-center">
 					<div className="flex items-center flex-shrink-0">
 						<img className="h-14 w-12 mr-2" src={logo} alt="Logo" />
@@ -29,12 +29,12 @@ const Navbar = () => {
 						<a href="#" className="py-2 px-3 border rounded-md">
 							Demo
 						</a>
-						<a
-							href="#"
+						<button
+							onClick={handleScrollToDemo}
 							className="bg-gradient-to-r from-green-500 to-white-800 py-2 px-3 rounded-md"
 						>
 							Try it out!
-						</a>
+						</button>
 					</div>
 					<div className="lg:hidden md:flex flex-col justify-end">
 						<button onClick={toggleNavbar}>

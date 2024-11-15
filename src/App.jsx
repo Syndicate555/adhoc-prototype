@@ -12,7 +12,8 @@ import ReceiptHierarchyTree from './components/ReceiptTree';
 import HeroSection from './components/HeroSection';
 import Header from './components/Header';
 import ProgressBar from './components/ProgressBar';
-import ReceiptCard from './components/ReceiptCard';
+import ReceiptsUploadSection from './components/ReceiptsUploadSection';
+
 import InsightsSummary from './components/InsightsSummary/InsightsSummary';
 import { uploadReceipts, fetchInsights } from './services/api';
 import { getProgressPercentage } from './utilities/utils';
@@ -42,8 +43,20 @@ function App() {
 	const [insightsReadyNotification, setInsightsReadyNotification] =
 		useState(false);
 	const insightsRef = useRef(null);
+	const heroSectionRef = useRef(null);
 	const socketRef = useRef(null);
-
+	const handleScrollToDemo = () => {
+		if (heroSectionRef.current) {
+			gsap.to(window, {
+				scrollTo: {
+					y: heroSectionRef.current,
+					offsetY: 50, // Adds an offset so that the section is not hidden behind the header
+				},
+				duration: 1.5,
+				ease: 'power3.out',
+			});
+		}
+	};
 	const animateProgress = useCallback(
 		(updatedReceipts) => {
 			const totalProgress = updatedReceipts.reduce((acc, receipt) => {
@@ -54,7 +67,6 @@ function App() {
 				? (totalProgress / (receipts.length * 100)) * 100
 				: 0;
 
-			// Use the greater value between fakeProgress and real progress
 			const overallProgress = Math.max(fakeProgress, overallRealProgress);
 
 			if (globalProgressRef.current) {
@@ -70,9 +82,8 @@ function App() {
 					overallProgress > 0 ? `${Math.round(overallProgress)}%` : '';
 			}
 
-			// Stop fake progress and hide the spinner once the real progress exceeds it
 			if (overallRealProgress > 0) {
-				setIsLoadingInsights(false); // Ensure the spinner is removed after real progress starts
+				setIsLoadingInsights(false);
 			}
 
 			if (overallRealProgress >= fakeProgress) {
@@ -88,11 +99,10 @@ function App() {
 	useEffect(() => {
 		let timer;
 		if (isGeneratingInsights) {
-			// Faster initial progress indication
 			const randomNumber = getRandomNumber(35, 60);
 			timer = setInterval(() => {
 				setFakeProgress((prev) => Math.min(prev + 10, randomNumber));
-			}, 500); // Increase fake progress by 10% every 300ms until it reaches the random number
+			}, 500);
 		}
 		return () => clearInterval(timer);
 	}, [isGeneratingInsights]);
@@ -299,11 +309,15 @@ function App() {
 
 	return (
 		<>
-			<Navbar />
+			<Navbar handleScrollToDemo={handleScrollToDemo} />
 			<div className="max-w-7xl mx-auto pt-20 px-6">
-				<HeroSectionProd />
+				<HeroSectionProd handleScrollToDemo={handleScrollToDemo} />
 				<FeatureSection />
+				<br />
+				<br />
+				<br />
 				<HeroSection
+					ref={heroSectionRef}
 					handleSelectReceiptsClick={handleSelectReceiptsClick}
 					handleUpload={handleUpload}
 					uploading={uploading}
@@ -326,31 +340,12 @@ function App() {
 
 				{/* Receipt Upload & Tracking Section */}
 				{receipts.length > 0 && (
-					<section className="container mx-auto px-4 my-10">
-						<h3 className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wide">
-							You are uploading <span></span>
-							<span className="bg-gradient-to-r from-green-500 to-green-800 text-transparent bg-clip-text">
-								{receipts.length}
-								<span> </span>
-								<span></span>
-								receipt
-								{receipts.length > 1 ? 's' : ''}
-							</span>
-						</h3>
-						<br />
-						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-							{receipts.map((receipt, index) => (
-								<ReceiptCard
-									key={index}
-									receipt={receipt}
-									index={index}
-									handleRemoveReceipt={handleRemoveReceipt}
-									uploadFinalized={uploadFinalized}
-									getProgressPercentage={getProgressPercentage}
-								/>
-							))}
-						</div>
-					</section>
+					<ReceiptsUploadSection
+						receipts={receipts}
+						handleRemoveReceipt={handleRemoveReceipt}
+						uploadFinalized={uploadFinalized}
+						getProgressPercentage={getProgressPercentage}
+					/>
 				)}
 
 				{/* Notification when all receipts are processed */}
@@ -384,14 +379,9 @@ function App() {
 					<InsightsSummary insights={insights} handleReset={handleReset} />
 				</div>
 
-				{/* Footer */}
-
 				<Footer />
 			</div>
 		</>
-		// <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
-
-		// </div>
 	);
 }
 

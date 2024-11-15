@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa';
+import { FaTrashAlt, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import Modal from 'react-modal';
 import 'react-circular-progressbar/dist/styles.css';
@@ -24,7 +24,7 @@ const ReceiptCard = ({
 	return (
 		<>
 			<div
-				className="bg-white p-5 rounded-2xl shadow-lg relative transform hover:scale-105 transition-transform cursor-pointer"
+				className="bg-neutral-800 p-5 rounded-xl shadow-lg relative transform hover:scale-105 transition-transform cursor-pointer mx-2 min-w-[200px] max-w-[220px] border border-neutral-700"
 				onClick={handleCardClick}
 			>
 				{!uploadFinalized && (
@@ -33,32 +33,34 @@ const ReceiptCard = ({
 							e.stopPropagation();
 							handleRemoveReceipt(index);
 						}}
-						className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-2 shadow-lg transform hover:scale-110 transition-transform"
+						className="absolute top-3 right-3 bg-red-600 text-white rounded-full p-2 shadow-lg transform hover:scale-110 transition-transform"
 					>
 						<FaTrashAlt />
 					</button>
 				)}
-				<div className="w-full h-48 mb-4 overflow-hidden rounded-xl">
+				<div className="w-full h-32 mb-4 overflow-hidden rounded-xl">
 					<img
 						src={URL.createObjectURL(receipt.file)}
 						alt={`Receipt ${index + 1}`}
 						className="w-full h-full object-cover"
 					/>
 				</div>
-				<div className="w-20 h-20 mx-auto">
+				<div className="text-center text-xs text-neutral-300 mb-4 truncate px-2">
+					{receipt.file.name}
+				</div>
+				<div className="w-16 h-16 mx-auto">
 					{receipt.status === 'COMPLETED' ? (
-						<FaCheckCircle className="text-green-500 w-full h-full" />
+						<FaCheckCircle className="text-green-400 w-full h-full" />
 					) : (
 						<CircularProgressbar
 							value={getProgressPercentage(receipt.status)}
 							text={`${getProgressPercentage(receipt.status)}%`}
 							styles={buildStyles({
-								pathColor:
-									receipt.status === 'COMPLETED' ? '#22c55e' : '#3b82f6',
-								textColor: '#000',
-								trailColor: '#d1d5db',
+								pathColor: '#00bcd4', // Bright color for better contrast
+								textColor: '#ffffff', // Ensures text is easily visible
+								trailColor: '#374151', // Matches dark theme without blending in
 								textSize: '16px',
-								marginLeft: '20px',
+								strokeLinecap: 'round',
 							})}
 						/>
 					)}
@@ -69,19 +71,32 @@ const ReceiptCard = ({
 			<Modal
 				isOpen={isModalOpen}
 				onRequestClose={closeModal}
-				className="receipt-modal"
-				overlayClassName="receipt-overlay"
+				className="receipt-modal max-w-2xl mx-auto my-10 p-5 bg-neutral-800 rounded-xl shadow-2xl outline-none"
+				overlayClassName="receipt-overlay fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center"
 				contentLabel={`Receipt ${index + 1}`}
 			>
-				<div className="modal-content">
-					<button className="close-button" onClick={closeModal}>
-						Close
+				<div className="relative flex flex-col items-center">
+					{/* Close Button */}
+					<button
+						className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2 shadow-lg hover:bg-red-700 transition-colors"
+						onClick={closeModal}
+					>
+						<FaTimes size={20} />
 					</button>
-					<img
-						src={URL.createObjectURL(receipt.file)}
-						alt={`Receipt ${index + 1}`}
-						className="modal-image"
-					/>
+
+					{/* Image */}
+					<div className="w-full max-w-md mb-6">
+						<img
+							src={URL.createObjectURL(receipt.file)}
+							alt={`Receipt ${index + 1}`}
+							className="w-full h-auto rounded-lg shadow-md"
+						/>
+					</div>
+
+					{/* File Name */}
+					<div className="text-center text-sm text-neutral-300 truncate px-4">
+						File: {receipt.file.name}
+					</div>
 				</div>
 			</Modal>
 		</>

@@ -1,87 +1,96 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-const HeroSection = ({
-	handleSelectReceiptsClick,
-	handleUpload,
-	uploading,
-	files,
-	warningMessage,
-	fileInputRef,
-	handleFileChange,
-	allCompleted,
-	isUploading,
-	isLoadingInsights,
-}) => {
-	return (
-		<section className="flex-1 flex flex-col items-center justify-center text-center">
-			<div className="flex flex-col items-center mt-6 lg:mt-20">
-				<h2 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
-					Unlock <span className="btn-shine">Insights</span> from Your Receipts
-				</h2>
-				<br></br>
-				<p className="text-xl text-600 mb-8">
-					Upload 20-50 of your receipts and let our AI generate valuable
-					spending insights for you.
-				</p>
+const HeroSection = forwardRef(
+	(
+		{
+			handleSelectReceiptsClick,
+			handleUpload,
+			uploading,
+			files,
+			warningMessage,
+			fileInputRef,
+			handleFileChange,
+			allCompleted,
+			isUploading,
+			isLoadingInsights,
+		},
+		ref
+	) => {
+		return (
+			<section
+				ref={ref}
+				className="flex-1 flex flex-col items-center justify-center text-center"
+			>
+				<div className="flex flex-col items-center mt-6 lg:mt-20">
+					<h2 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
+						Unlock <span className="btn-shine">Insights</span> from Your
+						Receipts
+					</h2>
+					<br></br>
+					<p className="text-xl text-600 mb-8">
+						Upload 20-50 of your receipts and let our AI generate valuable
+						spending insights for you.
+					</p>
 
-				<div className="flex justify-center space-x-6">
-					{isLoadingInsights ? (
-						<div className="flex flex-col items-center">
-							<img src="/spinner.svg" alt="Loading" className="logo-spinner" />
-							<h2 className="text-2xl font-bold text-800 mt-4">
-								Generating Insights...
-							</h2>
-							<p className="text-gray-600 mt-2">
-								This may take a moment, please wait.
-							</p>
-						</div>
-					) : (
-						<>
-							{/* Select Receipts Button */}
-							{!isUploading && (
-								<button
-									onClick={handleSelectReceiptsClick}
-									className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
-								>
-									Select Receipts
-								</button>
-							)}
+					<div className="flex justify-center space-x-6">
+						{isLoadingInsights ? (
+							<div className="flex flex-col items-center">
+								<img src="/4.png" alt="Loading" className="logo-spinner" />
+								<h2 className="text-2xl font-bold text-800 mt-4">
+									Generating Insights...
+								</h2>
+								<p className="text-gray-600 mt-2">
+									This may take a moment, please wait.
+								</p>
+							</div>
+						) : (
+							<>
+								{/* Select Receipts Button */}
+								{!isUploading && (
+									<button
+										onClick={handleSelectReceiptsClick}
+										className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
+									>
+										Select Receipts
+									</button>
+								)}
 
-							{/* Hidden File Input */}
-							<input
-								type="file"
-								ref={fileInputRef}
-								style={{ display: 'none' }}
-								accept="image/*"
-								multiple
-								onChange={handleFileChange}
-							/>
+								{/* Hidden File Input */}
+								<input
+									type="file"
+									ref={fileInputRef}
+									style={{ display: 'none' }}
+									accept="image/*"
+									multiple
+									onChange={handleFileChange}
+								/>
 
-							{/* Upload Receipts Button */}
-							{!isUploading && (
-								<button
-									onClick={handleUpload}
-									className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
-										uploading || files.length === 0
-											? 'opacity-50 cursor-not-allowed'
-											: ''
-									}`}
-									disabled={uploading || files.length === 0}
-								>
-									{uploading ? 'Generate' : 'Generate Insights'}
-								</button>
-							)}
-						</>
+								{/* Upload Receipts Button */}
+								{!isUploading && (
+									<button
+										onClick={handleUpload}
+										className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
+											uploading || files.length === 0
+												? 'opacity-50 cursor-not-allowed'
+												: ''
+										}`}
+										disabled={uploading || files.length === 0}
+									>
+										{uploading ? 'Generate' : 'Generate Insights'}
+									</button>
+								)}
+							</>
+						)}
+					</div>
+
+					{/* Warning Message */}
+					{warningMessage && (
+						<p className="mt-4 text-red-500 font-bold">{warningMessage}</p>
 					)}
 				</div>
-
-				{/* Warning Message */}
-				{warningMessage && (
-					<p className="mt-4 text-red-500 font-bold">{warningMessage}</p>
-				)}
-			</div>
-		</section>
-	);
-};
+			</section>
+		);
+	}
+);
 
 export default HeroSection;

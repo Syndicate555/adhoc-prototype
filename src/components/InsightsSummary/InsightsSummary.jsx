@@ -81,13 +81,17 @@ const InsightsSummary = ({ insights, handleReset }) => {
 			<Typography
 				variant="h3"
 				gutterBottom
-				sx={{ fontWeight: 'bold', textAlign: 'center' }}
+				sx={{
+					fontWeight: 'bold',
+					textAlign: 'center',
+					color: '#ffffff', // Updated text color for dark theme
+				}}
 			>
 				Receipt Insights Dashboard
 			</Typography>
 			<Typography
 				variant="subtitle1"
-				sx={{ textAlign: 'center', marginBottom: 4 }}
+				sx={{ textAlign: 'center', marginBottom: 4, color: '#cbd5e1' }} // Lighter text color for better contrast
 			>
 				Get an overview of your spending based on your uploaded receipts.
 			</Typography>
@@ -101,22 +105,46 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							? `$${insights.totalSpending.toFixed(2)}`
 							: '$0.00'
 					}
-					icon={<MonetizationOnIcon color="primary" fontSize="large" />}
+					icon={
+						<MonetizationOnIcon
+							sx={{ color: '#22c55e' }} // Bright green for visibility
+							fontSize="large"
+						/>
+					}
+					cardColor="bg-neutral-900" // Dark card background
 				/>
 				<SummaryCard
 					title="Total Transactions"
 					value={insights.totalReceipts || 0}
-					icon={<ReceiptIcon color="primary" fontSize="large" />}
+					icon={
+						<ReceiptIcon
+							sx={{ color: '#3b82f6' }} // Bright blue icon
+							fontSize="large"
+						/>
+					}
+					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Unique Vendors"
 					value={insights.totalUniqueVendors || 0}
-					icon={<StoreIcon color="primary" fontSize="large" />}
+					icon={
+						<StoreIcon
+							sx={{ color: '#f59e0b' }} // Bright orange for contrast
+							fontSize="large"
+						/>
+					}
+					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Total Products Purchased"
 					value={insights.totalLineItems || 0}
-					icon={<ShoppingCartIcon color="primary" fontSize="large" />}
+					icon={
+						<ShoppingCartIcon
+							sx={{ color: '#f97316' }} // Vibrant orange
+							fontSize="large"
+						/>
+					}
+					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Total Discount Collected"
@@ -125,7 +153,13 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							? `$${insights.totalDiscounts.toFixed(2)}`
 							: '$0.00'
 					}
-					icon={<DiscountIcon color="primary" fontSize="large" />}
+					icon={
+						<DiscountIcon
+							sx={{ color: '#e11d48' }} // Red for emphasis
+							fontSize="large"
+						/>
+					}
+					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Average Spent per Transaction"
@@ -134,7 +168,13 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							? `$${insights.averageSpendingPerTransaction.toFixed(2)}`
 							: '$0.00'
 					}
-					icon={<AccountBalanceWalletIcon color="primary" fontSize="large" />}
+					icon={
+						<AccountBalanceWalletIcon
+							sx={{ color: '#a855f7' }} // Purple for variety
+							fontSize="large"
+						/>
+					}
+					cardColor="bg-neutral-900"
 				/>
 			</Grid>
 
@@ -154,6 +194,8 @@ const InsightsSummary = ({ insights, handleReset }) => {
 						chartTitle="Spending by Parent Category"
 						dataLabels={spendingByParentCategoryLabels}
 						dataValues={spendingByParentCategoryValues}
+						backgroundColor="#1f2937" // Dark background for the pie chart
+						textColor="#ffffff" // White text for visibility
 					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
@@ -161,6 +203,8 @@ const InsightsSummary = ({ insights, handleReset }) => {
 						chartTitle={`Spending by Category: ${selectedParentCategory}`}
 						dataLabels={spendingByCategoryLabels}
 						dataValues={spendingByCategoryValues}
+						backgroundColor="#1f2937"
+						textColor="#ffffff"
 					/>
 				</Grid>
 			</Grid>
@@ -170,16 +214,27 @@ const InsightsSummary = ({ insights, handleReset }) => {
 				<Grid item xs={12}>
 					<SpendingByVendorChart
 						spendingByVendor={insights.spendingByVendor}
-						sx={{ minHeight: '900px' }}
+						backgroundColor="#1f2937"
+						textColor="#ffffff"
 						titleAlign="center"
 					/>
 				</Grid>
 			</Grid>
 
 			{/* Top Line Items Data Grid */}
-			<Card sx={{ my: 4 }}>
+			<Card
+				sx={{
+					my: 4,
+					backgroundColor: '#1f2937',
+					color: '#ffffff',
+				}}
+			>
 				<CardContent>
-					<Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
+					<Typography
+						variant="h5"
+						gutterBottom
+						sx={{ textAlign: 'center', color: '#ffffff' }}
+					>
 						Top Purchases
 					</Typography>
 					<DataGrid
@@ -196,6 +251,13 @@ const InsightsSummary = ({ insights, handleReset }) => {
 						]}
 						autoHeight
 						pageSize={5}
+						sx={{
+							color: '#ffffff', // White text
+							backgroundColor: '#374151', // Slightly lighter dark background
+							'& .MuiDataGrid-cell': {
+								borderBottom: '1px solid #4b5563', // Border color matching the theme
+							},
+						}}
 					/>
 				</CardContent>
 			</Card>
@@ -205,7 +267,13 @@ const InsightsSummary = ({ insights, handleReset }) => {
 				<Button
 					onClick={handleCSVExport}
 					variant="contained"
-					color="primary"
+					sx={{
+						backgroundColor: '#3b82f6', // Bright blue
+						color: '#ffffff',
+						'&:hover': {
+							backgroundColor: '#2563eb', // Darker blue for hover effect
+						},
+					}}
 					size="large"
 					startIcon={<DownloadOutlinedIcon />}
 				>
@@ -218,7 +286,13 @@ const InsightsSummary = ({ insights, handleReset }) => {
 				<Button
 					onClick={handleReset}
 					variant="contained"
-					color="primary"
+					sx={{
+						backgroundColor: '#22c55e', // Green for positivity
+						color: '#ffffff',
+						'&:hover': {
+							backgroundColor: '#16a34a', // Darker green for hover
+						},
+					}}
 					size="large"
 				>
 					Try it again with another batch of receipts
