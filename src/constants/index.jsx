@@ -143,7 +143,7 @@ export const features = [
 		icon: <Globe />,
 		text: 'Environmental Impact Tracker',
 		description:
-			'Track and quantify your positive environmental impact by choosing digital over paper receipts, turning sustainable choices into measurable achievements.',
+			'Track and quantify your environmental impact by choosing digital, turning sustainable choices into measurable achievements.',
 	},
 	{
 		icon: <ShieldCheck />,

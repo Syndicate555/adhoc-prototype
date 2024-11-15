@@ -252,10 +252,10 @@ const InsightsSummary = ({ insights, handleReset }) => {
 						autoHeight
 						pageSize={5}
 						sx={{
-							color: '#ffffff', // White text
-							backgroundColor: '#374151', // Slightly lighter dark background
+							color: '#ffffff',
+							backgroundColor: '#374151',
 							'& .MuiDataGrid-cell': {
-								borderBottom: '1px solid #4b5563', // Border color matching the theme
+								borderBottom: '1px solid #4b5563',
 							},
 						}}
 					/>
@@ -268,10 +268,10 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					onClick={handleCSVExport}
 					variant="contained"
 					sx={{
-						backgroundColor: '#3b82f6', // Bright blue
+						backgroundColor: '#3b82f6',
 						color: '#ffffff',
 						'&:hover': {
-							backgroundColor: '#2563eb', // Darker blue for hover effect
+							backgroundColor: '#2563eb',
 						},
 					}}
 					size="large"
@@ -287,10 +287,10 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					onClick={handleReset}
 					variant="contained"
 					sx={{
-						backgroundColor: '#22c55e', // Green for positivity
+						backgroundColor: '#22c55e',
 						color: '#ffffff',
 						'&:hover': {
-							backgroundColor: '#16a34a', // Darker green for hover
+							backgroundColor: '#16a34a',
 						},
 					}}
 					size="large"
