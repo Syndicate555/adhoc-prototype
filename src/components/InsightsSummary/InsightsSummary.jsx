@@ -25,7 +25,6 @@ import { handleExport } from '../../utilities/utils';
 const InsightsSummary = ({ insights, handleReset }) => {
 	const [selectedParentCategory, setSelectedParentCategory] = useState('');
 
-	// Extract data for charts
 	const parentCategories =
 		insights?.spendingByParentCategory?.map(
 			(category) => category.parent_category
@@ -51,7 +50,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 	);
 
 	useEffect(() => {
-		// Set default selected category if available
 		if (parentCategories.length > 0 && !selectedParentCategory) {
 			setSelectedParentCategory(parentCategories[0]);
 		}
@@ -65,7 +63,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		return handleExport(insights);
 	};
 
-	// Handle parent category change
 	const handleParentCategoryChange = (event) => {
 		setSelectedParentCategory(event.target.value);
 	};
@@ -170,7 +167,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					}
 					icon={
 						<AccountBalanceWalletIcon
-							sx={{ color: '#a855f7' }} // Purple for variety
+							sx={{ color: '#a855f7' }}
 							fontSize="large"
 						/>
 					}
