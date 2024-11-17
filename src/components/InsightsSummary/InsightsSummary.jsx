@@ -20,6 +20,17 @@ import SummaryCard from './components/SummayCard';
 import ParentCategoryDropdown from './components/ParentCategoryDropdown';
 import SpendingByPieChart from './components/SpendingByPieChart';
 import SpendingByVendorChart from './components/SpendingByVendorChart';
+import {
+	BarChart,
+	Bar,
+	XAxis,
+	YAxis,
+	CartesianGrid,
+	Tooltip,
+	ResponsiveContainer,
+	Legend,
+} from 'recharts';
+
 import { handleExport } from '../../utilities/utils';
 
 const InsightsSummary = ({ insights, handleReset }) => {
@@ -29,6 +40,13 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		insights?.spendingByParentCategory?.map(
 			(category) => category.parent_category
 		) || [];
+
+	const spendingByVendorData =
+		insights?.spendingByVendor?.map((item) => ({
+			name: item.vendor,
+			totalSpent: parseFloat(item.totalSpent.toFixed(2)),
+			fullName: item.vendor, // Add full name for tooltip display
+		})) || [];
 
 	const spendingByParentCategoryLabels =
 		insights?.spendingByParentCategory?.map((item) => item.parent_category) ||
@@ -66,6 +84,17 @@ const InsightsSummary = ({ insights, handleReset }) => {
 	const handleParentCategoryChange = (event) => {
 		setSelectedParentCategory(event.target.value);
 	};
+
+	const COLORS = [
+		'#8884d8',
+		'#82ca9d',
+		'#ffc658',
+		'#ff8042',
+		'#8dd1e1',
+		'#d0ed57',
+		'#a4de6c',
+		'#d069b2',
+	];
 
 	return (
 		<motion.section
@@ -207,57 +236,172 @@ const InsightsSummary = ({ insights, handleReset }) => {
 			</Grid>
 
 			{/* Spending by Vendor Bar Chart */}
+
 			<Grid container spacing={4} justifyContent="center" sx={{ mt: 4 }}>
 				<Grid item xs={12}>
-					<SpendingByVendorChart
-						spendingByVendor={insights.spendingByVendor}
-						backgroundColor="#1f2937"
-						textColor="#ffffff"
-						titleAlign="center"
-					/>
-				</Grid>
-			</Grid>
-
-			{/* Top Line Items Data Grid */}
-			<Card
-				sx={{
-					my: 4,
-					backgroundColor: '#1f2937',
-					color: '#ffffff',
-				}}
-			>
-				<CardContent>
 					<Typography
 						variant="h5"
-						gutterBottom
-						sx={{ textAlign: 'center', color: '#ffffff' }}
-					>
-						Top Purchases
-					</Typography>
-					<DataGrid
-						rows={insights.topLineItems.map((item, index) => ({
-							id: index,
-							title: item.title,
-							quantity: item.quantity,
-							totalSpent: `$${item.totalSpent.toFixed(2)}`,
-						}))}
-						columns={[
-							{ field: 'title', headerName: 'Item', flex: 1 },
-							{ field: 'quantity', headerName: 'Quantity', flex: 1 },
-							{ field: 'totalSpent', headerName: 'Total Spent', flex: 1 },
-						]}
-						autoHeight
-						pageSize={5}
+						align="center"
 						sx={{
 							color: '#ffffff',
-							backgroundColor: '#374151',
-							'& .MuiDataGrid-cell': {
-								borderBottom: '1px solid #4b5563',
-							},
+							fontWeight: 'bold',
+							marginBottom: 2,
+							fontSize: 28, // Increased font size for better prominence
 						}}
-					/>
-				</CardContent>
-			</Card>
+					>
+						Spending by Vendor
+					</Typography>
+					<br></br>
+					<br></br>
+					<ResponsiveContainer width="100%" height={800}>
+						<BarChart
+							data={spendingByVendorData}
+							margin={{ top: 0, right: 0, left: 20, bottom: 40 }} // Increased bottom margin for better spacing
+						>
+							<CartesianGrid strokeDasharray="3 3" stroke="#444" />
+
+							{/* Legend positioned at the top for better visual balance */}
+							<Legend
+								verticalAlign="right"
+								align="center"
+								wrapperStyle={{
+									color: '#6ccfe6',
+									fontSize: 18,
+									fontWeight: 'bold',
+								}}
+							/>
+
+							<XAxis
+								dataKey="name"
+								stroke="#ffffff"
+								tick={{ fill: '#ffffff', fontSize: 12 }}
+								interval={0}
+								height={40}
+								tickFormatter={(name) =>
+									name.length > 6 ? name.substring(0, 6) + '...' : name
+								} // Show only first 5 characters
+								label={{
+									value: 'Vendor',
+									position: 'insideBottom',
+									dy: 20,
+									fill: '#ffffff',
+									fontSize: 22,
+									fontWeight: 'bold',
+								}}
+							/>
+
+							<YAxis
+								stroke="#ffffff"
+								tick={{ fill: '#ffffff', fontSize: 12 }}
+								label={{
+									value: 'Total Money Spent (in $)',
+									angle: -90,
+									position: 'insideLeft',
+									dx: -15,
+									fill: '#ffffff',
+									fontSize: 22,
+									fontWeight: 'bold',
+								}}
+							/>
+
+							<Tooltip
+								formatter={(value, name, props) => [
+									`$${value.toFixed(2)}`,
+									props.payload.fullName,
+								]}
+								contentStyle={{ backgroundColor: '#333', color: '#ffffff' }}
+							/>
+
+							<Bar
+								dataKey="totalSpent"
+								fill="#3b82f6"
+								barSize={40}
+								name="Total money spent"
+							/>
+						</BarChart>
+					</ResponsiveContainer>
+				</Grid>
+			</Grid>
+			<br />
+			{/* Top Line Items Data Grid */}
+			<Box sx={{ my: 4 }}>
+				<Typography
+					variant="h5"
+					sx={{
+						textAlign: 'center',
+						color: '#ffffff',
+						fontWeight: 'bold',
+						marginBottom: 2,
+					}}
+				>
+					Top Purchases
+				</Typography>
+				<DataGrid
+					rows={insights.topLineItems.map((item, index) => ({
+						id: index,
+						title: item.title,
+						quantity: item.quantity,
+						totalSpent: `$${item.totalSpent.toFixed(2)}`,
+						category: item.category,
+					}))}
+					columns={[
+						{
+							field: 'title',
+							headerName: 'Item',
+							flex: 1,
+							headerAlign: 'center',
+							align: 'center',
+						},
+						{
+							field: 'quantity',
+							headerName: 'Quantity',
+							flex: 1,
+							headerAlign: 'center',
+							align: 'center',
+						},
+						{
+							field: 'totalSpent',
+							headerName: 'Total Spent',
+							flex: 1,
+							headerAlign: 'center',
+							align: 'center',
+						},
+						{
+							field: 'category',
+							headerName: 'Category',
+							flex: 1,
+							headerAlign: 'center',
+							align: 'center',
+						},
+					]}
+					autoHeight
+					pageSize={5}
+					sx={{
+						color: '#ffffff',
+						backgroundColor: '#1f2937',
+						border: 'none',
+						'& .MuiDataGrid-cell': {
+							borderBottom: '1px solid #4b5563',
+						},
+						'& .MuiDataGrid-footerContainer': {
+							backgroundColor: '#1f2937',
+							color: '#cbd5e1',
+						},
+						'& .MuiTablePagination-root': {
+							color: '#cbd5e1',
+						},
+						'& .MuiDataGrid-columnHeaders': {
+							backgroundColor: '#1f2937',
+							color: '#1f2937',
+							borderBottom: '1px solid #4b5563',
+						},
+						'& .data-grid-header': {
+							fontWeight: 'bold',
+							fontSize: '1rem',
+						},
+					}}
+				/>
+			</Box>
 
 			{/* Export Button */}
 			<Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>

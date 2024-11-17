@@ -6,9 +6,19 @@ const SpendingByPieChart = ({ chartTitle, dataLabels, dataValues }) => {
 	const pieChartRef = useRef(null);
 
 	return (
-		<Card sx={{ height: '100%' }}>
+		<Card
+			sx={{
+				height: '100%',
+				backgroundColor: '#1f2937', // Dark background for card
+				color: '#ffffff', // White text for better readability
+			}}
+		>
 			<CardContent>
-				<Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
+				<Typography
+					variant="h5"
+					gutterBottom
+					sx={{ textAlign: 'center', color: '#ffffff' }}
+				>
 					{chartTitle}
 				</Typography>
 				<br />
@@ -31,6 +41,8 @@ const SpendingByPieChart = ({ chartTitle, dataLabels, dataValues }) => {
 											'#50E3C2',
 											'#8B572A',
 										],
+										borderColor: '#333333',
+										borderWidth: 1,
 									},
 								],
 							}}
@@ -40,6 +52,21 @@ const SpendingByPieChart = ({ chartTitle, dataLabels, dataValues }) => {
 								plugins: {
 									legend: {
 										position: 'bottom',
+										labels: {
+											color: '#ffffff', // White legend text for visibility
+										},
+									},
+									tooltip: {
+										backgroundColor: '#444',
+										titleColor: '#ffffff',
+										bodyColor: '#ffffff',
+										callbacks: {
+											label: (context) => {
+												const label = context.label || '';
+												const value = context.raw || 0;
+												return `${label}: $${value.toFixed(2)}`;
+											},
+										},
 									},
 								},
 							}}
