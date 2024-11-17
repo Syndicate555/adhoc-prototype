@@ -279,7 +279,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 								height={40}
 								tickFormatter={(name) =>
 									name.length > 6 ? name.substring(0, 6) + '...' : name
-								} // Show only first 5 characters
+								}
 								label={{
 									value: 'Vendor',
 									position: 'insideBottom',
