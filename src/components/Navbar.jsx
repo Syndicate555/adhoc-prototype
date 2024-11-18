@@ -15,7 +15,7 @@ const Navbar = ({ handleScrollToDemo }) => {
 			<div className="container px-8 mx-auto relative lg:text-lg">
 				<div className="flex justify-between items-center">
 					<div className="flex items-center flex-shrink-0">
-						<img className="h-14 w-12 mr-2" src={logo} alt="Logo" />
+						<img className="h-16 w-14 mr-2" src={logo} alt="Logo" />
 						<span className="text-xl tracking-tight">Platen</span>
 					</div>
 					<ul className="hidden lg:flex ml-14 space-x-12">
