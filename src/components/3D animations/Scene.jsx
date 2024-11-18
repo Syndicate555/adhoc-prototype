@@ -14,13 +14,17 @@ export default function Scene({ isAnimating }) {
 		<Canvas
 			gl={{ antialias: true }}
 			dpr={[1, 2]}
-			className="relative w-full h-[60vh] md:h-[70vh]" // Increased canvas height for better visual use
-			camera={{ position: [0, 2.5, 4], fov: 45 }}
+			className="w-full h-full" // Increased canvas height for better visual use
+			camera={{ position: [0, 1.5, 4], fov: 30 }}
 		>
 			<directionalLight position={[-5, -5, 10]} intensity={3} />
 			<ambientLight intensity={1} />
 			<Suspense fallback={<Loader />}>
-				<Model isGeneratingInsights={isAnimating} />
+				<group position={[0, 1, 0]}>
+					{' '}
+					{/* Adjust y-value as needed */}
+					<Model isGeneratingInsights={isAnimating} />
+				</group>
 			</Suspense>
 			<OrbitControls enableZoom={false} />
 		</Canvas>

@@ -21,39 +21,34 @@ const HeroSection = forwardRef(
 		return (
 			<section
 				ref={ref}
-				className="flex-1 flex flex-col items-center justify-center text-center"
+				className="flex-1 flex flex-col items-center justify-start text-center pt-4"
 			>
-				<div className="flex flex-col items-center mt-6 lg:mt-20">
-					<h2 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
+				<div className="container mx-auto px-4 flex flex-col items-center mt-4 lg:mt-10">
+					<h2 className="text-3xl sm:text-5xl lg:text-6xl text-center tracking-wide px-4">
 						Unlock <span className="btn-shine">Insights</span> from Your
 						Receipts
 					</h2>
-					<br></br>
-					<p className="text-xl text-600 mb-8">
+					<p className="text-lg sm:text-xl text-600 mb-6 mt-4 px-4">
 						Upload 20-50 of your receipts and let our AI generate valuable
 						spending insights for you.
 					</p>
 					<div className="w-full flex justify-center items-center mb-4">
-						<div className="w-[600px] h-[450px] sm:w-[700px] sm:h-[500px] lg:w-[800px] lg:h-[550px]">
-							{' '}
+						<div className="w-full max-w-[800px] aspect-[16/11]">
 							<Scene isAnimating={isGeneratingInsights} />
 						</div>
 					</div>
-
-					<div className="flex justify-center space-x-6">
+					<div className="flex justify-center space-x-6 mt-4">
 						{isLoadingInsights ? (
 							<div className="flex flex-col items-center">
-								<img src="/4.png" alt="Loading" className="logo-spinner" />
 								<h2 className="text-2xl font-bold text-800 mt-4">
 									Generating Insights...
 								</h2>
-								<p className="text-gray-600 mt-2">
+								<p className="text-white-600 mt-2">
 									This may take a moment, please wait.
 								</p>
 							</div>
 						) : (
 							<>
-								{/* Select Receipts Button */}
 								{!isUploading && (
 									<button
 										onClick={handleSelectReceiptsClick}
@@ -73,7 +68,6 @@ const HeroSection = forwardRef(
 									onChange={handleFileChange}
 								/>
 
-								{/* Upload Receipts Button */}
 								{!isUploading && (
 									<button
 										onClick={handleUpload}
@@ -90,8 +84,6 @@ const HeroSection = forwardRef(
 							</>
 						)}
 					</div>
-
-					{/* Warning Message */}
 					{warningMessage && (
 						<p className="mt-4 text-red-500 font-bold">{warningMessage}</p>
 					)}
