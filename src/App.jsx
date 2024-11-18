@@ -361,11 +361,11 @@ function App() {
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.5 }}
 					>
-						<div className="bg-white p-8 rounded-lg shadow-lg text-center">
+						<div className="bg-[#1f2937] p-8 rounded-lg shadow-lg text-center">
 							<h2 className="text-3xl font-bold text-green-600 mb-4">
 								🎉 Your insights are ready to be viewed!
 							</h2>
-							<p className="text-lg text-gray-700 mb-6">
+							<p className="text-lg text-white-700 mb-6">
 								Click the button below to view your insights.
 							</p>
 							<button
