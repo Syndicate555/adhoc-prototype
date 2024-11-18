@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import Scene from './3D animations/Scene';
 
 const HeroSection = forwardRef(
 	(
@@ -13,6 +14,7 @@ const HeroSection = forwardRef(
 			allCompleted,
 			isUploading,
 			isLoadingInsights,
+			isGeneratingInsights,
 		},
 		ref
 	) => {
@@ -31,6 +33,12 @@ const HeroSection = forwardRef(
 						Upload 20-50 of your receipts and let our AI generate valuable
 						spending insights for you.
 					</p>
+					<div className="w-full flex justify-center items-center mb-4">
+						<div className="w-[600px] h-[450px] sm:w-[700px] sm:h-[500px] lg:w-[800px] lg:h-[550px]">
+							{' '}
+							<Scene isAnimating={isGeneratingInsights} />
+						</div>
+					</div>
 
 					<div className="flex justify-center space-x-6">
 						{isLoadingInsights ? (

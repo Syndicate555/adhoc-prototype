@@ -13,7 +13,7 @@ import HeroSection from './components/HeroSection';
 import Header from './components/Header';
 import ProgressBar from './components/ProgressBar';
 import ReceiptsUploadSection from './components/ReceiptsUploadSection';
-
+import Scene from './components/3D animations/Scene';
 import InsightsSummary from './components/InsightsSummary/InsightsSummary';
 import { uploadReceipts, fetchInsights } from './services/api';
 import { getProgressPercentage } from './utilities/utils';
@@ -39,6 +39,7 @@ function App() {
 	const [isGeneratingInsights, setIsGeneratingInsights] = useState(false);
 	const globalProgressRef = useRef(null);
 	const [isUploading, setIsUploading] = useState(false);
+	const [isModelAnimating, setIsModelAnimating] = useState(false);
 	const [isLoadingInsights, setIsLoadingInsights] = useState(false);
 	const [insightsReadyNotification, setInsightsReadyNotification] =
 		useState(false);
@@ -81,12 +82,12 @@ function App() {
 				globalProgressRef.current.textContent =
 					overallProgress > 0 ? `${Math.round(overallProgress)}%` : '';
 			}
-
 			if (overallRealProgress > 0) {
 				setIsLoadingInsights(false);
 			}
 
-			if (overallRealProgress >= fakeProgress) {
+			if (overallRealProgress === 100) {
+				setIsModelAnimating(false);
 				setIsGeneratingInsights(false);
 			}
 		},
@@ -245,6 +246,7 @@ function App() {
 		setUploading(true);
 		setIsUploading(true);
 		setIsLoadingInsights(true);
+		setIsModelAnimating(true);
 		try {
 			const createdReceipts = await uploadReceipts(files, sessionId);
 			if (createdReceipts) {
@@ -263,6 +265,7 @@ function App() {
 		} catch (error) {
 			console.error('Upload failed:', error);
 			setIsLoadingInsights(false);
+			setIsModelAnimating(false);
 		} finally {
 			setUploading(false);
 		}
@@ -326,8 +329,9 @@ function App() {
 					fileInputRef={fileInputRef}
 					handleFileChange={handleFileChange}
 					allCompleted={allCompleted}
-					isUploading={isUploading} // New prop
-					isLoadingInsights={isLoadingInsights} // New prop
+					isUploading={isUploading}
+					isLoadingInsights={isLoadingInsights}
+					isGeneratingInsights={isGeneratingInsights}
 				/>
 
 				{/* Receipt Item Hierarchy */}

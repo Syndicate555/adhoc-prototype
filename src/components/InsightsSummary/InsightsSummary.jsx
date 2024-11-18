@@ -246,7 +246,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							color: '#ffffff',
 							fontWeight: 'bold',
 							marginBottom: 2,
-							fontSize: 28, // Increased font size for better prominence
+							fontSize: 28,
 						}}
 					>
 						Spending by Vendor
