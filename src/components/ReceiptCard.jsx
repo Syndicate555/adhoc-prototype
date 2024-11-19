@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaTrashAlt, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import Modal from 'react-modal';
@@ -14,6 +14,7 @@ const ReceiptCard = ({
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [zoomLevel, setZoomLevel] = useState(1);
 	const [isImageLoading, setIsImageLoading] = useState(true);
+	const modalContentRef = useRef(null);
 
 	const handleCardClick = () => {
 		setIsModalOpen(true);
@@ -22,16 +23,37 @@ const ReceiptCard = ({
 
 	const closeModal = () => {
 		setIsModalOpen(false);
-		setZoomLevel(1);
+		setZoomLevel(1); // Reset zoom level
 	};
 
-	const handleImageClick = () => {
+	const handleImageClick = (e) => {
+		// Toggle zoom level between 1x and 2x
 		setZoomLevel((prevZoom) => (prevZoom === 1 ? 2 : 1));
+
+		// Center the zoomed area around the clicked point
+		if (zoomLevel === 1 && modalContentRef.current) {
+			const rect = modalContentRef.current.getBoundingClientRect();
+			const scrollX =
+				e.clientX - rect.left + modalContentRef.current.scrollLeft;
+			const scrollY = e.clientY - rect.top + modalContentRef.current.scrollTop;
+
+			modalContentRef.current.scrollTo({
+				left: scrollX - rect.width / 2,
+				top: scrollY - rect.height / 2,
+				behavior: 'smooth',
+			});
+		}
 	};
 
 	const handleImageLoad = () => {
 		setIsImageLoading(false);
 	};
+
+	useEffect(() => {
+		if (isModalOpen && modalContentRef.current) {
+			modalContentRef.current.scrollTop = 0;
+		}
+	}, [isModalOpen]);
 
 	return (
 		<>
@@ -87,11 +109,18 @@ const ReceiptCard = ({
 			<Modal
 				isOpen={isModalOpen}
 				onRequestClose={closeModal}
-				className="receipt-modal max-w-2xl mx-auto my-10 p-5 bg-neutral-800 rounded-xl shadow-2xl outline-none"
+				className="receipt-modal max-w-2xl mx-auto bg-neutral-800 rounded-xl shadow-2xl outline-none overflow-hidden"
 				overlayClassName="receipt-overlay fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center"
 				contentLabel={`Receipt ${index + 1}`}
 			>
-				<div className="relative flex flex-col items-center">
+				{/* Modal Content */}
+				<div
+					ref={modalContentRef}
+					className="relative flex flex-col items-center w-full overflow-auto"
+					style={{
+						maxHeight: '90vh',
+					}}
+				>
 					{/* Close Button */}
 					<button
 						className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2 shadow-lg hover:bg-red-700 transition-colors z-50"
@@ -102,44 +131,43 @@ const ReceiptCard = ({
 
 					{/* Loader */}
 					{isImageLoading && (
-						<div className="w-full bg-gray-700 rounded-full h-2 mt-6 mb-6 overflow-hidden">
-							<div
-								className="bg-blue-500 h-full animate-loading-bar"
-								style={{ width: '100%' }}
-							></div>
+						<div className="flex justify-center items-center h-16 w-16 mb-4">
+							<div className="loader"></div>
 						</div>
 					)}
 
 					{/* Image */}
 					<div
-						className={`w-full max-w-2xl max-h-[80vh] overflow-auto flex justify-center items-center ${
+						className={`flex justify-center items-center ${
 							isImageLoading ? 'hidden' : ''
 						}`}
 						style={{
-							cursor: 'zoom-in',
+							width: '100%',
 						}}
-						onClick={handleImageClick}
 					>
 						<img
 							src={URL.createObjectURL(receipt.file)}
 							alt={`Receipt ${index + 1}`}
 							className="rounded-lg shadow-md transition-transform duration-300"
 							style={{
-								transform: `scale(${zoomLevel})`, // Apply zoom level
+								transform: `scale(${zoomLevel})`,
 								objectFit: 'contain',
 								cursor: zoomLevel > 1 ? 'zoom-out' : 'zoom-in',
+								maxWidth: '100%',
+								maxHeight: '100%',
 							}}
+							onClick={handleImageClick}
 							onLoad={handleImageLoad}
 						/>
 					</div>
-
-					{/* File Name */}
-					{!isImageLoading && (
-						<div className="text-center text-sm text-neutral-300 truncate px-4 mt-4">
-							File: {receipt.file.name}
-						</div>
-					)}
 				</div>
+
+				{/* Fixed Filename */}
+				{!isImageLoading && (
+					<div className="text-center text-sm text-neutral-300 truncate px-4 mt-2 mb-4">
+						File: {receipt.file.name}
+					</div>
+				)}
 			</Modal>
 		</>
 	);
