@@ -1,54 +1,35 @@
-import { resourcesLinks, platformLinks, communityLinks } from '../constants';
+import React from 'react';
+import Section from './Section';
+import { socials } from '../constants';
+
 const Footer = () => {
 	return (
 		<footer className="mt-20 border-t py-10 border-neutral-700">
-			<div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-				<div>
-					<h3 className="text-md font-semibold mb-4">Resources</h3>
-					<ul className="space-y-2">
-						{resourcesLinks.map((link, index) => (
-							<li key={index}>
-								<a
-									href={link.href}
-									className="text-neutral-300 hover:text-white"
-								>
-									{link.text}
-								</a>
-							</li>
+			<Section crosses className="!px-0 !py-10">
+				<div className="container flex sm:justify-between justify-center items-center gap-10 max-sm:flex-col">
+					<p className="caption text-n-4 lg:block">
+						© {new Date().getFullYear()}. All rights reserved.
+					</p>
+
+					<ul className="flex gap-5 flex-wrap">
+						{socials.map((item) => (
+							<a
+								key={item.id}
+								href={item.url}
+								target="_blank"
+								className="flex items-center justify-center w-10 h-10 bg-n-7 rounded-full transition-colors hover:bg-n-6"
+							>
+								<img
+									src={item.iconUrl}
+									width={16}
+									height={16}
+									alt={item.title}
+								/>
+							</a>
 						))}
 					</ul>
 				</div>
-				<div>
-					<h3 className="text-md font-semibold mb-4">Platform</h3>
-					<ul className="space-y-2">
-						{platformLinks.map((link, index) => (
-							<li key={index}>
-								<a
-									href={link.href}
-									className="text-neutral-300 hover:text-white"
-								>
-									{link.text}
-								</a>
-							</li>
-						))}
-					</ul>
-				</div>
-				<div>
-					<h3 className="text-md font-semibold mb-4">Community</h3>
-					<ul className="space-y-2">
-						{communityLinks.map((link, index) => (
-							<li key={index}>
-								<a
-									href={link.href}
-									className="text-neutral-300 hover:text-white"
-								>
-									{link.text}
-								</a>
-							</li>
-						))}
-					</ul>
-				</div>
-			</div>
+			</Section>
 		</footer>
 	);
 };

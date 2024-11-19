@@ -31,6 +31,14 @@ import {
 	WifiOff,
 } from 'lucide-react';
 
+import {
+	discordBlack,
+	facebook,
+	instagram,
+	telegram,
+	twitter,
+} from '../assets';
+
 import user1 from '../assets/profile-pictures/user1.jpg';
 import user2 from '../assets/profile-pictures/user2.jpg';
 import user3 from '../assets/profile-pictures/user3.jpg';
@@ -287,6 +295,39 @@ export const checklistItems = [
 		title: 'Share work in minutes',
 		description:
 			'Track the performance of your VR apps and gain insights into user behavior.',
+	},
+];
+
+export const socials = [
+	{
+		id: '0',
+		title: 'Discord',
+		iconUrl: discordBlack,
+		url: '#',
+	},
+	{
+		id: '1',
+		title: 'Twitter',
+		iconUrl: twitter,
+		url: '#',
+	},
+	{
+		id: '2',
+		title: 'Instagram',
+		iconUrl: instagram,
+		url: '#',
+	},
+	{
+		id: '3',
+		title: 'Telegram',
+		iconUrl: telegram,
+		url: '#',
+	},
+	{
+		id: '4',
+		title: 'Facebook',
+		iconUrl: facebook,
+		url: '#',
 	},
 ];
 
