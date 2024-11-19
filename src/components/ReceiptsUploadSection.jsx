@@ -30,7 +30,10 @@ const ReceiptsUploadSection = ({
 				</button>
 			</div>
 			{isExpanded && (
-				<div className="flex overflow-x-auto space-x-4 p-4 bg-neutral-800 rounded-xl shadow-lg">
+				<div
+					className="flex overflow-x-auto space-x-4 p-4 bg-neutral-800 rounded-xl shadow-lg"
+					style={{ backgroundColor: '#2a3f58' }}
+				>
 					{receipts.map((receipt, index) => (
 						<ReceiptCard
 							key={index}

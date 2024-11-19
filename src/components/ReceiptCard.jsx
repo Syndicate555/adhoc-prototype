@@ -12,13 +12,25 @@ const ReceiptCard = ({
 	getProgressPercentage,
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [zoomLevel, setZoomLevel] = useState(1);
+	const [isImageLoading, setIsImageLoading] = useState(true);
 
 	const handleCardClick = () => {
 		setIsModalOpen(true);
+		setIsImageLoading(true);
 	};
 
 	const closeModal = () => {
 		setIsModalOpen(false);
+		setZoomLevel(1);
+	};
+
+	const handleImageClick = () => {
+		setZoomLevel((prevZoom) => (prevZoom === 1 ? 2 : 1));
+	};
+
+	const handleImageLoad = () => {
+		setIsImageLoading(false);
 	};
 
 	return (
@@ -26,6 +38,10 @@ const ReceiptCard = ({
 			<div
 				className="bg-neutral-800 p-5 rounded-xl shadow-lg relative transform hover:scale-105 transition-transform cursor-pointer mx-2 min-w-[200px] max-w-[220px] border border-neutral-700"
 				onClick={handleCardClick}
+				style={{
+					backgroundColor: '#1f2937',
+					boxShadow: '0 4px 12px rgba(0, 0, 0, 0.6)',
+				}}
 			>
 				{!uploadFinalized && (
 					<button
@@ -56,9 +72,9 @@ const ReceiptCard = ({
 							value={getProgressPercentage(receipt.status)}
 							text={`${getProgressPercentage(receipt.status)}%`}
 							styles={buildStyles({
-								pathColor: '#00bcd4', // Bright color for better contrast
-								textColor: '#ffffff', // Ensures text is easily visible
-								trailColor: '#374151', // Matches dark theme without blending in
+								pathColor: '#00bcd4',
+								textColor: '#ffffff',
+								trailColor: '#374151',
 								textSize: '16px',
 								strokeLinecap: 'round',
 							})}
@@ -78,25 +94,51 @@ const ReceiptCard = ({
 				<div className="relative flex flex-col items-center">
 					{/* Close Button */}
 					<button
-						className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2 shadow-lg hover:bg-red-700 transition-colors"
+						className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2 shadow-lg hover:bg-red-700 transition-colors z-50"
 						onClick={closeModal}
 					>
 						<FaTimes size={20} />
 					</button>
 
+					{/* Loader */}
+					{isImageLoading && (
+						<div className="w-full bg-gray-700 rounded-full h-2 mt-6 mb-6 overflow-hidden">
+							<div
+								className="bg-blue-500 h-full animate-loading-bar"
+								style={{ width: '100%' }}
+							></div>
+						</div>
+					)}
+
 					{/* Image */}
-					<div className="w-full max-w-md mb-6">
+					<div
+						className={`w-full max-w-2xl max-h-[80vh] overflow-auto flex justify-center items-center ${
+							isImageLoading ? 'hidden' : ''
+						}`}
+						style={{
+							cursor: 'zoom-in',
+						}}
+						onClick={handleImageClick}
+					>
 						<img
 							src={URL.createObjectURL(receipt.file)}
 							alt={`Receipt ${index + 1}`}
-							className="w-full h-auto rounded-lg shadow-md"
+							className="rounded-lg shadow-md transition-transform duration-300"
+							style={{
+								transform: `scale(${zoomLevel})`, // Apply zoom level
+								objectFit: 'contain',
+								cursor: zoomLevel > 1 ? 'zoom-out' : 'zoom-in',
+							}}
+							onLoad={handleImageLoad}
 						/>
 					</div>
 
 					{/* File Name */}
-					<div className="text-center text-sm text-neutral-300 truncate px-4">
-						File: {receipt.file.name}
-					</div>
+					{!isImageLoading && (
+						<div className="text-center text-sm text-neutral-300 truncate px-4 mt-4">
+							File: {receipt.file.name}
+						</div>
+					)}
 				</div>
 			</Modal>
 		</>
