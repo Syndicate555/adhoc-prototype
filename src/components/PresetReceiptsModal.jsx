@@ -1,5 +1,3 @@
-// src/components/PresetReceiptsModal.jsx
-
 import React, { useState } from 'react';
 import receipt1Image from '../assets/preset-receipts/1.jpeg';
 import receipt2Image from '../assets/preset-receipts/2.jpeg';
