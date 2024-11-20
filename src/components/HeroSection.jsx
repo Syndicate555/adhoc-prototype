@@ -15,6 +15,7 @@ const HeroSection = forwardRef(
 			isUploading,
 			isLoadingInsights,
 			isGeneratingInsights,
+			openPresetModal,
 		},
 		ref
 	) => {
@@ -50,12 +51,20 @@ const HeroSection = forwardRef(
 						) : (
 							<>
 								{!isUploading && (
-									<button
-										onClick={handleSelectReceiptsClick}
-										className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
-									>
-										Select Receipts
-									</button>
+									<div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+										<button
+											onClick={handleSelectReceiptsClick}
+											className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
+										>
+											Select Receipts
+										</button>
+										<button
+											onClick={openPresetModal}
+											className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
+										>
+											Use Preset Receipts
+										</button>
+									</div>
 								)}
 
 								{/* Hidden File Input */}

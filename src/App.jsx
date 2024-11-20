@@ -19,6 +19,7 @@ import { uploadReceipts, fetchInsights } from './services/api';
 import { getProgressPercentage } from './utilities/utils';
 import { motion } from 'framer-motion';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import PresetReceiptsModal from './components/PresetReceiptsModal';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -35,6 +36,7 @@ function App() {
 	const [allReceiptsProcessed, setAllReceiptsProcessed] = useState(false);
 	const [loadingInsights, setLoadingInsights] = useState(false);
 	const fileInputRef = useRef(null);
+	const [isPresetModalOpen, setIsPresetModalOpen] = useState(false);
 	const [fakeProgress, setFakeProgress] = useState(0);
 	const [isGeneratingInsights, setIsGeneratingInsights] = useState(false);
 	const globalProgressRef = useRef(null);
@@ -51,7 +53,7 @@ function App() {
 			gsap.to(window, {
 				scrollTo: {
 					y: heroSectionRef.current,
-					offsetY: 50, // Adds an offset so that the section is not hidden behind the header
+					offsetY: 50,
 				},
 				duration: 1.5,
 				ease: 'power3.out',
@@ -213,6 +215,19 @@ function App() {
 		setAllCompleted(false);
 	};
 
+	const handlePresetSelection = (selectedPresetReceipts) => {
+		const newReceipts = selectedPresetReceipts.map((presetReceipt) => ({
+			receiptId: null,
+			file: presetReceipt.imageFile, // We'll need to load the image as a File object
+			status: 'PENDING',
+			isPreset: true,
+			presetData: presetReceipt, // Contains id, imageUrl, categories
+		}));
+
+		setReceipts((prevReceipts) => [...prevReceipts, ...newReceipts]);
+		setAllCompleted(false);
+	};
+
 	const handleGenerateInsights = async () => {
 		if (!receipts.length || insightsGenerated || loadingInsights) return;
 
@@ -232,7 +247,7 @@ function App() {
 	};
 
 	const handleUpload = async () => {
-		if (!files || files.length === 0) {
+		if (!receipts || receipts.length === 0) {
 			setWarningMessage(
 				'No files selected. Please add receipts before uploading.'
 			);
@@ -248,11 +263,12 @@ function App() {
 		setIsLoadingInsights(true);
 		setIsModelAnimating(true);
 		try {
-			const createdReceipts = await uploadReceipts(files, sessionId);
+			const filesToUpload = receipts.map((receipt) => receipt.file);
+			const createdReceipts = await uploadReceipts(filesToUpload, sessionId);
 			if (createdReceipts) {
 				const uploadedReceipts = createdReceipts.map((receipt, index) => ({
+					...receipts[index],
 					receiptId: receipt._id,
-					file: files[index],
 					status: 'UPLOADED',
 					job_id: receipt.job_id,
 				}));
@@ -304,7 +320,7 @@ function App() {
 					y: insightsRef.current,
 					offsetY: 50,
 				},
-				duration: 1,
+				duration: 0.5,
 				ease: 'power3.out',
 			});
 		}
@@ -324,7 +340,7 @@ function App() {
 					handleSelectReceiptsClick={handleSelectReceiptsClick}
 					handleUpload={handleUpload}
 					uploading={uploading}
-					files={files}
+					files={receipts}
 					warningMessage={warningMessage}
 					fileInputRef={fileInputRef}
 					handleFileChange={handleFileChange}
@@ -332,11 +348,17 @@ function App() {
 					isUploading={isUploading}
 					isLoadingInsights={isLoadingInsights}
 					isGeneratingInsights={isGeneratingInsights}
+					openPresetModal={() => setIsPresetModalOpen(true)}
 				/>
 
 				{/* Receipt Item Hierarchy */}
 				{/* <ReceiptHierarchyTree data={treeData} /> */}
-
+				{/* Preset Receipts Modal */}
+				<PresetReceiptsModal
+					isOpen={isPresetModalOpen}
+					onClose={() => setIsPresetModalOpen(false)}
+					handlePresetSelection={handlePresetSelection}
+				/>
 				<ProgressBar
 					globalProgressRef={globalProgressRef}
 					receipts={receipts}

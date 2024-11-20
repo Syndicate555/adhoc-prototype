@@ -27,10 +27,8 @@ const ReceiptCard = ({
 	};
 
 	const handleImageClick = (e) => {
-		// Toggle zoom level between 1x and 2x
 		setZoomLevel((prevZoom) => (prevZoom === 1 ? 2 : 1));
 
-		// Center the zoomed area around the clicked point
 		if (zoomLevel === 1 && modalContentRef.current) {
 			const rect = modalContentRef.current.getBoundingClientRect();
 			const scrollX =
@@ -54,7 +52,9 @@ const ReceiptCard = ({
 			modalContentRef.current.scrollTop = 0;
 		}
 	}, [isModalOpen]);
-
+	const imageSource = receipt.file
+		? URL.createObjectURL(receipt.file)
+		: receipt.presetData?.imageUrl;
 	return (
 		<>
 			<div
@@ -78,13 +78,13 @@ const ReceiptCard = ({
 				)}
 				<div className="w-full h-32 mb-4 overflow-hidden rounded-xl">
 					<img
-						src={URL.createObjectURL(receipt.file)}
+						src={imageSource}
 						alt={`Receipt ${index + 1}`}
 						className="w-full h-full object-cover"
 					/>
 				</div>
 				<div className="text-center text-xs text-neutral-300 mb-4 truncate px-2">
-					{receipt.file.name}
+					{receipt.file?.name || receipt.presetData?.id}
 				</div>
 				<div className="w-16 h-16 mx-auto">
 					{receipt.status === 'COMPLETED' ? (
