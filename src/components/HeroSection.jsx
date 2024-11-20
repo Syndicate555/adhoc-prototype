@@ -56,7 +56,7 @@ const HeroSection = forwardRef(
 											onClick={handleSelectReceiptsClick}
 											className="bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white font-bold py-3 px-8 rounded-md shadow-lg transform hover:scale-105 transition-transform"
 										>
-											Select Receipts
+											Upload your own Receipts
 										</button>
 										<button
 											onClick={openPresetModal}
