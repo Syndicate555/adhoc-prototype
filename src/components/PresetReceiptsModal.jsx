@@ -124,6 +124,7 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 									>
 										{/* Receipt Image */}
 										<img
+											loading="lazy"
 											src={receipt.imageUrl}
 											alt={`Receipt ${receipt.id}`}
 											className="w-full h-40 object-cover"
