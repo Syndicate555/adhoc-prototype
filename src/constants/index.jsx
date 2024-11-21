@@ -38,643 +38,2550 @@ import {
 	FaThLarge,
 } from 'react-icons/fa';
 
-import receipt1Image from '../assets/preset-receipts/Groceries/1.jpeg';
-import receipt2Image from '../assets/preset-receipts/Groceries/10.jpeg';
-import receipt3Image from '../assets/preset-receipts/Groceries/11.jpeg';
-import receipt4Image from '../assets/preset-receipts/Groceries/12.jpeg';
-import receipt5Image from '../assets/preset-receipts/Groceries/13.jpeg';
-import receipt6Image from '../assets/preset-receipts/Groceries/14.jpeg';
-import receipt7Image from '../assets/preset-receipts/Groceries/15.jpeg';
-import receipt8Image from '../assets/preset-receipts/Groceries/16.jpeg';
-import receipt9Image from '../assets/preset-receipts/Groceries/17.jpeg';
-import receipt10Image from '../assets/preset-receipts/Groceries/18.jpeg';
-import receipt11Image from '../assets/preset-receipts/Groceries/19.jpeg';
-import receipt12Image from '../assets/preset-receipts/Groceries/2.jpeg';
-import receipt13Image from '../assets/preset-receipts/Groceries/20.jpeg';
-import receipt14Image from '../assets/preset-receipts/Groceries/21.jpeg';
-import receipt15Image from '../assets/preset-receipts/Groceries/22.jpeg';
-import receipt16Image from '../assets/preset-receipts/Groceries/23.jpeg';
-import receipt17Image from '../assets/preset-receipts/Groceries/24.jpeg';
-import receipt18Image from '../assets/preset-receipts/Groceries/25.jpeg';
-import receipt19Image from '../assets/preset-receipts/Groceries/26.jpeg';
-import receipt20Image from '../assets/preset-receipts/Groceries/27.jpeg';
-import receipt21Image from '../assets/preset-receipts/Groceries/28.jpeg';
-import receipt22Image from '../assets/preset-receipts/Groceries/29.jpeg';
-import receipt23Image from '../assets/preset-receipts/Groceries/3.jpeg';
-import receipt24Image from '../assets/preset-receipts/Groceries/30.jpeg';
-import receipt25Image from '../assets/preset-receipts/Groceries/31.jpeg';
-import receipt26Image from '../assets/preset-receipts/Groceries/32.jpeg';
-import receipt27Image from '../assets/preset-receipts/Groceries/33.jpeg';
-import receipt28Image from '../assets/preset-receipts/Groceries/34.jpeg';
-import receipt29Image from '../assets/preset-receipts/Groceries/35.jpeg';
-import receipt30Image from '../assets/preset-receipts/Groceries/36.jpeg';
-import receipt31Image from '../assets/preset-receipts/Groceries/37.jpeg';
-import receipt32Image from '../assets/preset-receipts/Groceries/38.jpeg';
-import receipt33Image from '../assets/preset-receipts/Groceries/39.jpeg';
-import receipt34Image from '../assets/preset-receipts/Groceries/4.jpeg';
-import receipt35Image from '../assets/preset-receipts/Groceries/40.jpeg';
-import receipt36Image from '../assets/preset-receipts/Groceries/41.jpeg';
-import receipt37Image from '../assets/preset-receipts/Groceries/42.jpeg';
-import receipt38Image from '../assets/preset-receipts/Groceries/43.jpeg';
-import receipt39Image from '../assets/preset-receipts/Groceries/44.jpeg';
-import receipt40Image from '../assets/preset-receipts/Groceries/45.jpeg';
-import receipt41Image from '../assets/preset-receipts/Groceries/46.jpeg';
-import receipt42Image from '../assets/preset-receipts/Groceries/5.jpeg';
-import receipt43Image from '../assets/preset-receipts/Groceries/6.jpeg';
-import receipt44Image from '../assets/preset-receipts/Groceries/7.jpeg';
-import receipt45Image from '../assets/preset-receipts/Groceries/8.jpeg';
-import receipt46Image from '../assets/preset-receipts/Groceries/9.jpeg';
-import receipt47Image from '../assets/preset-receipts/Groceries/refund.jpeg';
-import receipt48Image from '../assets/preset-receipts/Gas/1.jpeg';
-import receipt49Image from '../assets/preset-receipts/Gas/10.jpeg';
-import receipt50Image from '../assets/preset-receipts/Gas/11.jpeg';
-import receipt51Image from '../assets/preset-receipts/Gas/12.jpeg';
-import receipt52Image from '../assets/preset-receipts/Gas/13.jpeg';
-import receipt53Image from '../assets/preset-receipts/Gas/14.jpeg';
-import receipt54Image from '../assets/preset-receipts/Gas/15.jpeg';
-import receipt55Image from '../assets/preset-receipts/Gas/16.jpeg';
-import receipt56Image from '../assets/preset-receipts/Gas/17.jpeg';
-import receipt57Image from '../assets/preset-receipts/Gas/18.jpeg';
-import receipt58Image from '../assets/preset-receipts/Gas/19.jpeg';
-import receipt59Image from '../assets/preset-receipts/Gas/2.jpeg';
-import receipt60Image from '../assets/preset-receipts/Gas/20.jpeg';
-import receipt61Image from '../assets/preset-receipts/Gas/21.jpeg';
-import receipt62Image from '../assets/preset-receipts/Gas/22.jpeg';
-import receipt63Image from '../assets/preset-receipts/Gas/23.jpeg';
-import receipt64Image from '../assets/preset-receipts/Gas/24.jpeg';
-import receipt65Image from '../assets/preset-receipts/Gas/25.jpeg';
-import receipt66Image from '../assets/preset-receipts/Gas/26.jpeg';
-import receipt67Image from '../assets/preset-receipts/Gas/27.jpeg';
-import receipt68Image from '../assets/preset-receipts/Gas/28.jpeg';
-import receipt69Image from '../assets/preset-receipts/Gas/3.jpeg';
-import receipt70Image from '../assets/preset-receipts/Gas/4.jpeg';
-import receipt71Image from '../assets/preset-receipts/Gas/5.jpeg';
-import receipt72Image from '../assets/preset-receipts/Gas/6.jpeg';
-import receipt73Image from '../assets/preset-receipts/Gas/7.jpeg';
-import receipt74Image from '../assets/preset-receipts/Gas/8.jpeg';
-import receipt75Image from '../assets/preset-receipts/Gas/9.jpeg';
-import receipt76Image from '../assets/preset-receipts/Restaurants/1.jpeg';
-import receipt77Image from '../assets/preset-receipts/Restaurants/10.jpeg';
-import receipt78Image from '../assets/preset-receipts/Restaurants/11.jpeg';
-import receipt79Image from '../assets/preset-receipts/Restaurants/12.jpeg';
-import receipt80Image from '../assets/preset-receipts/Restaurants/13.jpeg';
-import receipt81Image from '../assets/preset-receipts/Restaurants/14.jpeg';
-import receipt82Image from '../assets/preset-receipts/Restaurants/15.jpeg';
-import receipt83Image from '../assets/preset-receipts/Restaurants/16.jpeg';
-import receipt84Image from '../assets/preset-receipts/Restaurants/17.jpeg';
-import receipt85Image from '../assets/preset-receipts/Restaurants/18.jpeg';
-import receipt86Image from '../assets/preset-receipts/Restaurants/2.jpeg';
-import receipt87Image from '../assets/preset-receipts/Restaurants/3.jpeg';
-import receipt88Image from '../assets/preset-receipts/Restaurants/4.jpeg';
-import receipt89Image from '../assets/preset-receipts/Restaurants/5.jpeg';
-import receipt90Image from '../assets/preset-receipts/Restaurants/6.jpeg';
-import receipt91Image from '../assets/preset-receipts/Restaurants/7.jpeg';
-import receipt92Image from '../assets/preset-receipts/Restaurants/8.jpeg';
-import receipt93Image from '../assets/preset-receipts/Restaurants/9.jpeg';
-import receipt94Image from '../assets/preset-receipts/Shopping/1.jpeg';
-import receipt95Image from '../assets/preset-receipts/Shopping/10.jpeg';
-import receipt96Image from '../assets/preset-receipts/Shopping/11.jpeg';
-import receipt97Image from '../assets/preset-receipts/Shopping/12.jpeg';
-import receipt98Image from '../assets/preset-receipts/Shopping/13.jpeg';
-import receipt99Image from '../assets/preset-receipts/Shopping/2.jpeg';
-import receipt100Image from '../assets/preset-receipts/Shopping/3.jpeg';
-import receipt101Image from '../assets/preset-receipts/Shopping/4.jpeg';
-import receipt102Image from '../assets/preset-receipts/Shopping/5.jpeg';
-import receipt103Image from '../assets/preset-receipts/Shopping/6.jpeg';
-import receipt104Image from '../assets/preset-receipts/Shopping/7.jpeg';
-import receipt105Image from '../assets/preset-receipts/Shopping/8.jpeg';
-import receipt106Image from '../assets/preset-receipts/Shopping/9.jpeg';
-
 export const presetReceipts = [
 	{
-		id: 'receipt1',
-		imageUrl: receipt1Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt2',
-		imageUrl: receipt2Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt3',
-		imageUrl: receipt3Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt4',
-		imageUrl: receipt4Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt5',
-		imageUrl: receipt5Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt6',
-		imageUrl: receipt6Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt7',
-		imageUrl: receipt7Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt8',
-		imageUrl: receipt8Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt9',
-		imageUrl: receipt9Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt10',
-		imageUrl: receipt10Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt11',
-		imageUrl: receipt11Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt12',
-		imageUrl: receipt12Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt13',
-		imageUrl: receipt13Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt14',
-		imageUrl: receipt14Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt15',
-		imageUrl: receipt15Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt16',
-		imageUrl: receipt16Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt17',
-		imageUrl: receipt17Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt18',
-		imageUrl: receipt18Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt19',
-		imageUrl: receipt19Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt20',
-		imageUrl: receipt20Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt21',
-		imageUrl: receipt21Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt22',
-		imageUrl: receipt22Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt23',
-		imageUrl: receipt23Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt24',
-		imageUrl: receipt24Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt25',
-		imageUrl: receipt25Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt26',
-		imageUrl: receipt26Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt27',
-		imageUrl: receipt27Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt28',
-		imageUrl: receipt28Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt29',
-		imageUrl: receipt29Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt30',
-		imageUrl: receipt30Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt31',
-		imageUrl: receipt31Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt32',
-		imageUrl: receipt32Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt33',
-		imageUrl: receipt33Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt34',
-		imageUrl: receipt34Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt35',
-		imageUrl: receipt35Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt36',
-		imageUrl: receipt36Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt37',
-		imageUrl: receipt37Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt38',
-		imageUrl: receipt38Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt39',
-		imageUrl: receipt39Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt40',
-		imageUrl: receipt40Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt41',
-		imageUrl: receipt41Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt42',
-		imageUrl: receipt42Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt43',
-		imageUrl: receipt43Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt44',
-		imageUrl: receipt44Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt45',
-		imageUrl: receipt45Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt46',
-		imageUrl: receipt46Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt47',
-		imageUrl: receipt47Image,
-		categories: ['groceries'],
-	},
-	{
-		id: 'receipt48',
-		imageUrl: receipt48Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt49',
-		imageUrl: receipt49Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt50',
-		imageUrl: receipt50Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt51',
-		imageUrl: receipt51Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt52',
-		imageUrl: receipt52Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt53',
-		imageUrl: receipt53Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt54',
-		imageUrl: receipt54Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt55',
-		imageUrl: receipt55Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt56',
-		imageUrl: receipt56Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt57',
-		imageUrl: receipt57Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt58',
-		imageUrl: receipt58Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt59',
-		imageUrl: receipt59Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt60',
-		imageUrl: receipt60Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt61',
-		imageUrl: receipt61Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt62',
-		imageUrl: receipt62Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt63',
-		imageUrl: receipt63Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt64',
-		imageUrl: receipt64Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt65',
-		imageUrl: receipt65Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt66',
-		imageUrl: receipt66Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt67',
-		imageUrl: receipt67Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt68',
-		imageUrl: receipt68Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt69',
-		imageUrl: receipt69Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt70',
-		imageUrl: receipt70Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt71',
-		imageUrl: receipt71Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt72',
-		imageUrl: receipt72Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt73',
-		imageUrl: receipt73Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt74',
-		imageUrl: receipt74Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt75',
-		imageUrl: receipt75Image,
-		categories: ['gas'],
-	},
-	{
-		id: 'receipt76',
-		imageUrl: receipt76Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt77',
-		imageUrl: receipt77Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt78',
-		imageUrl: receipt78Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt79',
-		imageUrl: receipt79Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt80',
-		imageUrl: receipt80Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt81',
-		imageUrl: receipt81Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt82',
-		imageUrl: receipt82Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt83',
-		imageUrl: receipt83Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt84',
-		imageUrl: receipt84Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt85',
-		imageUrl: receipt85Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt86',
-		imageUrl: receipt86Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt87',
-		imageUrl: receipt87Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt88',
-		imageUrl: receipt88Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt89',
-		imageUrl: receipt89Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt90',
-		imageUrl: receipt90Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt91',
-		imageUrl: receipt91Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt92',
-		imageUrl: receipt92Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt93',
-		imageUrl: receipt93Image,
-		categories: ['restaurants'],
-	},
-	{
-		id: 'receipt94',
-		imageUrl: receipt94Image,
+		id: 'receipt_groceries_1',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153654/13_ixxb8c.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt95',
-		imageUrl: receipt95Image,
+		id: 'receipt_groceries_2',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/12_fkfkpa.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt96',
-		imageUrl: receipt96Image,
+		id: 'receipt_groceries_3',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/11_mxbrye.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt97',
-		imageUrl: receipt97Image,
+		id: 'receipt_groceries_4',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/10_thsbs2.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt98',
-		imageUrl: receipt98Image,
+		id: 'receipt_groceries_5',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/9_zsmdbh.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt99',
-		imageUrl: receipt99Image,
+		id: 'receipt_groceries_6',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/8_nefhva.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt100',
-		imageUrl: receipt100Image,
+		id: 'receipt_groceries_7',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/7_yvua0y.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt101',
-		imageUrl: receipt101Image,
+		id: 'receipt_groceries_8',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/6_y8lklm.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt102',
-		imageUrl: receipt102Image,
+		id: 'receipt_groceries_9',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/5_oqjual.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt103',
-		imageUrl: receipt103Image,
+		id: 'receipt_groceries_10',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/4_b3auho.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt104',
-		imageUrl: receipt104Image,
+		id: 'receipt_groceries_11',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/3_gqz9pc.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt105',
-		imageUrl: receipt105Image,
+		id: 'receipt_groceries_12',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/2_ecxbuz.jpg',
 		categories: ['shopping'],
 	},
 	{
-		id: 'receipt106',
-		imageUrl: receipt106Image,
+		id: 'receipt_groceries_13',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/1_qqjqbx.jpg',
 		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_groceries_14',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/18_dlgj6y.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_15',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/17_bkhq8k.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_16',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153626/15_pcxtkh.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_17',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/14_nhshr1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_18',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/13_gdj7u1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_19',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153624/12_jjbeze.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_20',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/11_jnmidp.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_21',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/10_dtfmwb.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_22',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153622/9_oidxy6.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_23',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/8_ens9e5.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_24',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/7_vtgo9e.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_25',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/6_rfokse.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_26',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/5_dmjvcv.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_27',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/4_hnnlvs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_28',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/3_dqol01.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_29',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/2_zmukxs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_30',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/1_ubyzmk.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_31',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/16_mn5zxu.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_groceries_32',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/28_uykdho.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_33',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/27_mcd3ol.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_34',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/26_vuafp8.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_35',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/25_mkhsqf.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_36',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/24_cuhh2w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_37',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/22_tov1et.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_38',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/23_jb66sm.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_39',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/21_fntulq.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_40',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/20_ctepd2.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_41',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/19_jhii4j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_42',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/18_xuyn3k.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_43',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/17_ulc7bh.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_44',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/16_cv4agn.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_45',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/15_qbmj3w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_46',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/14_fklpwo.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_47',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/13_j8ktit.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_48',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/12_cv017e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_49',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/11_zzuqfw.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_50',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/10_okqmhy.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_51',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/9_k6g9lj.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_52',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/8_poid6f.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_53',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/7_ht6jfl.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_54',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/6_zbu16e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_55',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/4_kycml9.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_56',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/5_ijkqqt.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_57',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/3_xs8znz.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_58',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/2_lk2fpk.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_59',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/1_cxkg1j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_groceries_60',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/46_duf8h2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_61',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/refund_l98sll.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_62',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153369/45_f53m9j.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_63',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153368/44_mpse8i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_64',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153367/43_rep95d.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_65',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/41_palnix.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_66',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/42_fxxrkh.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_67',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/40_shkxjb.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_68',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/38_fpznht.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_69',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/39_jjsvme.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_70',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/37_e66zoj.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_71',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/35_zwdfvi.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_72',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/36_yutypc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_73',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/32_kcftp2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_74',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/31_jkl8p3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_75',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/33_vvuweq.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_76',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/34_pkvgag.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_77',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/30_eqkbk3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_78',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/29_qb0wwk.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_79',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/28_thmnzl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_80',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/26_vvdub7.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_81',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/25_hk2blf.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_82',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/24_dqox4v.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_83',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/27_w2fhj4.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_84',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/19_zoboiz.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_85',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/22_tjwvlc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_86',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/23_w9dbvl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_87',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/21_fado39.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_88',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/20_dvm0w8.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_89',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/18_x39iws.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_90',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/17_rnhx4f.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_91',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/16_cafgtp.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_92',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/14_od4g0l.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_93',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/15_vwc5ei.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_94',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/10_e8l4wl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_95',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/13_td1llo.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_96',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/11_ebjzbw.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_97',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/12_wqic32.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_98',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/9_twqu6w.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_99',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/3_gk5k7i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_100',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/2_xk3oge.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_101',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/7_sj56ph.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_102',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/6_uqwwno.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_103',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/8_dumsui.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_104',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/4_iad3ae.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_105',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/5_syzjid.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_groceries_106',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153348/1_bcyyn6.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_1',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153654/13_ixxb8c.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_2',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/12_fkfkpa.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_3',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/11_mxbrye.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_4',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/10_thsbs2.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_5',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/9_zsmdbh.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_6',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/8_nefhva.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_7',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/7_yvua0y.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_8',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/6_y8lklm.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_9',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/5_oqjual.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_10',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/4_b3auho.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_11',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/3_gqz9pc.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_12',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/2_ecxbuz.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_13',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/1_qqjqbx.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_gas_14',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/18_dlgj6y.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_15',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/17_bkhq8k.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_16',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153626/15_pcxtkh.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_17',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/14_nhshr1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_18',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/13_gdj7u1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_19',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153624/12_jjbeze.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_20',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/11_jnmidp.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_21',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/10_dtfmwb.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_22',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153622/9_oidxy6.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_23',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/8_ens9e5.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_24',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/7_vtgo9e.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_25',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/6_rfokse.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_26',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/5_dmjvcv.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_27',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/4_hnnlvs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_28',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/3_dqol01.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_29',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/2_zmukxs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_30',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/1_ubyzmk.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_31',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/16_mn5zxu.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_gas_32',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/28_uykdho.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_33',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/27_mcd3ol.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_34',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/26_vuafp8.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_35',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/25_mkhsqf.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_36',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/24_cuhh2w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_37',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/22_tov1et.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_38',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/23_jb66sm.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_39',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/21_fntulq.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_40',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/20_ctepd2.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_41',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/19_jhii4j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_42',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/18_xuyn3k.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_43',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/17_ulc7bh.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_44',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/16_cv4agn.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_45',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/15_qbmj3w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_46',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/14_fklpwo.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_47',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/13_j8ktit.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_48',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/12_cv017e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_49',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/11_zzuqfw.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_50',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/10_okqmhy.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_51',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/9_k6g9lj.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_52',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/8_poid6f.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_53',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/7_ht6jfl.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_54',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/6_zbu16e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_55',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/4_kycml9.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_56',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/5_ijkqqt.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_57',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/3_xs8znz.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_58',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/2_lk2fpk.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_59',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/1_cxkg1j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_gas_60',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/46_duf8h2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_61',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/refund_l98sll.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_62',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153369/45_f53m9j.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_63',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153368/44_mpse8i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_64',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153367/43_rep95d.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_65',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/41_palnix.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_66',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/42_fxxrkh.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_67',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/40_shkxjb.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_68',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/38_fpznht.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_69',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/39_jjsvme.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_70',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/37_e66zoj.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_71',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/35_zwdfvi.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_72',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/36_yutypc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_73',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/32_kcftp2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_74',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/31_jkl8p3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_75',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/33_vvuweq.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_76',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/34_pkvgag.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_77',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/30_eqkbk3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_78',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/29_qb0wwk.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_79',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/28_thmnzl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_80',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/26_vvdub7.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_81',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/25_hk2blf.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_82',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/24_dqox4v.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_83',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/27_w2fhj4.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_84',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/19_zoboiz.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_85',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/22_tjwvlc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_86',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/23_w9dbvl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_87',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/21_fado39.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_88',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/20_dvm0w8.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_89',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/18_x39iws.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_90',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/17_rnhx4f.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_91',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/16_cafgtp.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_92',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/14_od4g0l.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_93',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/15_vwc5ei.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_94',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/10_e8l4wl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_95',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/13_td1llo.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_96',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/11_ebjzbw.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_97',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/12_wqic32.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_98',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/9_twqu6w.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_99',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/3_gk5k7i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_100',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/2_xk3oge.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_101',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/7_sj56ph.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_102',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/6_uqwwno.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_103',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/8_dumsui.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_104',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/4_iad3ae.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_105',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/5_syzjid.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_gas_106',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153348/1_bcyyn6.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_1',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153654/13_ixxb8c.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_2',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/12_fkfkpa.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_3',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/11_mxbrye.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_4',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/10_thsbs2.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_5',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/9_zsmdbh.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_6',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/8_nefhva.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_7',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/7_yvua0y.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_8',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/6_y8lklm.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_9',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/5_oqjual.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_10',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/4_b3auho.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_11',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/3_gqz9pc.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_12',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/2_ecxbuz.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_13',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/1_qqjqbx.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_restaurants_14',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/18_dlgj6y.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_15',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/17_bkhq8k.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_16',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153626/15_pcxtkh.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_17',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/14_nhshr1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_18',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/13_gdj7u1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_19',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153624/12_jjbeze.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_20',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/11_jnmidp.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_21',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/10_dtfmwb.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_22',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153622/9_oidxy6.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_23',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/8_ens9e5.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_24',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/7_vtgo9e.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_25',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/6_rfokse.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_26',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/5_dmjvcv.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_27',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/4_hnnlvs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_28',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/3_dqol01.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_29',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/2_zmukxs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_30',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/1_ubyzmk.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_31',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/16_mn5zxu.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_restaurants_32',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/28_uykdho.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_33',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/27_mcd3ol.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_34',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/26_vuafp8.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_35',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/25_mkhsqf.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_36',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/24_cuhh2w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_37',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/22_tov1et.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_38',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/23_jb66sm.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_39',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/21_fntulq.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_40',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/20_ctepd2.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_41',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/19_jhii4j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_42',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/18_xuyn3k.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_43',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/17_ulc7bh.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_44',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/16_cv4agn.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_45',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/15_qbmj3w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_46',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/14_fklpwo.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_47',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/13_j8ktit.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_48',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/12_cv017e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_49',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/11_zzuqfw.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_50',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/10_okqmhy.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_51',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/9_k6g9lj.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_52',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/8_poid6f.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_53',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/7_ht6jfl.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_54',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/6_zbu16e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_55',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/4_kycml9.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_56',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/5_ijkqqt.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_57',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/3_xs8znz.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_58',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/2_lk2fpk.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_59',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/1_cxkg1j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_restaurants_60',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/46_duf8h2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_61',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/refund_l98sll.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_62',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153369/45_f53m9j.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_63',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153368/44_mpse8i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_64',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153367/43_rep95d.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_65',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/41_palnix.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_66',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/42_fxxrkh.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_67',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/40_shkxjb.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_68',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/38_fpznht.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_69',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/39_jjsvme.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_70',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/37_e66zoj.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_71',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/35_zwdfvi.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_72',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/36_yutypc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_73',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/32_kcftp2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_74',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/31_jkl8p3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_75',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/33_vvuweq.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_76',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/34_pkvgag.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_77',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/30_eqkbk3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_78',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/29_qb0wwk.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_79',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/28_thmnzl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_80',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/26_vvdub7.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_81',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/25_hk2blf.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_82',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/24_dqox4v.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_83',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/27_w2fhj4.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_84',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/19_zoboiz.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_85',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/22_tjwvlc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_86',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/23_w9dbvl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_87',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/21_fado39.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_88',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/20_dvm0w8.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_89',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/18_x39iws.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_90',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/17_rnhx4f.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_91',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/16_cafgtp.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_92',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/14_od4g0l.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_93',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/15_vwc5ei.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_94',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/10_e8l4wl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_95',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/13_td1llo.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_96',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/11_ebjzbw.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_97',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/12_wqic32.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_98',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/9_twqu6w.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_99',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/3_gk5k7i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_100',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/2_xk3oge.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_101',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/7_sj56ph.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_102',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/6_uqwwno.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_103',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/8_dumsui.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_104',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/4_iad3ae.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_105',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/5_syzjid.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_restaurants_106',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153348/1_bcyyn6.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_1',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153654/13_ixxb8c.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_2',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/12_fkfkpa.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_3',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153652/11_mxbrye.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_4',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/10_thsbs2.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_5',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153651/9_zsmdbh.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_6',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/8_nefhva.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_7',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153650/7_yvua0y.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_8',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/6_y8lklm.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_9',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153649/5_oqjual.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_10',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/4_b3auho.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_11',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153648/3_gqz9pc.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_12',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/2_ecxbuz.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_13',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153647/1_qqjqbx.jpg',
+		categories: ['shopping'],
+	},
+	{
+		id: 'receipt_shopping_14',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/18_dlgj6y.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_15',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153627/17_bkhq8k.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_16',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153626/15_pcxtkh.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_17',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/14_nhshr1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_18',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153625/13_gdj7u1.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_19',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153624/12_jjbeze.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_20',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/11_jnmidp.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_21',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153623/10_dtfmwb.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_22',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153622/9_oidxy6.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_23',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/8_ens9e5.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_24',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153621/7_vtgo9e.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_25',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/6_rfokse.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_26',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/5_dmjvcv.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_27',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153620/4_hnnlvs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_28',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/3_dqol01.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_29',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153619/2_zmukxs.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_30',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/1_ubyzmk.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_31',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153618/16_mn5zxu.jpg',
+		categories: ['restaurants'],
+	},
+	{
+		id: 'receipt_shopping_32',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/28_uykdho.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_33',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153434/27_mcd3ol.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_34',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/26_vuafp8.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_35',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/25_mkhsqf.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_36',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153433/24_cuhh2w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_37',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/22_tov1et.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_38',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/23_jb66sm.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_39',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153432/21_fntulq.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_40',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/20_ctepd2.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_41',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/19_jhii4j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_42',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153431/18_xuyn3k.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_43',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/17_ulc7bh.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_44',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153430/16_cv4agn.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_45',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/15_qbmj3w.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_46',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/14_fklpwo.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_47',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153429/13_j8ktit.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_48',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/12_cv017e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_49',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/11_zzuqfw.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_50',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153428/10_okqmhy.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_51',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/9_k6g9lj.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_52',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/8_poid6f.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_53',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/7_ht6jfl.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_54',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153427/6_zbu16e.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_55',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/4_kycml9.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_56',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/5_ijkqqt.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_57',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/3_xs8znz.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_58',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/2_lk2fpk.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_59',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153426/1_cxkg1j.jpg',
+		categories: ['gas'],
+	},
+	{
+		id: 'receipt_shopping_60',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/46_duf8h2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_61',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153370/refund_l98sll.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_62',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153369/45_f53m9j.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_63',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153368/44_mpse8i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_64',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153367/43_rep95d.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_65',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/41_palnix.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_66',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/42_fxxrkh.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_67',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153366/40_shkxjb.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_68',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/38_fpznht.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_69',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153365/39_jjsvme.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_70',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/37_e66zoj.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_71',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/35_zwdfvi.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_72',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153363/36_yutypc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_73',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/32_kcftp2.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_74',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/31_jkl8p3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_75',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/33_vvuweq.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_76',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153362/34_pkvgag.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_77',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/30_eqkbk3.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_78',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/29_qb0wwk.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_79',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153361/28_thmnzl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_80',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/26_vvdub7.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_81',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153355/25_hk2blf.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_82',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/24_dqox4v.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_83',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/27_w2fhj4.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_84',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/19_zoboiz.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_85',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/22_tjwvlc.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_86',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/23_w9dbvl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_87',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153354/21_fado39.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_88',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/20_dvm0w8.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_89',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/18_x39iws.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_90',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153353/17_rnhx4f.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_91',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/16_cafgtp.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_92',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/14_od4g0l.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_93',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153352/15_vwc5ei.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_94',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/10_e8l4wl.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_95',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/13_td1llo.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_96',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/11_ebjzbw.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_97',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153351/12_wqic32.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_98',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/9_twqu6w.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_99',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/3_gk5k7i.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_100',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/2_xk3oge.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_101',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/7_sj56ph.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_102',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153350/6_uqwwno.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_103',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/8_dumsui.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_104',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/4_iad3ae.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_105',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153349/5_syzjid.jpg',
+		categories: ['groceries'],
+	},
+	{
+		id: 'receipt_shopping_106',
+		imageUrl:
+			'https://res.cloudinary.com/dsdumoonx/image/upload/v1732153348/1_bcyyn6.jpg',
+		categories: ['groceries'],
 	},
 ];
 

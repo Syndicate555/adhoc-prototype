@@ -1,6 +1,3 @@
-import video1 from '../assets/3.mp4';
-import video2 from '../assets/2.mp4';
-
 const HeroSectionProd = ({ handleScrollToDemo }) => {
 	return (
 		<section className="flex-1 flex flex-col items-center justify-start text-center pt-4">
