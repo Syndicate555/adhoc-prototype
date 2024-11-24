@@ -45,7 +45,6 @@
 		"react-on-screen": "^2.1.1",
 		"recharts": "^2.13.3",
 		"socket.io-client": "^4.8.0",
-		"spark-md5": "^3.0.2",
 		"swiper": "^9.3.1",
 		"three": "^0.163.0",
 		"uuid": "^11.0.2"
