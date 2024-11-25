@@ -12,10 +12,11 @@ cloudinary.config({
 	api_key: '467231835958911',
 	api_secret: '9W2G0K5UVGf9nmZH6W9cEmz3yuo',
 });
+
 // Define the output file where the generated code will be written
 const outputFile = path.join(__dirname, '../constants/output.jsx');
 
-// Define the categories corresponding to your folders in Cloudinary
+// Define the categories based on folder names in cloudinary
 const categoriesList = ['Groceries', 'Gas', 'Restaurants', 'Shopping'];
 
 // Initialize arrays to hold presetReceipts entries
