@@ -30,7 +30,7 @@ import { FaShoppingCart, FaGasPump, FaUtensils, FaShoppingBag, FaThLarge } from 
 async function fetchImagesForCategory(category) {
 	const options = {
 		type: 'upload',
-		max_results: 500, // Adjust if you have more than 500 images per category
+		max_results: 500,
 	};
 
 	const resources = [];
