@@ -172,6 +172,8 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 				>
 					&times;
 				</button>
+				<br />
+				<br />
 				{/* Header */}
 				<div className="mb-4 px-6 pt-6 flex-shrink-0 text-center">
 					<h2 className="text-3xl font-bold mb-2">Select Preset Receipts</h2>
