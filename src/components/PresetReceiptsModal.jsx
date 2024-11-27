@@ -1,57 +1,163 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
 import { presetReceipts, categories } from '../constants';
+import LazyLoad from 'react-lazyload';
+import { FixedSizeGrid as Grid } from 'react-window';
+
+const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
+	const optimizedImageUrl = useMemo(
+		() =>
+			receipt.imageUrl.replace(
+				'/upload/',
+				'/upload/w_200,h_300,c_fill,q_auto,f_auto/'
+			),
+		[receipt.imageUrl]
+	);
+
+	return (
+		<div
+			className={`relative border rounded-lg overflow-hidden cursor-pointer ${
+				isSelected ? 'border-blue-500' : 'border-gray-700'
+			}`}
+			onClick={() => onToggle(receipt)}
+		>
+			<LazyLoad height={200} offset={100}>
+				<img
+					src={optimizedImageUrl}
+					alt={`Receipt ${receipt.id}`}
+					className="w-full h-40 object-cover"
+				/>
+			</LazyLoad>
+			{isSelected && (
+				<div className="absolute inset-0 bg-blue-600 bg-opacity-50 flex items-center justify-center">
+					<FaCheckCircle className="text-white text-4xl" />
+				</div>
+			)}
+			<div className="p-2">
+				<p className="text-sm text-gray-300">
+					Categories: {receipt.categories.join(', ')}
+				</p>
+			</div>
+		</div>
+	);
+});
+
+const ReceiptGrid = ({
+	receipts,
+	selectedReceipts,
+	toggleReceiptSelection,
+}) => {
+	const columnCount = 4;
+	const columnWidth = 250;
+	const rowHeight = 300;
+	const width = columnWidth * columnCount;
+	const rowCount = Math.ceil(receipts.length / columnCount);
+	const height = Math.min(rowCount * rowHeight, 600); // Limit height for better UX
+
+	return (
+		<Grid
+			columnCount={columnCount}
+			columnWidth={columnWidth}
+			height={height}
+			rowCount={rowCount}
+			rowHeight={rowHeight}
+			width={width}
+		>
+			{({ columnIndex, rowIndex, style }) => {
+				const index = rowIndex * columnCount + columnIndex;
+				if (index >= receipts.length) return null;
+				const receipt = receipts[index];
+				return (
+					<div style={style}>
+						<ReceiptItem
+							receipt={receipt}
+							isSelected={selectedReceipts.includes(receipt)}
+							onToggle={toggleReceiptSelection}
+						/>
+					</div>
+				);
+			}}
+		</Grid>
+	);
+};
+
 const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
+	// Hook calls must be at the top level
 	const [selectedReceipts, setSelectedReceipts] = useState([]);
 	const [activeCategory, setActiveCategory] = useState('all');
 
-	if (!isOpen) return null;
+	const toggleReceiptSelection = useCallback(
+		(receipt) => {
+			setSelectedReceipts((prevSelected) =>
+				prevSelected.includes(receipt)
+					? prevSelected.filter((r) => r !== receipt)
+					: [...prevSelected, receipt]
+			);
+		},
+		[setSelectedReceipts]
+	);
 
-	const toggleReceiptSelection = (receipt) => {
-		if (selectedReceipts.includes(receipt)) {
-			setSelectedReceipts(selectedReceipts.filter((r) => r !== receipt));
-		} else {
-			setSelectedReceipts([...selectedReceipts, receipt]);
-		}
-	};
-
-	const handleCategoryChange = (categoryValue) => {
+	const handleCategoryChange = useCallback((categoryValue) => {
 		setActiveCategory(categoryValue);
-	};
+	}, []);
 
-	const filteredReceipts = presetReceipts.filter((receipt) => {
-		if (activeCategory === 'all') return true;
-		return receipt.categories.some(
-			(category) => category.toLowerCase() === activeCategory.toLowerCase()
+	const filteredReceipts = useMemo(() => {
+		if (activeCategory === 'all') return presetReceipts;
+		return presetReceipts.filter((receipt) =>
+			receipt.categories.some(
+				(category) => category.toLowerCase() === activeCategory.toLowerCase()
+			)
 		);
-	});
+	}, [activeCategory]);
 
-	const handleAddReceipts = async () => {
+	const handleAddReceipts = useCallback(async () => {
 		try {
 			const updatedReceipts = await Promise.all(
 				selectedReceipts.map(async (receipt) => {
-					const response = await fetch(receipt.imageUrl);
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
+					try {
+						const response = await fetch(receipt.imageUrl, { mode: 'cors' });
+						if (!response.ok) {
+							throw new Error(`HTTP error! status: ${response.status}`);
+						}
+						const blob = await response.blob();
+						const mimeType = blob.type;
+						const extension = mimeType.split('/')[1];
+
+						const file = new File([blob], `${receipt.id}.${extension}`, {
+							type: mimeType,
+						});
+						return {
+							...receipt,
+							imageFile: file,
+						};
+					} catch (error) {
+						console.error(
+							`Error fetching image for receipt ${receipt.id}:`,
+							error
+						);
+						return null;
 					}
-					const blob = await response.blob();
-					const file = new File([blob], `${receipt.id}.jpg`, {
-						type: blob.type,
-					});
-					return {
-						...receipt,
-						imageFile: file,
-					};
 				})
 			);
 
-			handlePresetSelection(updatedReceipts);
+			const validReceipts = updatedReceipts.filter(
+				(receipt) => receipt !== null
+			);
+
+			if (validReceipts.length === 0) {
+				alert('Failed to add any receipts. Please try again.');
+				return;
+			}
+
+			handlePresetSelection(validReceipts);
 			onClose();
 		} catch (error) {
 			console.error('Error in handleAddReceipts:', error);
 		}
-	};
+	}, [selectedReceipts, handlePresetSelection, onClose]);
+
+	// Move the early return after all Hooks
+	if (!isOpen) return null;
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -66,8 +172,6 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 				>
 					&times;
 				</button>
-				<br />
-				<br />
 				{/* Header */}
 				<div className="mb-4 px-6 pt-6 flex-shrink-0 text-center">
 					<h2 className="text-3xl font-bold mb-2">Select Preset Receipts</h2>
@@ -104,51 +208,17 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 					style={{ maxHeight: 'calc(90vh - 250px)' }}
 				>
 					{/* Receipt Thumbnails */}
-					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-						<AnimatePresence>
-							{filteredReceipts.length > 0 ? (
-								filteredReceipts.map((receipt) => (
-									<motion.div
-										key={receipt.id}
-										layout
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										exit={{ opacity: 0 }}
-										transition={{ duration: 0.3 }}
-										className={`relative border rounded-lg overflow-hidden cursor-pointer ${
-											selectedReceipts.includes(receipt)
-												? 'border-blue-500'
-												: 'border-gray-700'
-										}`}
-										onClick={() => toggleReceiptSelection(receipt)}
-									>
-										{/* Receipt Image */}
-										<img
-											loading="lazy"
-											src={receipt.imageUrl}
-											alt={`Receipt ${receipt.id}`}
-											className="w-full h-40 object-cover"
-										/>
-										{/* Selection Overlay */}
-										{selectedReceipts.includes(receipt) && (
-											<div className="absolute inset-0 bg-blue-600 bg-opacity-50 flex items-center justify-center">
-												<FaCheckCircle className="text-white text-4xl" />
-											</div>
-										)}
-										<div className="p-2">
-											<p className="text-sm text-gray-300">
-												Categories: {receipt.categories.join(', ')}
-											</p>
-										</div>
-									</motion.div>
-								))
-							) : (
-								<div className="col-span-full text-center text-gray-400 py-10">
-									No receipts found for this category.
-								</div>
-							)}
-						</AnimatePresence>
-					</div>
+					{filteredReceipts.length > 0 ? (
+						<ReceiptGrid
+							receipts={filteredReceipts}
+							selectedReceipts={selectedReceipts}
+							toggleReceiptSelection={toggleReceiptSelection}
+						/>
+					) : (
+						<div className="col-span-full text-center text-gray-400 py-10">
+							No receipts found for this category.
+						</div>
+					)}
 				</div>
 
 				{/* Action Buttons */}
