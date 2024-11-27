@@ -2,7 +2,6 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { presetReceipts, categories } from '../constants';
 import LazyLoad from 'react-lazyload';
-import { FixedSizeGrid as Grid } from 'react-window';
 
 const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 	const optimizedImageUrl = useMemo(
@@ -41,45 +40,6 @@ const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 		</div>
 	);
 });
-
-const ReceiptGrid = ({
-	receipts,
-	selectedReceipts,
-	toggleReceiptSelection,
-}) => {
-	const columnCount = 4;
-	const columnWidth = 250;
-	const rowHeight = 300;
-	const width = columnWidth * columnCount;
-	const rowCount = Math.ceil(receipts.length / columnCount);
-	const height = Math.min(rowCount * rowHeight, 600); // Limit height for better UX
-
-	return (
-		<Grid
-			columnCount={columnCount}
-			columnWidth={columnWidth}
-			height={height}
-			rowCount={rowCount}
-			rowHeight={rowHeight}
-			width={width}
-		>
-			{({ columnIndex, rowIndex, style }) => {
-				const index = rowIndex * columnCount + columnIndex;
-				if (index >= receipts.length) return null;
-				const receipt = receipts[index];
-				return (
-					<div style={style}>
-						<ReceiptItem
-							receipt={receipt}
-							isSelected={selectedReceipts.includes(receipt)}
-							onToggle={toggleReceiptSelection}
-						/>
-					</div>
-				);
-			}}
-		</Grid>
-	);
-};
 
 const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 	// Hook calls must be at the top level
@@ -162,22 +122,24 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 			<div
-				className="relative bg-gray-900 w-full max-w-4xl rounded-lg text-white mx-4 flex flex-col"
+				className="relative bg-gray-900 w-full max-w-4xl rounded-lg text-white mx-2 sm:mx-4 flex flex-col"
 				style={{ maxHeight: '90vh' }}
 			>
 				{/* Close Button */}
 				<button
 					onClick={onClose}
-					className="absolute top-4 right-6 text-gray-400 hover:text-gray-200 font-bold text-3xl focus:outline-none"
+					className="absolute top-4 right-4 sm:right-6 text-gray-400 hover:text-gray-200 font-bold text-2xl sm:text-3xl focus:outline-none"
 				>
 					&times;
 				</button>
 				<br />
 				<br />
 				{/* Header */}
-				<div className="mb-4 px-6 pt-6 flex-shrink-0 text-center">
-					<h2 className="text-3xl font-bold mb-2">Select Preset Receipts</h2>
-					<p className="text-lg text-gray-300">
+				<div className="mb-4 px-4 sm:px-6 pt-6 flex-shrink-0 text-center">
+					<h2 className="text-2xl sm:text-3xl font-bold mb-2">
+						Select Preset Receipts
+					</h2>
+					<p className="text-base sm:text-lg text-gray-300">
 						Don't have your own receipts to upload? No worries! Try out Platen
 						by selecting receipts from our library that contains a vast array of
 						receipts from real-world transactions.
@@ -185,13 +147,13 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 				</div>
 
 				{/* Category Tabs */}
-				<div className="mb-4 px-6 flex-shrink-0">
+				<div className="mb-4 px-4 sm:px-6 flex-shrink-0">
 					<div className="flex flex-wrap justify-center space-x-2">
 						{categories.map((category) => (
 							<button
 								key={category.value}
 								onClick={() => handleCategoryChange(category.value)}
-								className={`flex items-center px-4 py-2 m-1 rounded-lg focus:outline-none ${
+								className={`flex items-center px-3 py-2 m-1 rounded-lg focus:outline-none ${
 									activeCategory === category.value
 										? 'bg-blue-600 text-white'
 										: 'bg-gray-700 text-gray-300 hover:bg-gray-600'
@@ -206,16 +168,21 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 
 				{/* Scrollable Content */}
 				<div
-					className="overflow-y-auto px-6"
+					className="overflow-y-auto px-4 sm:px-6"
 					style={{ maxHeight: 'calc(90vh - 250px)' }}
 				>
 					{/* Receipt Thumbnails */}
 					{filteredReceipts.length > 0 ? (
-						<ReceiptGrid
-							receipts={filteredReceipts}
-							selectedReceipts={selectedReceipts}
-							toggleReceiptSelection={toggleReceiptSelection}
-						/>
+						<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+							{filteredReceipts.map((receipt) => (
+								<ReceiptItem
+									key={receipt.id}
+									receipt={receipt}
+									isSelected={selectedReceipts.includes(receipt)}
+									onToggle={toggleReceiptSelection}
+								/>
+							))}
+						</div>
 					) : (
 						<div className="col-span-full text-center text-gray-400 py-10">
 							No receipts found for this category.
@@ -224,7 +191,7 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 				</div>
 
 				{/* Action Buttons */}
-				<div className="mt-4 px-6 py-4 flex justify-end space-x-4 flex-shrink-0">
+				<div className="mt-4 px-4 sm:px-6 py-4 flex justify-end space-x-4 flex-shrink-0">
 					<button
 						onClick={onClose}
 						className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none"
