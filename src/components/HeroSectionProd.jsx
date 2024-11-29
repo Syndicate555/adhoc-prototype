@@ -1,4 +1,8 @@
-const HeroSectionProd = ({ handleScrollToDemo }) => {
+const HeroSectionProd = ({ handleScrollToDemo, setIsWaitlistModalOpen }) => {
+	const handleJoinWaitlistClick = () => {
+		setIsWaitlistModalOpen(true);
+	};
+
 	return (
 		<section className="flex-1 flex flex-col items-center justify-start text-center pt-4">
 			<div className="flex flex-col items-center mt-6 lg:mt-20">
@@ -22,8 +26,10 @@ const HeroSectionProd = ({ handleScrollToDemo }) => {
 						Try it out!
 					</button>
 					<a
-						href="#"
-						className="py-3 px-4 mx-3 rounded-md border text-neutral-700 font-semibold"
+						onClick={handleJoinWaitlistClick}
+						className="py-3 px-4 mx-3 rounded-md border text-white-700 font-semibold"
+						aria-label="Join the waitlist"
+						tabIndex="0"
 					>
 						Join the waitlist
 					</a>

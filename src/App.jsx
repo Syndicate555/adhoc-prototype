@@ -20,6 +20,7 @@ import { getProgressPercentage } from './utilities/utils';
 import { motion } from 'framer-motion';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import PresetReceiptsModal from './components/PresetReceiptsModal';
+import WaitlistModal from './components/WaitlistModal';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -43,11 +44,14 @@ function App() {
 	const [isUploading, setIsUploading] = useState(false);
 	const [isModelAnimating, setIsModelAnimating] = useState(false);
 	const [isLoadingInsights, setIsLoadingInsights] = useState(false);
-	const [insightsReadyNotification, setInsightsReadyNotification] =
-		useState(false);
+	const [insightsReadyNotification, setInsightsReadyNotification] = useState(false);
+	const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
+	const [waitlistSuccessMessage, setWaitlistSuccessMessage] = useState('');
+
 	const insightsRef = useRef(null);
 	const heroSectionRef = useRef(null);
 	const socketRef = useRef(null);
+
 	const handleScrollToDemo = () => {
 		if (heroSectionRef.current) {
 			gsap.to(window, {
@@ -158,6 +162,16 @@ function App() {
 			socket.disconnect();
 		};
 	}, [sessionId, animateProgress]);
+
+	useEffect(() => {
+		let timer;
+		if (waitlistSuccessMessage){
+			timer = setTimeout(() => {
+				setWaitlistSuccessMessage('');
+			}, 2000);
+		}
+		return () => clearTimeout(timer);
+	}, [waitlistSuccessMessage]);
 
 	const handleReset = () => {
 		setReceipts([]);
@@ -330,7 +344,10 @@ function App() {
 		<>
 			<Navbar handleScrollToDemo={handleScrollToDemo} />
 			<div className="max-w-7xl mx-auto pt-20 px-6">
-				<HeroSectionProd handleScrollToDemo={handleScrollToDemo} />
+				<HeroSectionProd 
+					handleScrollToDemo={handleScrollToDemo}
+					setIsWaitlistModalOpen={setIsWaitlistModalOpen}
+				/>
 				<FeatureSection />
 				<br />
 				<br />
@@ -406,6 +423,17 @@ function App() {
 				</div>
 
 				<Footer />
+				{isWaitlistModalOpen && (
+					<WaitlistModal 
+						setIsWaitlistModalOpen={setIsWaitlistModalOpen}
+						setWaitlistSuccessMessage={setWaitlistSuccessMessage}
+					/>
+				)}
+				{waitlistSuccessMessage && (
+					<div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-md shadow-lg">
+						{waitlistSuccessMessage}	
+					</div>
+				)}
 			</div>
 		</>
 	);
