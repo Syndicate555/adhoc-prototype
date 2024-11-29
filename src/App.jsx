@@ -21,6 +21,7 @@ import { motion } from 'framer-motion';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import PresetReceiptsModal from './components/PresetReceiptsModal';
 import WaitlistModal from './components/WaitlistModal';
+import MobileAppFeatureSection from './components/MobileAppFeatureSection';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -422,6 +423,9 @@ function App() {
 					<InsightsSummary insights={insights} handleReset={handleReset} />
 				</div>
 
+				{/* Mobile app screenshots section overview */}
+				<MobileAppFeatureSection />
+				
 				<Footer />
 				{isWaitlistModalOpen && (
 					<WaitlistModal 
