@@ -42,7 +42,6 @@ const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 });
 
 const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
-	// Hook calls must be at the top level
 	const [selectedReceipts, setSelectedReceipts] = useState([]);
 	const [activeCategory, setActiveCategory] = useState('all');
 
@@ -116,7 +115,6 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 		}
 	}, [selectedReceipts, handlePresetSelection, onClose]);
 
-	// Move the early return after all Hooks
 	if (!isOpen) return null;
 
 	return (
