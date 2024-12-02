@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://www.receipt-ms.online';
+const API_BASE_URL = import.meta.env.VITE_RECEIPT_MS_URL;
 
 export const uploadReceipts = async (files, sessionId) => {
 	const formData = new FormData();

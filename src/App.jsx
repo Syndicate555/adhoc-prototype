@@ -4,16 +4,13 @@ import Navbar from './components/Navbar';
 import HeroSectionProd from './components/HeroSectionProd';
 import FeatureSection from './components/FeatureSection';
 import Footer from './components/Footer';
-import axios from 'axios';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import gsap from 'gsap';
 import ReceiptHierarchyTree from './components/ReceiptTree';
 import HeroSection from './components/HeroSection';
-import Header from './components/Header';
 import ProgressBar from './components/ProgressBar';
 import ReceiptsUploadSection from './components/ReceiptsUploadSection';
-import Scene from './components/3D animations/Scene';
 import InsightsSummary from './components/InsightsSummary/InsightsSummary';
 import { uploadReceipts, fetchInsights } from './services/api';
 import { getProgressPercentage } from './utilities/utils';
@@ -45,13 +42,13 @@ function App() {
 	const [isUploading, setIsUploading] = useState(false);
 	const [isModelAnimating, setIsModelAnimating] = useState(false);
 	const [isLoadingInsights, setIsLoadingInsights] = useState(false);
-	const [insightsReadyNotification, setInsightsReadyNotification] = useState(false);
+	const [insightsReadyNotification, setInsightsReadyNotification] =
+		useState(false);
 	const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
 	const [waitlistSuccessMessage, setWaitlistSuccessMessage] = useState('');
 
 	const insightsRef = useRef(null);
 	const heroSectionRef = useRef(null);
-	const socketRef = useRef(null);
 
 	const handleScrollToDemo = () => {
 		if (heroSectionRef.current) {
@@ -116,7 +113,14 @@ function App() {
 	}, [isGeneratingInsights]);
 
 	useEffect(() => {
-		const socket = io('https://www.receipt-ms.online', {
+		const backendUrl = import.meta.env.VITE_RECEIPT_MS_URL;
+
+		if (!backendUrl) {
+			console.error('Backend URL is not defined in environment variables.');
+			return;
+		}
+
+		const socket = io(backendUrl, {
 			transports: ['websocket', 'polling'],
 			reconnection: true,
 			reconnectionAttempts: 5,
@@ -166,7 +170,7 @@ function App() {
 
 	useEffect(() => {
 		let timer;
-		if (waitlistSuccessMessage){
+		if (waitlistSuccessMessage) {
 			timer = setTimeout(() => {
 				setWaitlistSuccessMessage('');
 			}, 2000);
@@ -345,7 +349,7 @@ function App() {
 		<>
 			<Navbar handleScrollToDemo={handleScrollToDemo} />
 			<div className="max-w-7xl mx-auto pt-20 px-6">
-				<HeroSectionProd 
+				<HeroSectionProd
 					handleScrollToDemo={handleScrollToDemo}
 					setIsWaitlistModalOpen={setIsWaitlistModalOpen}
 				/>
@@ -425,17 +429,17 @@ function App() {
 
 				{/* Mobile app screenshots section overview */}
 				<MobileAppFeatureSection />
-				
+
 				<Footer />
 				{isWaitlistModalOpen && (
-					<WaitlistModal 
+					<WaitlistModal
 						setIsWaitlistModalOpen={setIsWaitlistModalOpen}
 						setWaitlistSuccessMessage={setWaitlistSuccessMessage}
 					/>
 				)}
 				{waitlistSuccessMessage && (
 					<div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-md shadow-lg">
-						{waitlistSuccessMessage}	
+						{waitlistSuccessMessage}
 					</div>
 				)}
 			</div>
