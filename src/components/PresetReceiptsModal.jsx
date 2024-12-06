@@ -66,6 +66,37 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 		);
 	}, [activeCategory]);
 
+	// Helper function to shuffle an array (Fisher-Yates)
+	const shuffleArray = (array) => {
+		const arr = [...array];
+		for (let i = arr.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[arr[i], arr[j]] = [arr[j], arr[i]];
+		}
+		return arr;
+	};
+
+	// Auto-select logic
+	const handleAutoSelect = useCallback(
+		(count) => {
+			// Find the receipts not yet selected
+			const notSelected = filteredReceipts.filter(
+				(r) => !selectedReceipts.includes(r)
+			);
+
+			// Shuffle the not selected receipts so we pick randomly
+			const shuffled = shuffleArray(notSelected);
+
+			// Take the first `count` receipts or all if fewer than `count` available
+			const toSelect = shuffled.slice(0, count);
+
+			if (toSelect.length > 0) {
+				setSelectedReceipts((prev) => [...prev, ...toSelect]);
+			}
+		},
+		[filteredReceipts, selectedReceipts]
+	);
+
 	const handleAddReceipts = useCallback(async () => {
 		try {
 			const updatedReceipts = await Promise.all(
@@ -161,10 +192,35 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 					</div>
 				</div>
 
+				{/* Auto-Select Buttons */}
+				<div className="mb-4 px-4 sm:px-6 flex-shrink-0 text-center">
+					<p className="text-gray-300 mb-2">Auto-Select Receipts:</p>
+					<div className="flex justify-center space-x-4">
+						<button
+							onClick={() => handleAutoSelect(20)}
+							className="bg-gray-700 text-gray-300 hover:bg-gray-600 px-4 py-2 rounded-md focus:outline-none"
+						>
+							Select 20
+						</button>
+						<button
+							onClick={() => handleAutoSelect(30)}
+							className="bg-gray-700 text-gray-300 hover:bg-gray-600 px-4 py-2 rounded-md focus:outline-none"
+						>
+							Select 30
+						</button>
+						<button
+							onClick={() => handleAutoSelect(50)}
+							className="bg-gray-700 text-gray-300 hover:bg-gray-600 px-4 py-2 rounded-md focus:outline-none"
+						>
+							Select 50
+						</button>
+					</div>
+				</div>
+
 				{/* Scrollable Content */}
 				<div
 					className="overflow-y-auto px-4 sm:px-6"
-					style={{ maxHeight: 'calc(90vh - 250px)' }}
+					style={{ maxHeight: 'calc(90vh - 350px)' }}
 				>
 					{/* Receipt Thumbnails */}
 					{filteredReceipts.length > 0 ? (
