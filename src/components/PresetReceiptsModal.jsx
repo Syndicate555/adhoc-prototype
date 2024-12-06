@@ -3,7 +3,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { presetReceipts, categories } from '../constants';
 
 const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
-	const optimizedImageUrl = useMemo(
+	const optimizedImageUrl = React.useMemo(
 		() =>
 			receipt.imageUrl.replace(
 				'/upload/',
@@ -42,16 +42,13 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 	const [selectedReceipts, setSelectedReceipts] = useState([]);
 	const [activeCategory, setActiveCategory] = useState('all');
 
-	const toggleReceiptSelection = useCallback(
-		(receipt) => {
-			setSelectedReceipts((prevSelected) =>
-				prevSelected.includes(receipt)
-					? prevSelected.filter((r) => r !== receipt)
-					: [...prevSelected, receipt]
-			);
-		},
-		[setSelectedReceipts]
-	);
+	const toggleReceiptSelection = useCallback((receipt) => {
+		setSelectedReceipts((prevSelected) =>
+			prevSelected.includes(receipt)
+				? prevSelected.filter((r) => r !== receipt)
+				: [...prevSelected, receipt]
+		);
+	}, []);
 
 	const handleCategoryChange = useCallback((categoryValue) => {
 		setActiveCategory(categoryValue);
@@ -76,28 +73,27 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 		return arr;
 	};
 
-	// Auto-select logic
+	// Auto-select logic: Now REPLACES the current selection instead of appending
 	const handleAutoSelect = useCallback(
 		(count) => {
-			// Find the receipts not yet selected
-			const notSelected = filteredReceipts.filter(
-				(r) => !selectedReceipts.includes(r)
-			);
-
-			// Shuffle the not selected receipts so we pick randomly
+			const notSelected = [...filteredReceipts]; // We will select from all filtered receipts
 			const shuffled = shuffleArray(notSelected);
-
-			// Take the first `count` receipts or all if fewer than `count` available
 			const toSelect = shuffled.slice(0, count);
 
-			if (toSelect.length > 0) {
-				setSelectedReceipts((prev) => [...prev, ...toSelect]);
-			}
+			setSelectedReceipts(toSelect);
 		},
-		[filteredReceipts, selectedReceipts]
+		[filteredReceipts]
 	);
 
+	const clearSelection = useCallback(() => {
+		setSelectedReceipts([]);
+	}, []);
+
 	const handleAddReceipts = useCallback(async () => {
+		if (selectedReceipts.length === 0) {
+			alert('No receipts selected. Please select some receipts before adding.');
+			return;
+		}
 		try {
 			const updatedReceipts = await Promise.all(
 				selectedReceipts.map(async (receipt) => {
@@ -160,15 +156,15 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 				</button>
 				<br />
 				<br />
+
 				{/* Header */}
 				<div className="mb-4 px-4 sm:px-6 pt-6 flex-shrink-0 text-center">
 					<h2 className="text-2xl sm:text-3xl font-bold mb-2">
 						Select Preset Receipts
 					</h2>
 					<p className="text-base sm:text-lg text-gray-300">
-						Don't have your own receipts to upload? No worries! Try out Platen
-						by selecting receipts from our library that contains a vast array of
-						receipts from real-world transactions.
+						Don't have your own receipts to upload? Select from our library of
+						real-world receipts.
 					</p>
 				</div>
 
@@ -192,10 +188,13 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 					</div>
 				</div>
 
-				{/* Auto-Select Buttons */}
+				{/* Auto-Select Controls and Counter */}
 				<div className="mb-4 px-4 sm:px-6 flex-shrink-0 text-center">
-					<p className="text-gray-300 mb-2">Auto-Select Receipts:</p>
-					<div className="flex justify-center space-x-4">
+					<p className="text-gray-300 mb-2">
+						Currently Selected:{' '}
+						<span className="font-bold">{selectedReceipts.length}</span>
+					</p>
+					<div className="flex flex-wrap justify-center space-x-4 mb-2">
 						<button
 							onClick={() => handleAutoSelect(20)}
 							className="bg-gray-700 text-gray-300 hover:bg-gray-600 px-4 py-2 rounded-md focus:outline-none"
@@ -215,12 +214,18 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 							Select 50
 						</button>
 					</div>
+					<button
+						onClick={clearSelection}
+						className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md focus:outline-none"
+					>
+						Clear Selection
+					</button>
 				</div>
 
 				{/* Scrollable Content */}
 				<div
 					className="overflow-y-auto px-4 sm:px-6"
-					style={{ maxHeight: 'calc(90vh - 350px)' }}
+					style={{ maxHeight: 'calc(90vh - 400px)' }}
 				>
 					{/* Receipt Thumbnails */}
 					{filteredReceipts.length > 0 ? (
