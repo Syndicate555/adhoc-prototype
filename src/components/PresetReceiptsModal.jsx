@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { presetReceipts, categories } from '../constants';
-import LazyLoad from 'react-lazyload';
 
 const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 	const optimizedImageUrl = useMemo(
@@ -20,13 +19,11 @@ const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 			}`}
 			onClick={() => onToggle(receipt)}
 		>
-			<LazyLoad height={200} offset={100}>
-				<img
-					src={optimizedImageUrl}
-					alt={`Receipt ${receipt.id}`}
-					className="w-full h-40 object-cover"
-				/>
-			</LazyLoad>
+			<img
+				src={optimizedImageUrl}
+				alt={`Receipt ${receipt.id}`}
+				className="w-full h-40 object-cover"
+			/>
 			{isSelected && (
 				<div className="absolute inset-0 bg-blue-600 bg-opacity-50 flex items-center justify-center">
 					<FaCheckCircle className="text-white text-4xl" />
