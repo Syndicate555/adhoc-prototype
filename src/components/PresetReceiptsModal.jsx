@@ -63,7 +63,6 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 		);
 	}, [activeCategory]);
 
-	// Helper function to shuffle an array (Fisher-Yates)
 	const shuffleArray = (array) => {
 		const arr = [...array];
 		for (let i = arr.length - 1; i > 0; i--) {
@@ -73,10 +72,9 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 		return arr;
 	};
 
-	// Auto-select logic: Now REPLACES the current selection instead of appending
 	const handleAutoSelect = useCallback(
 		(count) => {
-			const notSelected = [...filteredReceipts]; // We will select from all filtered receipts
+			const notSelected = [...filteredReceipts];
 			const shuffled = shuffleArray(notSelected);
 			const toSelect = shuffled.slice(0, count);
 
