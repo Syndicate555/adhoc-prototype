@@ -45,7 +45,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		insights?.spendingByVendor?.map((item) => ({
 			name: item.vendor,
 			totalSpent: parseFloat(item.totalSpent.toFixed(2)),
-			fullName: item.vendor, // Add full name for tooltip display
+			fullName: item.vendor,
 		})) || [];
 
 	const spendingByParentCategoryLabels =
@@ -85,17 +85,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		setSelectedParentCategory(event.target.value);
 	};
 
-	const COLORS = [
-		'#8884d8',
-		'#82ca9d',
-		'#ffc658',
-		'#ff8042',
-		'#8dd1e1',
-		'#d0ed57',
-		'#a4de6c',
-		'#d069b2',
-	];
-
 	return (
 		<motion.section
 			className="container mx-auto px-4 my-10"
@@ -110,14 +99,14 @@ const InsightsSummary = ({ insights, handleReset }) => {
 				sx={{
 					fontWeight: 'bold',
 					textAlign: 'center',
-					color: '#ffffff', // Updated text color for dark theme
+					color: '#ffffff',
 				}}
 			>
 				Receipt Insights Dashboard
 			</Typography>
 			<Typography
 				variant="subtitle1"
-				sx={{ textAlign: 'center', marginBottom: 4, color: '#cbd5e1' }} // Lighter text color for better contrast
+				sx={{ textAlign: 'center', marginBottom: 4, color: '#cbd5e1' }}
 			>
 				Get an overview of your spending based on your uploaded receipts.
 			</Typography>
@@ -132,44 +121,26 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							: '$0.00'
 					}
 					icon={
-						<MonetizationOnIcon
-							sx={{ color: '#22c55e' }} // Bright green for visibility
-							fontSize="large"
-						/>
+						<MonetizationOnIcon sx={{ color: '#22c55e' }} fontSize="large" />
 					}
-					cardColor="bg-neutral-900" // Dark card background
+					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Total Transactions"
 					value={insights.totalReceipts || 0}
-					icon={
-						<ReceiptIcon
-							sx={{ color: '#3b82f6' }} // Bright blue icon
-							fontSize="large"
-						/>
-					}
+					icon={<ReceiptIcon sx={{ color: '#3b82f6' }} fontSize="large" />}
 					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Unique Vendors"
 					value={insights.totalUniqueVendors || 0}
-					icon={
-						<StoreIcon
-							sx={{ color: '#f59e0b' }} // Bright orange for contrast
-							fontSize="large"
-						/>
-					}
+					icon={<StoreIcon sx={{ color: '#f59e0b' }} fontSize="large" />}
 					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
 					title="Total Products Purchased"
 					value={insights.totalLineItems || 0}
-					icon={
-						<ShoppingCartIcon
-							sx={{ color: '#f97316' }} // Vibrant orange
-							fontSize="large"
-						/>
-					}
+					icon={<ShoppingCartIcon sx={{ color: '#f97316' }} fontSize="large" />}
 					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
@@ -179,12 +150,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							? `$${insights.totalDiscounts.toFixed(2)}`
 							: '$0.00'
 					}
-					icon={
-						<DiscountIcon
-							sx={{ color: '#e11d48' }} // Red for emphasis
-							fontSize="large"
-						/>
-					}
+					icon={<DiscountIcon sx={{ color: '#e11d48' }} fontSize="large" />}
 					cardColor="bg-neutral-900"
 				/>
 				<SummaryCard
@@ -220,8 +186,8 @@ const InsightsSummary = ({ insights, handleReset }) => {
 						chartTitle="Spending by Parent Category"
 						dataLabels={spendingByParentCategoryLabels}
 						dataValues={spendingByParentCategoryValues}
-						backgroundColor="#1f2937" // Dark background for the pie chart
-						textColor="#ffffff" // White text for visibility
+						backgroundColor="#1f2937"
+						textColor="#ffffff"
 					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
@@ -256,7 +222,7 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					<ResponsiveContainer width="100%" height={800}>
 						<BarChart
 							data={spendingByVendorData}
-							margin={{ top: 0, right: 0, left: 20, bottom: 40 }} // Increased bottom margin for better spacing
+							margin={{ top: 0, right: 0, left: 20, bottom: 40 }}
 						>
 							<CartesianGrid strokeDasharray="3 3" stroke="#444" />
 
