@@ -52,7 +52,7 @@ const MobileAppFeatureSection = () => {
 	};
 
 	return (
-		<section className="py-24 ">
+		<section className="py-24 border-t py-10 border-neutral-700">
 			<h2 className="text-3xl font-semibold text-center mb-8 text-white">
 				Explore Our Mobile App
 			</h2>
