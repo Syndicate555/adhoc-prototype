@@ -22,14 +22,17 @@ const ReceiptsUploadSection = ({
 					You are uploading {receipts.length} receipts
 				</h2>
 				<div className="flex items-center gap-4">
-					<button
-						onClick={clearSelection}
-						className="text-white bg-red-600 hover:bg-red-700 p-2 rounded-full focus:outline-none transition-colors duration-200"
-						aria-label="Clear all receipts"
-						title="Clear all receipts"
-					>
-						<FaTrashAlt />
-					</button>
+					{!uploadFinalized && (
+						<button
+							onClick={clearSelection}
+							className="text-white bg-red-600 hover:bg-red-700 p-2 rounded-full focus:outline-none transition-colors duration-200"
+							aria-label="Clear all receipts"
+							title="Clear all receipts"
+						>
+							<FaTrashAlt />
+						</button>
+					)}
+
 					<button
 						onClick={toggleExpand}
 						className="text-white bg-orange-500 p-2 rounded-full hover:bg-orange-600 transition-colors duration-200 focus:outline-none"
