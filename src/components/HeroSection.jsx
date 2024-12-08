@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import Scene from './3D animations/Scene';
+import { motion } from 'framer-motion';
 
 const HeroSection = forwardRef(
 	(
@@ -11,7 +12,6 @@ const HeroSection = forwardRef(
 			warningMessage,
 			fileInputRef,
 			handleFileChange,
-			allCompleted,
 			isUploading,
 			isLoadingInsights,
 			isGeneratingInsights,
@@ -19,6 +19,8 @@ const HeroSection = forwardRef(
 		},
 		ref
 	) => {
+		const shouldAnimateGenerate = files.length > 0 && !isUploading;
+
 		return (
 			<section
 				ref={ref}
@@ -78,17 +80,39 @@ const HeroSection = forwardRef(
 								/>
 
 								{!isUploading && (
-									<button
+									<motion.button
 										onClick={handleUpload}
-										className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform hover:scale-105 transition-transform ${
+										className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform transition-transform ${
 											uploading || files.length === 0
 												? 'opacity-50 cursor-not-allowed'
 												: ''
 										}`}
 										disabled={uploading || files.length === 0}
+										animate={
+											shouldAnimateGenerate
+												? {
+														scale: [1, 1.2, 1],
+														boxShadow: [
+															'0px 0px 0px rgba(0,255,0,0)',
+															'0px 0px 15px rgba(0,255,0,0.5)',
+															'0px 0px 0px rgba(0,255,0,0)',
+														],
+												  }
+												: {}
+										}
+										transition={
+											shouldAnimateGenerate
+												? {
+														repeat: Infinity,
+														repeatType: 'mirror',
+														duration: 1.5,
+														ease: 'easeInOut',
+												  }
+												: {}
+										}
 									>
 										{uploading ? 'Generate' : 'Generate Insights'}
-									</button>
+									</motion.button>
 								)}
 							</>
 						)}

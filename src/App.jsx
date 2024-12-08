@@ -249,6 +249,7 @@ function App() {
 
 	const clearSelection = useCallback(() => {
 		setReceipts([]);
+		setFiles([]);
 	}, []);
 
 	const handleGenerateInsights = async () => {

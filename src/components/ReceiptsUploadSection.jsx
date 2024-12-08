@@ -15,10 +15,6 @@ const ReceiptsUploadSection = ({
 
 	const toggleExpand = () => setIsExpanded(!isExpanded);
 
-	const handleClear = () => {
-		setIsClearing(true);
-	};
-
 	return (
 		<div className="my-8">
 			<div className="flex flex-wrap items-center gap-4 mb-4">
@@ -27,7 +23,7 @@ const ReceiptsUploadSection = ({
 				</h2>
 				<div className="flex items-center gap-4">
 					<button
-						onClick={handleClear}
+						onClick={clearSelection}
 						className="text-white bg-red-600 hover:bg-red-700 p-2 rounded-full focus:outline-none transition-colors duration-200"
 						aria-label="Clear all receipts"
 						title="Clear all receipts"
