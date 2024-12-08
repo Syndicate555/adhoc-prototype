@@ -19,7 +19,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SummaryCard from './components/SummayCard';
 import ParentCategoryDropdown from './components/ParentCategoryDropdown';
 import SpendingByPieChart from './components/SpendingByPieChart';
-import SpendingByVendorChart from './components/SpendingByVendorChart';
+import { handleExport } from '../../utilities/utils';
 import {
 	BarChart,
 	Bar,
@@ -31,10 +31,30 @@ import {
 	Legend,
 } from 'recharts';
 
-import { handleExport } from '../../utilities/utils';
-
 const InsightsSummary = ({ insights, handleReset }) => {
 	const [selectedParentCategory, setSelectedParentCategory] = useState('');
+	const [windowWidth, setWindowWidth] = useState(
+		typeof window !== 'undefined' ? window.innerWidth : 1200
+	);
+
+	useEffect(() => {
+		// Handle window resize
+		const handleResize = () => {
+			setWindowWidth(window.innerWidth);
+		};
+		if (typeof window !== 'undefined') {
+			window.addEventListener('resize', handleResize);
+		}
+		return () => {
+			if (typeof window !== 'undefined') {
+				window.removeEventListener('resize', handleResize);
+			}
+		};
+	}, []);
+
+	if (!insights) {
+		return null;
+	}
 
 	const parentCategories =
 		insights?.spendingByParentCategory?.map(
@@ -48,12 +68,44 @@ const InsightsSummary = ({ insights, handleReset }) => {
 			fullName: item.vendor,
 		})) || [];
 
+	// Determine how many bars to show based on screen size
+
+	let maxBars;
+	if (windowWidth <= 600) {
+		// Mobile
+		maxBars = 5;
+	} else if (windowWidth <= 1024) {
+		// Tablet
+		maxBars = 10;
+	} else {
+		// Desktop
+		maxBars = spendingByVendorData.length;
+	}
+
+	const displayedVendorData = spendingByVendorData.slice(0, maxBars);
+
+	// Determine legend font size dynamically
+	let legendFontSize;
+	if (windowWidth <= 600) {
+		legendFontSize = 12; // Smaller legend font on mobile
+	} else if (windowWidth <= 1024) {
+		legendFontSize = 14; // Slightly smaller on tablet
+	} else {
+		legendFontSize = 18; // Default larger font on desktop
+	}
+
 	const spendingByParentCategoryLabels =
 		insights?.spendingByParentCategory?.map((item) => item.parent_category) ||
 		[];
 
 	const spendingByParentCategoryValues =
 		insights?.spendingByParentCategory?.map((item) => item.totalSpent) || [];
+
+	useEffect(() => {
+		if (parentCategories.length > 0 && !selectedParentCategory) {
+			setSelectedParentCategory(parentCategories[0]);
+		}
+	}, [parentCategories, selectedParentCategory]);
 
 	const filteredSpendingByCategory =
 		insights?.spendingByCategory?.filter(
@@ -66,16 +118,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 	const spendingByCategoryValues = filteredSpendingByCategory.map(
 		(category) => category.totalSpent
 	);
-
-	useEffect(() => {
-		if (parentCategories.length > 0 && !selectedParentCategory) {
-			setSelectedParentCategory(parentCategories[0]);
-		}
-	}, [parentCategories, selectedParentCategory]);
-
-	if (!insights) {
-		return null;
-	}
 
 	const handleCSVExport = () => {
 		return handleExport(insights);
@@ -202,7 +244,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 			</Grid>
 
 			{/* Spending by Vendor Bar Chart */}
-
 			<Grid container spacing={4} justifyContent="center" sx={{ mt: 4 }}>
 				<Grid item xs={12}>
 					<Typography
@@ -217,23 +258,26 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					>
 						Spending by Vendor
 					</Typography>
-					<br></br>
-					<br></br>
-					<ResponsiveContainer width="100%" height={800}>
+					<br />
+					<br />
+					<ResponsiveContainer
+						width="100%"
+						height={windowWidth <= 600 ? 400 : 800}
+					>
 						<BarChart
-							data={spendingByVendorData}
+							data={displayedVendorData}
 							margin={{ top: 0, right: 0, left: 20, bottom: 40 }}
 						>
 							<CartesianGrid strokeDasharray="3 3" stroke="#444" />
 
-							{/* Legend positioned at the top for better visual balance */}
 							<Legend
 								verticalAlign="right"
 								align="center"
 								wrapperStyle={{
 									color: '#6ccfe6',
-									fontSize: 18,
+									fontSize: legendFontSize,
 									fontWeight: 'bold',
+									whiteSpace: 'nowrap',
 								}}
 							/>
 
@@ -281,13 +325,14 @@ const InsightsSummary = ({ insights, handleReset }) => {
 							<Bar
 								dataKey="totalSpent"
 								fill="#3b82f6"
-								barSize={40}
+								barSize={windowWidth <= 600 ? 20 : 40}
 								name="Total money spent"
 							/>
 						</BarChart>
 					</ResponsiveContainer>
 				</Grid>
 			</Grid>
+
 			<br />
 			{/* Top Line Items Data Grid */}
 			<Box sx={{ my: 4 }}>
