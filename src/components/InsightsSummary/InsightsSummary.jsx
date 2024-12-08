@@ -38,7 +38,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 	);
 
 	useEffect(() => {
-		// Handle window resize
 		const handleResize = () => {
 			setWindowWidth(window.innerWidth);
 		};
@@ -68,8 +67,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 			fullName: item.vendor,
 		})) || [];
 
-	// Determine how many bars to show based on screen size
-
 	let maxBars;
 	if (windowWidth <= 600) {
 		// Mobile
@@ -82,16 +79,117 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		maxBars = spendingByVendorData.length;
 	}
 
+	const renderTable = () => (
+		<Box sx={{ my: 4 }}>
+			<DataGrid
+				rows={insights.topLineItems.map((item, index) => ({
+					id: index,
+					title: item.title,
+					quantity: item.quantity,
+					totalSpent: `$${item.totalSpent.toFixed(2)}`,
+					category: item.category,
+				}))}
+				columns={[
+					{
+						field: 'title',
+						headerName: 'Item',
+						flex: 1,
+						headerAlign: 'center',
+						align: 'center',
+					},
+					{
+						field: 'quantity',
+						headerName: 'Quantity',
+						flex: 1,
+						headerAlign: 'center',
+						align: 'center',
+					},
+					{
+						field: 'totalSpent',
+						headerName: 'Total Spent',
+						flex: 1,
+						headerAlign: 'center',
+						align: 'center',
+					},
+					{
+						field: 'category',
+						headerName: 'Category',
+						flex: 1,
+						headerAlign: 'center',
+						align: 'center',
+					},
+				]}
+				autoHeight
+				pageSize={5}
+				sx={{
+					color: '#ffffff',
+					backgroundColor: '#1f2937',
+					border: 'none',
+					'& .MuiDataGrid-cell': {
+						borderBottom: '1px solid #4b5563',
+					},
+					'& .MuiDataGrid-footerContainer': {
+						backgroundColor: '#1f2937',
+						color: '#cbd5e1',
+					},
+					'& .MuiTablePagination-root': {
+						color: '#cbd5e1',
+					},
+					'& .MuiDataGrid-columnHeaders': {
+						backgroundColor: '#1f2937',
+						color: '#1f2937',
+						borderBottom: '1px solid #4b5563',
+					},
+					'& .data-grid-header': {
+						fontWeight: 'bold',
+						fontSize: '1rem',
+					},
+				}}
+			/>
+		</Box>
+	);
+
+	const renderCards = () => (
+		<Box sx={{ mt: 4 }}>
+			{insights.topLineItems.map((row, index) => (
+				<Card
+					key={index}
+					sx={{
+						mb: 2,
+						backgroundColor: '#1f2937',
+						color: '#ffffff',
+						borderRadius: 2,
+						boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+					}}
+				>
+					<CardContent>
+						<Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+							{row.title}
+						</Typography>
+						<Typography>
+							<strong>Quantity:</strong> {row.quantity}
+						</Typography>
+						<Typography>
+							<strong>Total Spent:</strong> {`$${row.totalSpent.toFixed(2)}`}
+						</Typography>
+						<Typography>
+							<strong>Category:</strong> {row.category}
+						</Typography>
+					</CardContent>
+				</Card>
+			))}
+		</Box>
+	);
+
 	const displayedVendorData = spendingByVendorData.slice(0, maxBars);
 
-	// Determine legend font size dynamically
 	let legendFontSize;
 	if (windowWidth <= 600) {
-		legendFontSize = 12; // Smaller legend font on mobile
+		legendFontSize = 12;
 	} else if (windowWidth <= 1024) {
-		legendFontSize = 14; // Slightly smaller on tablet
+		legendFontSize = 14;
 	} else {
-		legendFontSize = 18; // Default larger font on desktop
+		legendFontSize = 18;
 	}
 
 	const spendingByParentCategoryLabels =
@@ -335,83 +433,32 @@ const InsightsSummary = ({ insights, handleReset }) => {
 
 			<br />
 			{/* Top Line Items Data Grid */}
-			<Box sx={{ my: 4 }}>
+			<Box sx={{ mt: 4 }}>
 				<Typography
 					variant="h5"
 					sx={{
 						textAlign: 'center',
 						color: '#ffffff',
 						fontWeight: 'bold',
-						marginBottom: 2,
+						mb: 2,
 					}}
 				>
 					Top Purchases
 				</Typography>
-				<DataGrid
-					rows={insights.topLineItems.map((item, index) => ({
-						id: index,
-						title: item.title,
-						quantity: item.quantity,
-						totalSpent: `$${item.totalSpent.toFixed(2)}`,
-						category: item.category,
-					}))}
-					columns={[
-						{
-							field: 'title',
-							headerName: 'Item',
-							flex: 1,
-							headerAlign: 'center',
-							align: 'center',
-						},
-						{
-							field: 'quantity',
-							headerName: 'Quantity',
-							flex: 1,
-							headerAlign: 'center',
-							align: 'center',
-						},
-						{
-							field: 'totalSpent',
-							headerName: 'Total Spent',
-							flex: 1,
-							headerAlign: 'center',
-							align: 'center',
-						},
-						{
-							field: 'category',
-							headerName: 'Category',
-							flex: 1,
-							headerAlign: 'center',
-							align: 'center',
-						},
-					]}
-					autoHeight
-					pageSize={5}
-					sx={{
-						color: '#ffffff',
-						backgroundColor: '#1f2937',
-						border: 'none',
-						'& .MuiDataGrid-cell': {
-							borderBottom: '1px solid #4b5563',
-						},
-						'& .MuiDataGrid-footerContainer': {
-							backgroundColor: '#1f2937',
-							color: '#cbd5e1',
-						},
-						'& .MuiTablePagination-root': {
-							color: '#cbd5e1',
-						},
-						'& .MuiDataGrid-columnHeaders': {
-							backgroundColor: '#1f2937',
-							color: '#1f2937',
-							borderBottom: '1px solid #4b5563',
-						},
-						'& .data-grid-header': {
-							fontWeight: 'bold',
-							fontSize: '1rem',
-						},
-					}}
-				/>
+				{windowWidth <= 768 ? renderCards() : renderTable()}
+				<Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+					<Button
+						onClick={handleReset}
+						variant="contained"
+						sx={{
+							backgroundColor: '#22c55e',
+							color: '#ffffff',
+							'&:hover': { backgroundColor: '#16a34a' },
+						}}
+					>
+						Try Again with Another Batch
+					</Button>
+				</Box>
 			</Box>
 
 			{/* Export Button */}
@@ -430,24 +477,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 					startIcon={<DownloadOutlinedIcon />}
 				>
 					Export as CSV
-				</Button>
-			</Box>
-
-			{/* Try it again Button */}
-			<Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-				<Button
-					onClick={handleReset}
-					variant="contained"
-					sx={{
-						backgroundColor: '#22c55e',
-						color: '#ffffff',
-						'&:hover': {
-							backgroundColor: '#16a34a',
-						},
-					}}
-					size="large"
-				>
-					Try it again with another batch of receipts
 				</Button>
 			</Box>
 		</motion.section>
