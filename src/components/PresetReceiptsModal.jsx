@@ -41,6 +41,7 @@ const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 	const [selectedReceipts, setSelectedReceipts] = useState([]);
 	const [activeCategory, setActiveCategory] = useState('all');
+	const [isAdding, setIsAdding] = useState(false); // New loading state
 
 	const toggleReceiptSelection = useCallback((receipt) => {
 		setSelectedReceipts((prevSelected) =>
@@ -77,7 +78,6 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 			const notSelected = [...filteredReceipts];
 			const shuffled = shuffleArray(notSelected);
 			const toSelect = shuffled.slice(0, count);
-
 			setSelectedReceipts(toSelect);
 		},
 		[filteredReceipts]
@@ -93,6 +93,7 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 			return;
 		}
 		try {
+			setIsAdding(true); // Start loading
 			const updatedReceipts = await Promise.all(
 				selectedReceipts.map(async (receipt) => {
 					try {
@@ -127,13 +128,17 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 
 			if (validReceipts.length === 0) {
 				alert('Failed to add any receipts. Please try again.');
+				setIsAdding(false);
 				return;
 			}
 
 			handlePresetSelection(validReceipts);
 			onClose();
+			clearSelection();
+			setIsAdding(false);
 		} catch (error) {
 			console.error('Error in handleAddReceipts:', error);
+			setIsAdding(false);
 		}
 	}, [selectedReceipts, handlePresetSelection, onClose]);
 
@@ -249,19 +254,25 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 					<button
 						onClick={onClose}
 						className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none"
+						disabled={isAdding}
 					>
 						Cancel
 					</button>
 					<button
 						onClick={handleAddReceipts}
-						className={`px-4 py-2 rounded-md focus:outline-none ${
-							selectedReceipts.length === 0
+						className={`px-4 py-2 rounded-md focus:outline-none relative ${
+							selectedReceipts.length === 0 || isAdding
 								? 'bg-blue-300 cursor-not-allowed'
 								: 'bg-blue-500 hover:bg-blue-600 text-white'
 						}`}
-						disabled={selectedReceipts.length === 0}
+						disabled={selectedReceipts.length === 0 || isAdding}
 					>
-						Add Selected Receipts
+						{isAdding ? (
+							// Spinner instead of text
+							<div className="w-6 h-6 border-4 border-white border-t-transparent border-solid rounded-full animate-spin mx-auto" />
+						) : (
+							'Add Selected Receipts'
+						)}
 					</button>
 				</div>
 			</div>
