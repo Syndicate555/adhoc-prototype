@@ -237,15 +237,19 @@ function App() {
 	const handlePresetSelection = (selectedPresetReceipts) => {
 		const newReceipts = selectedPresetReceipts.map((presetReceipt) => ({
 			receiptId: null,
-			file: presetReceipt.imageFile, // We'll need to load the image as a File object
+			file: presetReceipt.imageFile,
 			status: 'PENDING',
 			isPreset: true,
-			presetData: presetReceipt, // Contains id, imageUrl, categories
+			presetData: presetReceipt,
 		}));
 
 		setReceipts((prevReceipts) => [...prevReceipts, ...newReceipts]);
 		setAllCompleted(false);
 	};
+
+	const clearSelection = useCallback(() => {
+		setReceipts([]);
+	}, []);
 
 	const handleGenerateInsights = async () => {
 		if (!receipts.length || insightsGenerated || loadingInsights) return;
@@ -372,31 +376,32 @@ function App() {
 					isGeneratingInsights={isGeneratingInsights}
 					openPresetModal={() => setIsPresetModalOpen(true)}
 				/>
-
-				{/* Receipt Item Hierarchy */}
-				{/* <ReceiptHierarchyTree data={treeData} /> */}
+				<br />
 				{/* Preset Receipts Modal */}
 				<PresetReceiptsModal
 					isOpen={isPresetModalOpen}
 					onClose={() => setIsPresetModalOpen(false)}
 					handlePresetSelection={handlePresetSelection}
 				/>
-				<ProgressBar
-					globalProgressRef={globalProgressRef}
-					receipts={receipts}
-				/>
 
-				{/* Receipt Upload & Tracking Section */}
+				{/* Section containing progress and receipt uploads */}
 				{receipts.length > 0 && (
-					<ReceiptsUploadSection
-						receipts={receipts}
-						handleRemoveReceipt={handleRemoveReceipt}
-						uploadFinalized={uploadFinalized}
-						getProgressPercentage={getProgressPercentage}
-					/>
+					<div className="mt-10 max-w-7xl mx-auto px-6">
+						<ProgressBar
+							globalProgressRef={globalProgressRef}
+							receipts={receipts}
+						/>
+						<br />
+						<ReceiptsUploadSection
+							receipts={receipts}
+							handleRemoveReceipt={handleRemoveReceipt}
+							uploadFinalized={uploadFinalized}
+							getProgressPercentage={getProgressPercentage}
+							clearSelection={clearSelection}
+						/>
+					</div>
 				)}
 
-				{/* Notification when all receipts are processed */}
 				{allReceiptsProcessed && (
 					<motion.div
 						className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
@@ -407,13 +412,13 @@ function App() {
 					>
 						<div className="bg-[#1f2937] p-8 rounded-lg shadow-lg text-center">
 							<h2 className="text-3xl font-bold text-green-600 mb-4">
-								🎉 Your insights are ready to be viewed!
+								🎉 Your insights are ready!
 							</h2>
-							<p className="text-lg text-white-700 mb-6">
+							<p className="text-lg text-gray-300 mb-6">
 								Click the button below to view your insights.
 							</p>
 							<button
-								className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold"
+								className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
 								onClick={scrollToInsights}
 							>
 								View My Insights
@@ -422,15 +427,13 @@ function App() {
 					</motion.div>
 				)}
 
-				{/* Insights Summary Section */}
 				<div ref={insightsRef}>
 					<InsightsSummary insights={insights} handleReset={handleReset} />
 				</div>
 
-				{/* Mobile app screenshots section overview */}
 				<MobileAppFeatureSection />
-
 				<Footer />
+
 				{isWaitlistModalOpen && (
 					<WaitlistModal
 						setIsWaitlistModalOpen={setIsWaitlistModalOpen}
