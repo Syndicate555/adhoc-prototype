@@ -29,7 +29,7 @@ const HeroSection = forwardRef(
 				className="flex-1 flex flex-col items-center justify-start text-center pt-4"
 			>
 				<div className="container mx-auto px-4 flex flex-col items-center mt-4 lg:mt-10">
-					<h2 className="text-3xl sm:text-5xl lg:text-6xl text-center tracking-wide px-4">
+					<h2 className="text-3xl sm:text-5xl lg:text-6xl text-center font-bold tracking-wide px-4">
 						Unlock <span className="btn-shine">Insights</span> from Your
 						Receipts
 					</h2>

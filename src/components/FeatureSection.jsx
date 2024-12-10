@@ -12,7 +12,7 @@ const FeatureSection = () => {
 		<section className="mt-20 border-t py-10 border-neutral-700">
 			<div className="relative mt-20 border-b border-neutral-800 min-h-[800px] pb-20">
 				<div className="text-center">
-					<h2 className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wide">
+					<h2 className="text-4xl sm:text-6xl lg:text-7xl tracking-wide font-bold leading-tight">
 						Easily store{' '}
 						<span className="bg-gradient-to-r from-green-500 to-green-800 text-transparent bg-clip-text">
 							your Receipts
