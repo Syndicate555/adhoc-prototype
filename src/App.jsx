@@ -431,6 +431,9 @@ function App() {
 				<div ref={insightsRef}>
 					<InsightsSummary insights={insights} handleReset={handleReset} />
 				</div>
+				<br />
+				<br />
+				<br />
 
 				<MobileAppFeatureSection />
 				<Footer />
