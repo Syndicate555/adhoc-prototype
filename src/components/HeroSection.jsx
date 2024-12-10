@@ -1,7 +1,9 @@
 import React, { forwardRef } from 'react';
 import Scene from './3D animations/Scene';
 import { motion } from 'framer-motion';
-
+import Lottie from 'lottie-react';
+import receiptScanningAnimation from '../assets/lottie/receipt.json';
+import { ReactTyped } from 'react-typed';
 const HeroSection = forwardRef(
 	(
 		{
@@ -35,6 +37,7 @@ const HeroSection = forwardRef(
 						Upload 20-50 of your receipts and let our AI generate valuable
 						spending insights for you.
 					</p>
+
 					<div className="w-full flex justify-center items-center mb-4">
 						<div className="w-full max-w-[800px] aspect-[16/11]">
 							<Scene isAnimating={isGeneratingInsights} />
@@ -43,12 +46,15 @@ const HeroSection = forwardRef(
 					<div className="flex justify-center space-x-6 mt-4">
 						{isLoadingInsights ? (
 							<div className="flex flex-col items-center">
-								<h2 className="text-2xl font-bold text-800 mt-4">
-									Generating Insights...
-								</h2>
-								<p className="text-white-600 mt-2">
-									This may take a moment, please wait.
-								</p>
+								<div className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white-500">
+									<ReactTyped
+										strings={['Scanning your Receipts', '']}
+										typeSpeed={40}
+										backSpeed={40}
+										showCursor={false}
+									/>
+								</div>
+								<Lottie animationData={receiptScanningAnimation} loop={false} />
 							</div>
 						) : (
 							<>

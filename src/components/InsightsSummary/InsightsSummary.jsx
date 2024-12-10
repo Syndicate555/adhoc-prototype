@@ -51,10 +51,6 @@ const InsightsSummary = ({ insights, handleReset }) => {
 		};
 	}, []);
 
-	if (!insights) {
-		return null;
-	}
-
 	const parentCategories =
 		insights?.spendingByParentCategory?.map(
 			(category) => category.parent_category
@@ -224,6 +220,10 @@ const InsightsSummary = ({ insights, handleReset }) => {
 	const handleParentCategoryChange = (event) => {
 		setSelectedParentCategory(event.target.value);
 	};
+
+	if (!insights) {
+		return <></>;
+	}
 
 	return (
 		<motion.section
