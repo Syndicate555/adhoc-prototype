@@ -19,7 +19,7 @@ const HeroSectionProd = ({ handleScrollToDemo, setIsWaitlistModalOpen }) => {
 					<span className="text-green-400">Organized</span>{' '}
 					<span className="text-green-500">Analyzed</span>
 					<br />
-					<span className="bg-gradient-to-r from-green-400 to-green-700 text-transparent bg-clip-text">
+					<span className="bg-gradient-to-r from-green-600 to-green-800 text-transparent bg-clip-text">
 						Optimized
 					</span>
 				</h1>

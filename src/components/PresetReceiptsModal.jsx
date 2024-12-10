@@ -41,7 +41,7 @@ const ReceiptItem = React.memo(({ receipt, isSelected, onToggle }) => {
 const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 	const [selectedReceipts, setSelectedReceipts] = useState([]);
 	const [activeCategory, setActiveCategory] = useState('all');
-	const [isAdding, setIsAdding] = useState(false); // New loading state
+	const [isAdding, setIsAdding] = useState(false);
 
 	const toggleReceiptSelection = useCallback((receipt) => {
 		setSelectedReceipts((prevSelected) =>
@@ -268,7 +268,6 @@ const PresetReceiptsModal = ({ isOpen, onClose, handlePresetSelection }) => {
 						disabled={selectedReceipts.length === 0 || isAdding}
 					>
 						{isAdding ? (
-							// Spinner instead of text
 							<div className="w-6 h-6 border-4 border-white border-t-transparent border-solid rounded-full animate-spin mx-auto" />
 						) : (
 							'Add Selected Receipts'
