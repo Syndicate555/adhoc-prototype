@@ -8,20 +8,18 @@ const HeroSectionProd = ({ handleScrollToDemo, setIsWaitlistModalOpen }) => {
 
 	return (
 		<section className="flex flex-col lg:flex-row items-center justify-between py-16 px-8 lg:px-16 relative bg-transparent">
-			{/* Subtle Gradient for Blending */}
 			<div className="absolute inset-0 bg-gradient-to-b from-neutral-1100 to-transparent z-0"></div>
 
-			{/* Left Side - Text and Buttons */}
 			<div className="flex-1 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10 space-y-6">
 				<h1 className="text-4xl sm:text-6xl lg:text-7xl tracking-wide font-extrabold leading-tight">
-					Your Receipts.
+					Your Receipts
 					<br />
-					<span className="text-green-400">Organized</span>{' '}
-					<span className="text-green-500">Analyzed</span>
+					<span className="bg-gradient-to-r from-green-600 to-green-900 text-transparent bg-clip-text">
+						Organized
+					</span>{' '}
+					<span className="text-green-600">Analyzed</span>
 					<br />
-					<span className="bg-gradient-to-r from-green-600 to-green-800 text-transparent bg-clip-text">
-						Optimized
-					</span>
+					<span className="text-green-400">Optimized!</span>
 				</h1>
 				<p className="mt-6 text-lg lg:text-xl text-neutral-400 max-w-lg lg:max-w-md leading-relaxed">
 					Transform every purchase into actionable insights with Platen.
