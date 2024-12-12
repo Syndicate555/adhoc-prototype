@@ -9,6 +9,7 @@ const ReceiptsUploadSection = ({
 	uploadFinalized,
 	getProgressPercentage,
 	clearSelection,
+	allArePresetReceipts,
 }) => {
 	const [isExpanded, setIsExpanded] = useState(true);
 	const [isClearing, setIsClearing] = useState(false);
@@ -99,6 +100,7 @@ const ReceiptsUploadSection = ({
 											handleRemoveReceipt={handleRemoveReceipt}
 											uploadFinalized={uploadFinalized}
 											getProgressPercentage={getProgressPercentage}
+											allArePresetReceipts={allArePresetReceipts}
 										/>
 									</motion.div>
 								))}

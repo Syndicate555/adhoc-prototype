@@ -12,7 +12,11 @@ import HeroSection from './components/HeroSection';
 import ProgressBar from './components/ProgressBar';
 import ReceiptsUploadSection from './components/ReceiptsUploadSection';
 import InsightsSummary from './components/InsightsSummary/InsightsSummary';
-import { uploadReceipts, fetchInsights } from './services/api';
+import {
+	uploadReceipts,
+	fetchInsights,
+	fetchInsightsByPresetIds,
+} from './services/api';
 import { getProgressPercentage } from './utilities/utils';
 import { motion } from 'framer-motion';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -46,6 +50,7 @@ function App() {
 		useState(false);
 	const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
 	const [waitlistSuccessMessage, setWaitlistSuccessMessage] = useState('');
+	const [isFakeProgressActive, setIsFakeProgressActive] = useState(false); // NEW STATE
 
 	const insightsRef = useRef(null);
 	const heroSectionRef = useRef(null);
@@ -62,6 +67,11 @@ function App() {
 			});
 		}
 	};
+
+	const allArePresetReceipts = useCallback(() => {
+		return receipts.length > 0 && receipts.every((r) => r.isPreset === true);
+	}, [receipts]);
+
 	const animateProgress = useCallback(
 		(updatedReceipts) => {
 			const totalProgress = updatedReceipts.reduce((acc, receipt) => {
@@ -194,6 +204,7 @@ function App() {
 		setIsUploading(false);
 		setIsLoadingInsights(false);
 		setInsightsReadyNotification(false);
+		setIsFakeProgressActive(false);
 		globalProgressRef.current = null;
 	};
 
@@ -227,6 +238,7 @@ function App() {
 			receiptId: null,
 			file,
 			status: 'PENDING',
+			isPreset: false,
 		}));
 
 		setFiles((prevFiles) => [...prevFiles, ...uniqueFiles]);
@@ -239,7 +251,7 @@ function App() {
 			receiptId: null,
 			file: presetReceipt.imageFile,
 			status: 'PENDING',
-			isPreset: true,
+			isPreset: true, // Mark that this is a preset receipt
 			presetData: presetReceipt,
 		}));
 
@@ -258,11 +270,22 @@ function App() {
 		setLoadingInsights(true);
 
 		try {
-			const job_id = receipts[0].job_id;
-			const insightsData = await fetchInsights(job_id);
-			setInsights(insightsData);
+			if (allArePresetReceipts()) {
+				// All preset: fetch insights by preset_ids
+				setAllReceiptsProcessed(true);
+				const presetIds = receipts.map((r) => r.presetData.id);
+				const insightsData = await fetchInsightsByPresetIds(presetIds);
+				setInsights(insightsData);
+			} else {
+				// User receipts present: fetch by job_id
+				const job_id = receipts[0].job_id;
+				const insightsData = await fetchInsights(job_id);
+				setInsights(insightsData);
+			}
+
 			setInsightsGenerated(true);
 			setInsightsReadyNotification(true);
+			setUploadFinalized(true);
 		} catch (error) {
 			console.error('Failed to fetch insights:', error);
 		} finally {
@@ -287,20 +310,58 @@ function App() {
 		setIsLoadingInsights(true);
 		setIsModelAnimating(true);
 		try {
-			const filesToUpload = receipts.map((receipt) => receipt.file);
-			const createdReceipts = await uploadReceipts(filesToUpload, sessionId);
-			if (createdReceipts) {
-				const uploadedReceipts = createdReceipts.map((receipt, index) => ({
-					...receipts[index],
-					receiptId: receipt._id,
-					status: 'UPLOADED',
-					job_id: receipt.job_id,
-				}));
+			const filesToUpload = receipts
+				.filter((r) => !r.isPreset)
+				.map((receipt) => receipt.file);
 
-				setReceipts(uploadedReceipts);
-				setUploadFinalized(true);
-				setFakeProgress(30);
+			if (filesToUpload.length > 0) {
+				const createdReceipts = await uploadReceipts(filesToUpload, sessionId);
+				if (createdReceipts) {
+					let userReceiptCounter = 0;
+					const uploadedReceipts = receipts.map((receipt) => {
+						if (receipt.isPreset) {
+							return receipt;
+						} else {
+							const createdReceipt = createdReceipts[userReceiptCounter++];
+							return {
+								...receipt,
+								receiptId: createdReceipt._id,
+								status: 'UPLOADED',
+								job_id: createdReceipt.job_id,
+							};
+						}
+					});
+
+					setReceipts(uploadedReceipts);
+					setUploadFinalized(true);
+					setFakeProgress(30);
+					setIsGeneratingInsights(true);
+				}
+			} else {
+				// If somehow no user files, just do preset logic
 				setIsGeneratingInsights(true);
+				setIsFakeProgressActive(true);
+				let progress = 0;
+				const interval = setInterval(() => {
+					progress += 25;
+					if (progress > 100) progress = 100;
+					setFakeProgress(progress);
+					const updated = receipts.map((r) => ({
+						...r,
+						status: progress < 100 ? 'UPLOADED' : 'COMPLETED',
+					}));
+					setReceipts(updated);
+					animateProgress(updated);
+					if (progress === 100) {
+						clearInterval(interval);
+						setIsUploading(false);
+						setIsLoadingInsights(false);
+						setIsModelAnimating(false);
+						setIsGeneratingInsights(false);
+						setIsFakeProgressActive(false);
+						checkAllCompleted(updated);
+					}
+				}, 200);
 			}
 		} catch (error) {
 			console.error('Upload failed:', error);
@@ -336,8 +397,11 @@ function App() {
 
 	const scrollToInsights = async () => {
 		setAllReceiptsProcessed(false);
-		await handleGenerateInsights();
-
+		// The user clicks "View My Insights" here. At this point, we fetch insights if not already fetched.
+		// If allArePresetReceipts and we haven't fetched insights yet, call handleGenerateInsights:
+		if (!insightsGenerated) {
+			await handleGenerateInsights();
+		}
 		if (insightsRef.current) {
 			gsap.to(window, {
 				scrollTo: {
@@ -376,6 +440,11 @@ function App() {
 					isLoadingInsights={isLoadingInsights}
 					isGeneratingInsights={isGeneratingInsights}
 					openPresetModal={() => setIsPresetModalOpen(true)}
+					insightsGenerated={insightsGenerated}
+					uploadFinalized={uploadFinalized}
+					isFakeProgressActive={isFakeProgressActive}
+					handleGenerateInsights={handleGenerateInsights}
+					presetReceiptsSelected={allArePresetReceipts()}
 				/>
 				<br />
 				{/* Preset Receipts Modal */}
@@ -388,10 +457,13 @@ function App() {
 				{/* Section containing progress and receipt uploads */}
 				{receipts.length > 0 && (
 					<div className="mt-10 max-w-7xl mx-auto px-6">
-						<ProgressBar
-							globalProgressRef={globalProgressRef}
-							receipts={receipts}
-						/>
+						{!allArePresetReceipts() && (
+							<ProgressBar
+								globalProgressRef={globalProgressRef}
+								receipts={receipts}
+							/>
+						)}
+
 						<br />
 						<ReceiptsUploadSection
 							receipts={receipts}
@@ -399,6 +471,7 @@ function App() {
 							uploadFinalized={uploadFinalized}
 							getProgressPercentage={getProgressPercentage}
 							clearSelection={clearSelection}
+							allArePresetReceipts={allArePresetReceipts}
 						/>
 					</div>
 				)}

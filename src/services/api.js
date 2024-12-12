@@ -28,12 +28,26 @@ export const uploadReceipts = async (files, sessionId) => {
 
 export const fetchInsights = async (jobId) => {
 	try {
-		const response = await axios.get(
-			`${API_BASE_URL}/analytics/summary?demo=true&job=${jobId}`
-		);
+		const response = await axios.post(`${API_BASE_URL}/analytics/summary`, {
+			demo: true,
+			job: jobId,
+		});
 		return response.data.insights;
 	} catch (error) {
 		console.error('Failed to fetch insights:', error);
+		throw error;
+	}
+};
+
+export const fetchInsightsByPresetIds = async (presetIds) => {
+	try {
+		const response = await axios.post(`${API_BASE_URL}/analytics/summary`, {
+			demo: true,
+			preset_ids: presetIds,
+		});
+		return response.data.insights;
+	} catch (error) {
+		console.error('Failed to fetch insights by preset_ids:', error);
 		throw error;
 	}
 };

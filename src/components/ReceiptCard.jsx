@@ -10,6 +10,7 @@ const ReceiptCard = ({
 	handleRemoveReceipt,
 	uploadFinalized,
 	getProgressPercentage,
+	allArePresetReceipts,
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [zoomLevel, setZoomLevel] = useState(1);
@@ -87,7 +88,7 @@ const ReceiptCard = ({
 					{receipt.file?.name || receipt.presetData?.id}
 				</div>
 				<div className="w-16 h-16 mx-auto">
-					{receipt.status === 'COMPLETED' ? (
+					{receipt.status === 'COMPLETED' || allArePresetReceipts() ? (
 						<FaCheckCircle className="text-green-400 w-full h-full" />
 					) : (
 						<CircularProgressbar

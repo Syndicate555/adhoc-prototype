@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Lottie from 'lottie-react';
 import receiptScanningAnimation from '../assets/lottie/receipt.json';
 import { ReactTyped } from 'react-typed';
+
 const HeroSection = forwardRef(
 	(
 		{
@@ -18,10 +19,26 @@ const HeroSection = forwardRef(
 			isLoadingInsights,
 			isGeneratingInsights,
 			openPresetModal,
+			// Add these new props to control button visibility and fake progress states
+			insightsGenerated,
+			uploadFinalized,
+			isFakeProgressActive,
+			handleGenerateInsights,
+			presetReceiptsSelected,
 		},
 		ref
 	) => {
-		const shouldAnimateGenerate = files.length > 0 && !isUploading;
+		// Show generate animation only if there are files, not uploading, not finalized, and not insights ready
+		const shouldAnimateGenerate =
+			files.length > 0 &&
+			!isUploading &&
+			!insightsGenerated &&
+			!uploadFinalized;
+
+		// Hide action buttons if insights are already generated or upload finalized
+		const showActionButtons = !insightsGenerated && !uploadFinalized;
+
+		const generateButtonText = uploading ? 'Generate' : 'Generate Insights';
 
 		return (
 			<section
@@ -44,7 +61,7 @@ const HeroSection = forwardRef(
 						</div>
 					</div>
 					<div className="flex justify-center space-x-6 mt-4">
-						{isLoadingInsights ? (
+						{isLoadingInsights || isFakeProgressActive ? (
 							<div className="flex flex-col items-center">
 								<div className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white-500">
 									<ReactTyped
@@ -58,7 +75,8 @@ const HeroSection = forwardRef(
 							</div>
 						) : (
 							<>
-								{!isUploading && (
+								{/* Only show these buttons if user hasn't completed or generated insights yet */}
+								{showActionButtons && !isUploading && (
 									<div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
 										<button
 											onClick={handleSelectReceiptsClick}
@@ -85,9 +103,13 @@ const HeroSection = forwardRef(
 									onChange={handleFileChange}
 								/>
 
-								{!isUploading && (
+								{showActionButtons && !isUploading && (
 									<motion.button
-										onClick={handleUpload}
+										onClick={
+											presetReceiptsSelected
+												? handleGenerateInsights
+												: handleUpload
+										}
 										className={`bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-md shadow-lg transform transition-transform ${
 											uploading || files.length === 0
 												? 'opacity-50 cursor-not-allowed'
@@ -117,7 +139,7 @@ const HeroSection = forwardRef(
 												: {}
 										}
 									>
-										{uploading ? 'Generate' : 'Generate Insights'}
+										{generateButtonText}
 									</motion.button>
 								)}
 							</>
