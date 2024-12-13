@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import ReceiptCard from './ReceiptCard';
 import { FaChevronDown, FaChevronUp, FaTrashAlt } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +16,11 @@ const ReceiptsUploadSection = ({
 
 	const toggleExpand = () => setIsExpanded(!isExpanded);
 
+	const containerVariants = {
+		collapsed: { height: 0, opacity: 0 },
+		expanded: { height: 'auto', opacity: 1 },
+	};
+
 	return (
 		<div className="my-8">
 			<div className="flex flex-wrap items-center gap-4 mb-4">
@@ -25,7 +30,11 @@ const ReceiptsUploadSection = ({
 				<div className="flex items-center gap-4">
 					{!uploadFinalized && (
 						<button
-							onClick={clearSelection}
+							onClick={() => {
+								setIsClearing(true);
+								// We'll rely on AnimatePresence exit complete to clearSelection
+								setIsExpanded(false);
+							}}
 							className="text-white bg-red-600 hover:bg-red-700 p-2 rounded-full focus:outline-none transition-colors duration-200"
 							aria-label="Clear all receipts"
 							title="Clear all receipts"
@@ -53,25 +62,18 @@ const ReceiptsUploadSection = ({
 					}
 				}}
 			>
-				{isExpanded && (
+				{isExpanded && !isClearing && (
 					<motion.div
 						key="drawer"
 						className="rounded-xl shadow-lg overflow-hidden"
-						style={{ backgroundColor: '#2a3f58', originY: 0 }}
-						initial={{ scaleY: 0, opacity: 0 }}
-						animate={{
-							scaleY: isClearing ? 0 : 1,
-							opacity: isClearing ? 0 : 1,
-							transition: { duration: 0.3, ease: 'easeOut' },
-						}}
-						exit={{
-							scaleY: 0,
-							opacity: 0,
-							transition: { duration: 0.3, ease: 'easeIn' },
-						}}
+						style={{ backgroundColor: '#2a3f58', overflow: 'hidden' }}
+						initial="collapsed"
+						animate="expanded"
+						exit="collapsed"
+						variants={containerVariants}
+						transition={{ duration: 0.3, ease: 'easeOut' }}
 					>
-						{/* The container of receipts has layout for smooth position changes */}
-						<motion.div className="flex overflow-x-auto space-x-4 p-4" layout>
+						<div className="flex overflow-x-auto space-x-4 p-4">
 							<AnimatePresence>
 								{receipts.map((receipt, index) => (
 									<motion.div
@@ -80,19 +82,10 @@ const ReceiptsUploadSection = ({
 											receipt.file?.name ||
 											`receipt-${index}`
 										}
-										layout
-										initial={{ opacity: 0, scale: 0.95 }}
-										animate={{
-											opacity: 1,
-											scale: 1,
-											transition: { duration: 0.2 },
-										}}
-										exit={{
-											opacity: 0,
-											scale: 0.5,
-											rotate: -10,
-											transition: { duration: 0.3, ease: 'easeInOut' },
-										}}
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 0.2 }}
 									>
 										<ReceiptCard
 											receipt={receipt}
@@ -105,7 +98,7 @@ const ReceiptsUploadSection = ({
 									</motion.div>
 								))}
 							</AnimatePresence>
-						</motion.div>
+						</div>
 					</motion.div>
 				)}
 			</AnimatePresence>

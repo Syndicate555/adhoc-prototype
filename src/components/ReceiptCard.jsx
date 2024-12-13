@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { FaTrashAlt, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import Modal from 'react-modal';
@@ -17,6 +17,24 @@ const ReceiptCard = ({
 	const [isImageLoading, setIsImageLoading] = useState(true);
 	const modalContentRef = useRef(null);
 
+	const imageSource = useMemo(() => {
+		if (receipt.isPreset && receipt.presetData?.imageUrl) {
+			return receipt.presetData.imageUrl;
+		} else if (receipt.file) {
+			return URL.createObjectURL(receipt.file);
+		}
+		return '';
+	}, [receipt.isPreset, receipt.presetData, receipt.file]);
+
+	useEffect(() => {
+		return () => {
+			// Cleanup object URL if we created one for user file
+			if (receipt.file && !receipt.isPreset && imageSource) {
+				URL.revokeObjectURL(imageSource);
+			}
+		};
+	}, [imageSource, receipt.file, receipt.isPreset]);
+
 	const handleCardClick = () => {
 		setIsModalOpen(true);
 		setIsImageLoading(true);
@@ -24,38 +42,19 @@ const ReceiptCard = ({
 
 	const closeModal = () => {
 		setIsModalOpen(false);
-		setZoomLevel(1); // Reset zoom level
+		setZoomLevel(1);
 	};
 
 	const handleImageClick = (e) => {
 		setZoomLevel((prevZoom) => (prevZoom === 1 ? 2 : 1));
-
-		if (zoomLevel === 1 && modalContentRef.current) {
-			const rect = modalContentRef.current.getBoundingClientRect();
-			const scrollX =
-				e.clientX - rect.left + modalContentRef.current.scrollLeft;
-			const scrollY = e.clientY - rect.top + modalContentRef.current.scrollTop;
-
-			modalContentRef.current.scrollTo({
-				left: scrollX - rect.width / 2,
-				top: scrollY - rect.height / 2,
-				behavior: 'smooth',
-			});
-		}
 	};
 
 	const handleImageLoad = () => {
 		setIsImageLoading(false);
 	};
 
-	useEffect(() => {
-		if (isModalOpen && modalContentRef.current) {
-			modalContentRef.current.scrollTop = 0;
-		}
-	}, [isModalOpen]);
-	const imageSource = receipt.file
-		? URL.createObjectURL(receipt.file)
-		: receipt.presetData?.imageUrl;
+	const showRemoveButton = !uploadFinalized;
+
 	return (
 		<>
 			<div
@@ -66,7 +65,7 @@ const ReceiptCard = ({
 					boxShadow: '0 4px 12px rgba(0, 0, 0, 0.6)',
 				}}
 			>
-				{!uploadFinalized && (
+				{showRemoveButton && (
 					<button
 						onClick={(e) => {
 							e.stopPropagation();
@@ -77,17 +76,21 @@ const ReceiptCard = ({
 						<FaTrashAlt />
 					</button>
 				)}
-				<div className="w-full h-32 mb-4 overflow-hidden rounded-xl">
-					<img
-						src={imageSource}
-						alt={`Receipt ${index + 1}`}
-						className="w-full h-full object-cover"
-					/>
+				<div className="w-full h-32 mb-4 overflow-hidden rounded-xl flex justify-center items-center bg-neutral-700">
+					{imageSource ? (
+						<img
+							src={imageSource}
+							alt={`Receipt ${index + 1}`}
+							className="w-full h-full object-cover"
+						/>
+					) : (
+						<div className="text-gray-400 text-sm">No Image</div>
+					)}
 				</div>
 				<div className="text-center text-xs text-neutral-300 mb-4 truncate px-2">
-					{receipt.file?.name || receipt.presetData?.id}
+					{receipt.file?.name || receipt.presetData?.id || 'Unknown Receipt'}
 				</div>
-				<div className="w-16 h-16 mx-auto">
+				<div className="w-16 h-16 mx-auto flex justify-center items-center">
 					{receipt.status === 'COMPLETED' || allArePresetReceipts() ? (
 						<FaCheckCircle className="text-green-400 w-full h-full" />
 					) : (
@@ -106,7 +109,6 @@ const ReceiptCard = ({
 				</div>
 			</div>
 
-			{/* Modal for full-screen receipt view */}
 			<Modal
 				isOpen={isModalOpen}
 				onRequestClose={closeModal}
@@ -114,7 +116,6 @@ const ReceiptCard = ({
 				overlayClassName="receipt-overlay fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center"
 				contentLabel={`Receipt ${index + 1}`}
 			>
-				{/* Modal Content */}
 				<div
 					ref={modalContentRef}
 					className="relative flex flex-col items-center w-full overflow-auto"
@@ -122,7 +123,6 @@ const ReceiptCard = ({
 						maxHeight: '90vh',
 					}}
 				>
-					{/* Close Button */}
 					<button
 						className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2 shadow-lg hover:bg-red-700 transition-colors z-50"
 						onClick={closeModal}
@@ -130,41 +130,40 @@ const ReceiptCard = ({
 						<FaTimes size={20} />
 					</button>
 
-					{/* Loader */}
 					{isImageLoading && (
 						<div className="flex justify-center items-center h-16 w-16 mb-4">
 							<div className="loader"></div>
 						</div>
 					)}
 
-					{/* Image */}
-					<div
-						className={`flex justify-center items-center ${
-							isImageLoading ? 'hidden' : ''
-						}`}
-						style={{
-							width: '100%',
-						}}
-					>
-						<img
-							src={URL.createObjectURL(receipt.file)}
-							alt={`Receipt ${index + 1}`}
-							className="rounded-lg shadow-md transition-transform duration-300"
+					{imageSource && (
+						<div
+							className={`flex justify-center items-center ${
+								isImageLoading ? 'hidden' : ''
+							}`}
 							style={{
-								transform: `scale(${zoomLevel})`,
-								objectFit: 'contain',
-								cursor: zoomLevel > 1 ? 'zoom-out' : 'zoom-in',
-								maxWidth: '100%',
-								maxHeight: '100%',
+								width: '100%',
+								overflow: zoomLevel > 1 ? 'scroll' : 'hidden',
 							}}
-							onClick={handleImageClick}
-							onLoad={handleImageLoad}
-						/>
-					</div>
+						>
+							<img
+								src={imageSource}
+								alt={`Receipt ${index + 1}`}
+								className="rounded-lg shadow-md transition-transform duration-300"
+								style={{
+									transform: `scale(${zoomLevel})`,
+									objectFit: 'contain',
+									cursor: zoomLevel > 1 ? 'zoom-out' : 'zoom-in',
+									maxWidth: '100%',
+									maxHeight: '100%',
+								}}
+								onClick={handleImageClick}
+								onLoad={handleImageLoad}
+							/>
+						</div>
+					)}
 				</div>
-
-				{/* Fixed Filename */}
-				{!isImageLoading && (
+				{!isImageLoading && receipt.file && (
 					<div className="text-center text-sm text-neutral-300 truncate px-4 mt-2 mb-4">
 						File: {receipt.file.name}
 					</div>
@@ -174,4 +173,4 @@ const ReceiptCard = ({
 	);
 };
 
-export default ReceiptCard;
+export default React.memo(ReceiptCard);
