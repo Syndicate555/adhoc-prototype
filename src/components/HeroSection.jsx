@@ -19,7 +19,6 @@ const HeroSection = forwardRef(
 			isLoadingInsights,
 			isGeneratingInsights,
 			openPresetModal,
-			// Add these new props to control button visibility and fake progress states
 			insightsGenerated,
 			uploadFinalized,
 			isFakeProgressActive,
@@ -28,14 +27,12 @@ const HeroSection = forwardRef(
 		},
 		ref
 	) => {
-		// Show generate animation only if there are files, not uploading, not finalized, and not insights ready
 		const shouldAnimateGenerate =
 			files.length > 0 &&
 			!isUploading &&
 			!insightsGenerated &&
 			!uploadFinalized;
 
-		// Hide action buttons if insights are already generated or upload finalized
 		const showActionButtons = !insightsGenerated && !uploadFinalized;
 
 		const generateButtonText = uploading ? 'Generate' : 'Generate Insights';
@@ -55,15 +52,15 @@ const HeroSection = forwardRef(
 						spending insights for you.
 					</p>
 
-					<div className="w-full flex justify-center items-center mb-4">
+					{/* <div className="w-full flex justify-center items-center mb-4">
 						<div className="w-full max-w-[800px] aspect-[16/11]">
 							<Scene isAnimating={isGeneratingInsights} />
 						</div>
-					</div>
+					</div> */}
 					<div className="flex justify-center space-x-6 mt-4">
 						{isLoadingInsights || isFakeProgressActive ? (
 							<div className="flex flex-col items-center">
-								<div className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white-500">
+								{/* <div className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white-500">
 									<ReactTyped
 										strings={['Scanning your Receipts', '']}
 										typeSpeed={40}
@@ -71,7 +68,7 @@ const HeroSection = forwardRef(
 										showCursor={false}
 									/>
 								</div>
-								<Lottie animationData={receiptScanningAnimation} loop={false} />
+								<Lottie animationData={receiptScanningAnimation} loop={false} /> */}
 							</div>
 						) : (
 							<>
