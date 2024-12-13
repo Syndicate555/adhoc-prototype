@@ -14,9 +14,10 @@ const FeatureSection = () => {
 				<div className="text-center">
 					<h2 className="text-4xl sm:text-6xl lg:text-7xl tracking-wide font-bold leading-tight">
 						Easily store{' '}
-						<span className="bg-gradient-to-r from-green-500 to-green-800 text-transparent bg-clip-text">
-							your Receipts
-						</span>
+						<span className="bg-gradient-to-r from-green-500 to-green-600 text-transparent bg-clip-text">
+							your
+						</span>{' '}
+						<span className="text-green-400">Receipts</span>
 					</h2>
 				</div>
 				<div className="relative mt-10 lg:mt-20 max-w-6xl mx-auto px-4">
@@ -25,10 +26,10 @@ const FeatureSection = () => {
 						effect="coverflow"
 						grabCursor={true}
 						centeredSlides={true}
-						slidesPerView={1} // Default for smaller screens
+						slidesPerView={1}
 						coverflowEffect={{
 							rotate: 30,
-							stretch: 0, // No excessive stretching for a clean look
+							stretch: 0,
 							depth: 100,
 							modifier: 1,
 							slideShadows: false,
@@ -58,7 +59,7 @@ const FeatureSection = () => {
 						pagination={{ clickable: true }}
 						loop={true}
 						autoplay={{
-							delay: 5000, // Set interval for autoplay
+							delay: 5000,
 							disableOnInteraction: false,
 						}}
 						className="w-full pb-20"
@@ -68,9 +69,9 @@ const FeatureSection = () => {
 								<div
 									className="bg-neutral-800 p-6 md:p-10 rounded-3xl shadow-lg flex flex-col items-center"
 									style={{
-										minHeight: '400px', // Standardized height to ensure consistency across cards
+										minHeight: '400px',
 										width: '100%',
-										maxWidth: '380px', // To prevent over-stretching
+										maxWidth: '380px',
 									}}
 								>
 									<div className="w-16 h-16 p-3 md:w-20 md:h-20 md:p-4 mb-4 bg-neutral-900 text-orange-700 flex justify-center items-center rounded-full">
@@ -90,13 +91,13 @@ const FeatureSection = () => {
 					{/* Navigation buttons repositioned */}
 					<div className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 z-10 ml-4">
 						<ChevronLeft
-							size={30} // Adjusted size for mobile friendliness
+							size={30}
 							className="text-neutral-500 hover:text-white transition-colors"
 						/>
 					</div>
 					<div className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 z-10 mr-4">
 						<ChevronRight
-							size={30} // Adjusted size for mobile friendliness
+							size={30}
 							className="text-neutral-500 hover:text-white transition-colors"
 						/>
 					</div>
