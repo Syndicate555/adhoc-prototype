@@ -32,7 +32,6 @@ const ReceiptsUploadSection = ({
 						<button
 							onClick={() => {
 								setIsClearing(true);
-								// We'll rely on AnimatePresence exit complete to clearSelection
 								setIsExpanded(false);
 							}}
 							className="text-white bg-red-600 hover:bg-red-700 p-2 rounded-full focus:outline-none transition-colors duration-200"
