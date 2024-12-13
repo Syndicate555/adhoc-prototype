@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaTrashAlt, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import Modal from 'react-modal';
@@ -17,27 +17,37 @@ const ReceiptCard = ({
 	const [isImageLoading, setIsImageLoading] = useState(true);
 	const modalContentRef = useRef(null);
 
-	const imageSource = useMemo(() => {
-		if (receipt.isPreset && receipt.presetData?.imageUrl) {
-			return receipt.presetData.imageUrl;
-		} else if (receipt.file) {
-			return URL.createObjectURL(receipt.file);
-		}
-		return '';
-	}, [receipt.isPreset, receipt.presetData, receipt.file]);
+	const [localImageURL, setLocalImageURL] = useState('');
 
+	// Create the object URL once the receipt is mounted
 	useEffect(() => {
+		let objectURL;
+		if (receipt.isPreset && receipt.presetData?.imageUrl) {
+			// Preset receipt: just use the given URL
+			setLocalImageURL(receipt.presetData.imageUrl);
+			setIsImageLoading(false);
+		} else if (receipt.file) {
+			// User-uploaded file: create an object URL
+			objectURL = URL.createObjectURL(receipt.file);
+			setLocalImageURL(objectURL);
+			setIsImageLoading(false);
+		} else {
+			// No image case
+			setLocalImageURL('');
+			setIsImageLoading(false);
+		}
+
 		return () => {
-			// Cleanup object URL if we created one for user file
-			if (receipt.file && !receipt.isPreset && imageSource) {
-				URL.revokeObjectURL(imageSource);
+			// Cleanup object URL if created
+			if (objectURL) {
+				URL.revokeObjectURL(objectURL);
 			}
 		};
-	}, [imageSource, receipt.file, receipt.isPreset]);
+	}, [receipt.isPreset, receipt.presetData, receipt.file]);
 
 	const handleCardClick = () => {
 		setIsModalOpen(true);
-		setIsImageLoading(true);
+		setIsImageLoading(true); // For modal loading indicator
 	};
 
 	const closeModal = () => {
@@ -45,7 +55,7 @@ const ReceiptCard = ({
 		setZoomLevel(1);
 	};
 
-	const handleImageClick = (e) => {
+	const handleImageClick = () => {
 		setZoomLevel((prevZoom) => (prevZoom === 1 ? 2 : 1));
 	};
 
@@ -77,9 +87,9 @@ const ReceiptCard = ({
 					</button>
 				)}
 				<div className="w-full h-32 mb-4 overflow-hidden rounded-xl flex justify-center items-center bg-neutral-700">
-					{imageSource ? (
+					{localImageURL ? (
 						<img
-							src={imageSource}
+							src={localImageURL}
 							alt={`Receipt ${index + 1}`}
 							className="w-full h-full object-cover"
 						/>
@@ -136,7 +146,7 @@ const ReceiptCard = ({
 						</div>
 					)}
 
-					{imageSource && (
+					{localImageURL && (
 						<div
 							className={`flex justify-center items-center ${
 								isImageLoading ? 'hidden' : ''
@@ -147,7 +157,7 @@ const ReceiptCard = ({
 							}}
 						>
 							<img
-								src={imageSource}
+								src={localImageURL}
 								alt={`Receipt ${index + 1}`}
 								className="rounded-lg shadow-md transition-transform duration-300"
 								style={{
