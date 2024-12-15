@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import gsap from 'gsap';
-import ReceiptHierarchyTree from './components/ReceiptTree';
+// import ReceiptHierarchyTree from './components/ReceiptTree';
 import HeroSection from './components/HeroSection';
 import ProgressBar from './components/ProgressBar';
 import ReceiptsUploadSection from './components/ReceiptsUploadSection';
