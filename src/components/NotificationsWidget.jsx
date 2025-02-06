@@ -5,12 +5,14 @@ import React from "react";
 import { Alert, AlertDescription } from "./Alert";
 
 /**
- * This widget replaces the old "AlertsSection" so it doesn't stretch full width
+ * This widget replaces the old "AlertsSection" so it doesn't stretch full width.
  */
 const NotificationsWidget = () => {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 text-gray-800">
-      <h2 className="text-lg font-semibold mb-3">Important Notifications</h2>
+    <div className="bg-white rounded-lg shadow p-4 text-gray-800">
+      <h2 className="text-lg font-semibold text-gray-800 mb-3">
+        Important Notifications
+      </h2>
 
       <div className="space-y-3">
         <Alert variant="destructive">
